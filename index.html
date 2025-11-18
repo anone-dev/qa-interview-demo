@@ -2,17 +2,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>QA Interview Demo</title>
+<title>QA Interview Demo with Mock API</title>
 <style>
 body { font-family: Arial; margin: 20px; }
 .hidden { display: none; }
-input, select, button { margin: 5px 0; padding: 5px; }
 .product { border: 1px solid #ccc; margin: 5px; padding: 10px; }
 </style>
 </head>
 <body>
-
-<h1>QA Interview Demo</h1>
+<h1>QA Interview Demo (Web + API)</h1>
 <div id="page-register">
   <h2>Register</h2>
   <input id="reg-first" placeholder="First Name"><br>
@@ -28,18 +26,7 @@ input, select, button { margin: 5px 0; padding: 5px; }
 
 <div id="page-products" class="hidden">
   <h2>Products</h2>
-  <div class="product">
-    <span>T-Shirt (100 THB)</span><br>
-    Qty: <input id="qty-shirt" type="number" value="1"><br>
-  </div>
-  <div class="product">
-    <span>Shoes (500 THB)</span><br>
-    Qty: <input id="qty-shoes" type="number" value="1"><br>
-  </div>
-  <div class="product">
-    <span>Hat (50 THB)</span><br>
-    Qty: <input id="qty-hat" type="number" value="1"><br>
-  </div>
+  <div id="product-list"></div>
   <button onclick="checkout()">Checkout</button>
 </div>
 
@@ -69,37 +56,97 @@ input, select, button { margin: 5px 0; padding: 5px; }
 
 <script>
 let orders = [];
+let products = [];
 
+// Mock API Simulation
+function apiRegister(data){
+  return new Promise(resolve=>{
+    // ❌ Bug: No proper email/password validation
+    resolve({status:"success", message:"Register Success"});
+  });
+}
+
+function apiGetProducts(){
+  return new Promise(resolve=>{
+    // ❌ Bug: Wrong price data from backend
+    resolve([
+      {name:"T-Shirt", price:120}, // Should be 100
+      {name:"Shoes", price:550},   // Should be 500
+      {name:"Hat", price:60}       // Should be 50
+    ]);
+  });
+}
+
+function apiCheckout(cart){
+  return new Promise(resolve=>{
+    // ❌ Bug: qty=0 allowed
+    let total = 0;
+    cart.forEach(item=> total += item.qty * item.price);
+    resolve({total: total});
+  });
+}
+
+function apiPayment(method, amount, cardNum){
+  return new Promise(resolve=>{
+    // ❌ Bug: Credit card not validated
+    if(method === "Bank Transfer"){
+      resolve({status:"success", recorded:false}); // ❌ Not recorded
+    } else {
+      resolve({status:"success", recorded:true});
+    }
+  });
+}
+
+function apiGetOrders(){
+  return new Promise(resolve=>{
+    // ❌ Bug: Duplicate merges
+    resolve(orders);
+  });
+}
+
+// Page functions
 function register(){
-  const email = document.getElementById('reg-email').value;
-  const pass = document.getElementById('reg-pass').value;
-  const dob = document.getElementById('reg-dob').value;
-  
-  // ❌ Bug: Email validation faulty (no regex), Password min length wrong (>=7 instead of 8)
-  if(pass.length >= 7){ // wrong validation
-    document.getElementById('reg-msg').innerText = "Register Success!";
-    document.getElementById('page-register').classList.add('hidden');
+  const data = {
+    first: document.getElementById('reg-first').value,
+    last: document.getElementById('reg-last').value,
+    email: document.getElementById('reg-email').value,
+    pass: document.getElementById('reg-pass').value,
+    dob: document.getElementById('reg-dob').value,
+    gender: document.getElementById('reg-gender').value
+  };
+  apiRegister(data).then(res=>{
+    document.getElementById('reg-msg').innerText = res.message;
+    if(res.status === "success"){
+      document.getElementById('page-register').classList.add('hidden');
+      loadProducts();
+    }
+  });
+}
+
+function loadProducts(){
+  apiGetProducts().then(items=>{
+    products = items;
+    const listDiv = document.getElementById('product-list');
+    listDiv.innerHTML = "";
+    items.forEach((p,i)=>{
+      listDiv.innerHTML += `<div class="product">
+        ${p.name} (${p.price} THB)<br>
+        Qty: <input id="qty-${i}" type="number" value="1">
+      </div>`;
+    });
     document.getElementById('page-products').classList.remove('hidden');
-  } else {
-    document.getElementById('reg-msg').innerText = "Password too short!";
-  }
+  });
 }
 
 function checkout(){
-  const qtyShirt = parseInt(document.getElementById('qty-shirt').value);
-  const qtyShoes = parseInt(document.getElementById('qty-shoes').value);
-  const qtyHat = parseInt(document.getElementById('qty-hat').value);
-  
-  // ❌ Bug: qty=0 allowed
-  let total = qtyShirt*100 + qtyShoes*500 + qtyHat*50;
-  // ❌ Bug: Wrong calculation if qty > 10 (over-discount bug)
-  if(qtyShirt > 10) total -= 100; 
-  
-  document.getElementById('order-summary').innerText = 
-    `Total: ${total} THB (Shirt:${qtyShirt}, Shoes:${qtyShoes}, Hat:${qtyHat})`;
-  
-  document.getElementById('page-products').classList.add('hidden');
-  document.getElementById('page-checkout').classList.remove('hidden');
+  const cart = products.map((p,i)=>{
+    return {name:p.name, price:p.price, qty:parseInt(document.getElementById(`qty-${i}`).value)};
+  });
+  apiCheckout(cart).then(res=>{
+    document.getElementById('order-summary').innerText = `Total: ${res.total} THB`;
+    document.getElementById('page-products').classList.add('hidden');
+    document.getElementById('page-checkout').classList.remove('hidden');
+  });
 }
 
 function goPayment(){
@@ -110,25 +157,24 @@ function goPayment(){
 function processPayment(){
   const method = document.getElementById('pay-method').value;
   const card = document.getElementById('card-num').value;
+  const amountText = document.getElementById('order-summary').innerText;
+  const amount = parseInt(amountText.replace(/[^0-9]/g,""));
   
-  // ❌ Bug: Credit card not validated
-  if(method === "Credit Card" && card.length < 16){
-    document.getElementById('pay-msg').innerText = "Payment Success! (BUG: Card invalid)";
-  } else if(method === "Bank Transfer"){
-    // ❌ Bug: This payment doesn't add order to history
-    document.getElementById('pay-msg').innerText = "Payment Success via Bank Transfer!";
-  } else {
-    orders.push("Order placed (method: "+method+")");
-    document.getElementById('pay-msg').innerText = "Payment Success!";
-  }
-  document.getElementById('page-payment').classList.add('hidden');
-  document.getElementById('page-history').classList.remove('hidden');
-  showHistory();
+  apiPayment(method, amount, card).then(res=>{
+    document.getElementById('pay-msg').innerText = "Payment " + res.status;
+    if(res.recorded){
+      orders.push({item:"Order via "+method, amount:amount});
+    }
+    showHistory();
+    document.getElementById('page-payment').classList.add('hidden');
+    document.getElementById('page-history').classList.remove('hidden');
+  });
 }
 
 function showHistory(){
-  // ❌ Bug: Duplicate product merges into same order
-  document.getElementById('history-list').innerHTML = orders.join("<br>");
+  apiGetOrders().then(hist=>{
+    document.getElementById('history-list').innerHTML = hist.map(o=> `${o.item} - ${o.amount} THB`).join("<br>");
+  });
 }
 </script>
 </body>
