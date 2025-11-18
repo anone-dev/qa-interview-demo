@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>QA Interview Demo</title>
+<style>
+body { font-family: Arial; margin: 20px; }
+.hidden { display: none; }
+input, select, button { margin: 5px 0; padding: 5px; }
+.product { border: 1px solid #ccc; margin: 5px; padding: 10px; }
+</style>
+</head>
+<body>
+
+<h1>QA Interview Demo</h1>
+<div id="page-register">
+  <h2>Register</h2>
+  <input id="reg-first" placeholder="First Name"><br>
+  <input id="reg-last" placeholder="Last Name"><br>
+  <input id="reg-email" placeholder="Email"><br>
+  <input id="reg-pass" placeholder="Password" type="password"><br>
+  <input id="reg-confirm" placeholder="Confirm Password" type="password"><br>
+  <input id="reg-dob" placeholder="Date of Birth (YYYY-MM-DD)"><br>
+  <select id="reg-gender"><option>Male</option><option>Female</option></select><br>
+  <button onclick="register()">Register</button>
+  <div id="reg-msg"></div>
+</div>
+
+<div id="page-products" class="hidden">
+  <h2>Products</h2>
+  <div class="product">
+    <span>T-Shirt (100 THB)</span><br>
+    Qty: <input id="qty-shirt" type="number" value="1"><br>
+  </div>
+  <div class="product">
+    <span>Shoes (500 THB)</span><br>
+    Qty: <input id="qty-shoes" type="number" value="1"><br>
+  </div>
+  <div class="product">
+    <span>Hat (50 THB)</span><br>
+    Qty: <input id="qty-hat" type="number" value="1"><br>
+  </div>
+  <button onclick="checkout()">Checkout</button>
+</div>
+
+<div id="page-checkout" class="hidden">
+  <h2>Checkout</h2>
+  <div id="order-summary"></div>
+  <button onclick="goPayment()">Proceed to Payment</button>
+</div>
+
+<div id="page-payment" class="hidden">
+  <h2>Payment</h2>
+  Method:
+  <select id="pay-method">
+    <option>Credit Card</option>
+    <option>Bank Transfer</option>
+    <option>e-Wallet</option>
+  </select><br>
+  Card Number (for Credit Card only): <input id="card-num"><br>
+  <button onclick="processPayment()">Pay Now</button>
+  <div id="pay-msg"></div>
+</div>
+
+<div id="page-history" class="hidden">
+  <h2>Order History</h2>
+  <div id="history-list"></div>
+</div>
+
+<script>
+let orders = [];
+
+function register(){
+  const email = document.getElementById('reg-email').value;
+  const pass = document.getElementById('reg-pass').value;
+  const dob = document.getElementById('reg-dob').value;
+  
+  // ❌ Bug: Email validation faulty (no regex), Password min length wrong (>=7 instead of 8)
+  if(pass.length >= 7){ // wrong validation
+    document.getElementById('reg-msg').innerText = "Register Success!";
+    document.getElementById('page-register').classList.add('hidden');
+    document.getElementById('page-products').classList.remove('hidden');
+  } else {
+    document.getElementById('reg-msg').innerText = "Password too short!";
+  }
+}
+
+function checkout(){
+  const qtyShirt = parseInt(document.getElementById('qty-shirt').value);
+  const qtyShoes = parseInt(document.getElementById('qty-shoes').value);
+  const qtyHat = parseInt(document.getElementById('qty-hat').value);
+  
+  // ❌ Bug: qty=0 allowed
+  let total = qtyShirt*100 + qtyShoes*500 + qtyHat*50;
+  // ❌ Bug: Wrong calculation if qty > 10 (over-discount bug)
+  if(qtyShirt > 10) total -= 100; 
+  
+  document.getElementById('order-summary').innerText = 
+    `Total: ${total} THB (Shirt:${qtyShirt}, Shoes:${qtyShoes}, Hat:${qtyHat})`;
+  
+  document.getElementById('page-products').classList.add('hidden');
+  document.getElementById('page-checkout').classList.remove('hidden');
+}
+
+function goPayment(){
+  document.getElementById('page-checkout').classList.add('hidden');
+  document.getElementById('page-payment').classList.remove('hidden');
+}
+
+function processPayment(){
+  const method = document.getElementById('pay-method').value;
+  const card = document.getElementById('card-num').value;
+  
+  // ❌ Bug: Credit card not validated
+  if(method === "Credit Card" && card.length < 16){
+    document.getElementById('pay-msg').innerText = "Payment Success! (BUG: Card invalid)";
+  } else if(method === "Bank Transfer"){
+    // ❌ Bug: This payment doesn't add order to history
+    document.getElementById('pay-msg').innerText = "Payment Success via Bank Transfer!";
+  } else {
+    orders.push("Order placed (method: "+method+")");
+    document.getElementById('pay-msg').innerText = "Payment Success!";
+  }
+  document.getElementById('page-payment').classList.add('hidden');
+  document.getElementById('page-history').classList.remove('hidden');
+  showHistory();
+}
+
+function showHistory(){
+  // ❌ Bug: Duplicate product merges into same order
+  document.getElementById('history-list').innerHTML = orders.join("<br>");
+}
+</script>
+</body>
+</html>
