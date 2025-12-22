@@ -32,6 +32,18 @@
     border-color: #e67e22; 
 }
 
+.level-card.selected-junior {
+    border-color: var(--accent-color);
+    background: #ebf3fb;
+    box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
+}
+
+.level-card.selected-senior {
+    border-color: #e67e22;
+    background: #fef5e7;
+    box-shadow: 0 6px 15px rgba(230, 126, 34, 0.3);
+}
+
 .level-icon { 
     font-size: 3rem; 
     margin-bottom: 15px; 
@@ -172,6 +184,108 @@ th {
     color: #999; 
     font-style: italic; 
     font-weight: normal; 
+}
+
+/* JSON Interactive Styles */
+.json-interactive-container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.json-code-view {
+    flex: 1.5;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 20px;
+    border-radius: 8px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    min-width: 450px;
+}
+
+.json-qa-panel {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 400px;
+}
+
+.code-line { 
+    line-height: 1.6; 
+    white-space: pre-wrap; 
+    display: flex;
+}
+
+.code-content {
+    flex: 1;
+}
+
+.indent1 { padding-left: 20px; }
+.indent2 { padding-left: 40px; }
+.indent3 { padding-left: 60px; }
+
+.line-num {
+    display: inline-block;
+    width: 30px;
+    color: #858585;
+    text-align: left;
+    margin-right: 15px;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.json-val { transition: background 0.3s, color 0.3s; padding: 0 2px; border-radius: 2px; }
+.json-obj { transition: background 0.3s; }
+
+.highlight-answer {
+    background-color: #27ae60;
+    color: #fff !important;
+    font-weight: bold;
+    box-shadow: 0 0 10px #27ae60;
+}
+
+.highlight-block {
+    background-color: rgba(39, 174, 96, 0.2);
+    border: 1px solid #27ae60;
+}
+
+.json-btn {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    color: #333;
+    white-space: nowrap;
+}
+
+.json-btn:hover {
+    background: #f8f9fa;
+    border-color: var(--accent-color);
+    transform: translateX(5px);
+}
+
+.json-btn.active-q {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+.result-box {
+    margin-top: 15px;
+    padding: 15px;
+    background: #e8f4fd;
+    border-left: 4px solid #3498db;
+    border-radius: 4px;
+    animation: fadeIn 0.3s;
 }
 
 /* Placeholder Content */

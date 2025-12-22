@@ -22,15 +22,33 @@ function switchMainTab(tab) {
 }
 
 async function authInterviewAccess() {
+    const stored = localStorage.getItem('interviewAuth');
+    if(stored) {
+        const data = JSON.parse(stored);
+        if(Date.now() < data.expiry) {
+            switchMainTab('interview');
+            return;
+        }
+        localStorage.removeItem('interviewAuth');
+    }
+    
     while(true) {
         const password = await getPasswordInput('Enter Password to Access Interview Questions');
         if(password === null) return;
         const hash = await hashPassword(password);
+        
         if(hash === '3c0d3661d0f3f5aafaf307a94d9e38045f39c002ad80d08427a2aad674159696') {
+            const expiry = Date.now() + (7 * 24 * 60 * 60 * 1000);
+            localStorage.setItem('interviewAuth', JSON.stringify({expiry}));
             switchMainTab('interview');
             return;
+        } else if(hash === 'b9c0cddf116b3ba8fb8eea843f6627b6c5c1867adf130d51923ab2fdece2467e') {
+            switchMainTab('interview');
+            return;
+        } else {
+            alert('⛔ Access Denied: Incorrect Password');
+            continue;
         }
-        alert('⛔ Access Denied: Incorrect Password');
     }
 }
 

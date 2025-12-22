@@ -302,10 +302,6 @@
         </div>
 
         <div id="interview-content-area" class="hidden">
-            <div style="text-align: left; margin-bottom: 10px;">
-                <button class="btn btn-outline" style="padding: 5px 15px; font-size: 0.9rem;" onclick="resetInterviewLevel()">⬅️ Back to Level Selection</button>
-            </div>
-            
             <div class="card">
                 <div class="header" id="interview-header" style="background:#2c3e50; color:white; padding:15px 25px; border-radius:10px 10px 0 0; margin:-30px -30px 20px -30px; display:flex; justify-content:space-between; align-items:center;">
                     <h2 style="margin:0; color:white; border:none; padding:0;">Selected: <span id="selected-level-text">...</span></h2>
@@ -338,6 +334,19 @@
                         <div id="solution-junior" class="solution-section">
                             <h4>✅ เฉลย: Collapsed Decision Table</h4>
                             <table><thead><tr><th>Rules</th><th class="bg-green">Pass</th><th class="bg-red">Fail C1</th><th class="bg-red">Fail C2</th><th class="bg-red">Fail C3</th></tr></thead><tbody><tr><td>C1</td><td class="bg-green">True</td><td class="bg-red">False</td><td class="bg-green">True</td><td class="bg-green">True</td></tr><tr><td>C2</td><td class="bg-green">True</td><td class="dont-care">-</td><td class="bg-red">False</td><td class="bg-green">True</td></tr><tr><td>C3</td><td class="bg-green">True</td><td class="dont-care">-</td><td class="dont-care">-</td><td class="bg-red">False</td></tr><tr><td><b>Result</b></td><td class="bg-green">Approve</td><td class="bg-red">Reject</td><td class="bg-red">Reject</td><td class="bg-red">Reject</td></tr></tbody></table>
+                            <div style="margin-top:15px; background:#f8f9fa; padding:15px; border-left:4px solid #3498db; font-size:0.9rem;">
+                                <h4 style="margin-top:0; color:#2c3e50;">📖 คำอธิบายตารางลดรูป:</h4>
+                                <ul style="margin:10px 0; padding-left:20px;">
+                                    <li><b>Case 1 (Success):</b> ทุกอย่างต้อง True เท่านั้น</li>
+                                    <li><b>Case 2 (Focus C1 Fail):</b> ถ้าเงินเดือนไม่ถึง (False) ไม่ต้องสนใจอายุงานหรือแบล็กลิสต์ ผลคือ Reject แน่นอน</li>
+                                    <li><b>Case 3 (Focus C2 Fail):</b> ถ้าเงินเดือนผ่าน (True) แต่อายุงานไม่ถึง (False) ไม่ต้องสนแบล็กลิสต์ ผลคือ Reject</li>
+                                    <li><b>Case 4 (Focus C3 Fail):</b> ถ้าเงินเดือนผ่าน (True) และอายุงานผ่าน (True) แต่ติดแบล็กลิสต์ (False) ผลคือ Reject</li>
+                                </ul>
+                                <div style="margin-top:10px; background:#fff3cd; padding:10px; border-radius:5px;">
+                                    <b>⚡ Priority &amp; Ordering (ลำดับความสำคัญ):</b> เสนอให้เช็ก Blacklist (C3) ก่อน<br>
+                                    <b>เหตุผล:</b> เป็นเงื่อนไข "Kill Switch" หรือ "Knock-out criteria" ที่ร้ายแรงที่สุด ถ้าติด Blacklist ไม่จำเป็นต้องเสียเวลาไปคำนวณเงินเดือนหรือเช็กอายุงานให้เปลือง Resource ของระบบ (Fail Fast Concept)
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -359,17 +368,71 @@
                                 <li>ถ้าไม่มี <b>Guarantor</b> ➔ <span class="action-badge act-reject">Reject</span></li>
                             </ul>
                         </div>
-                        <p style="text-align: center; font-style: italic; color: #888;">คำสั่ง: จงเขียน <b>Decision Table (แบบลดรูป)</b> ที่ถูกต้องที่สุด</p>
+                        <p style="text-align: center; font-style: italic; color: #888;">คำสั่ง: จงเขียน <b>Test Case / Decision Table (แบบลดรูป)</b> ที่จำเป็นต้องทดสอบ</p>
                         <center><button class="btn btn-secondary" style="background:#555; color:white;" onclick="toggleSolution('senior')">เฉลย (Solution)</button></center>
                         <div id="solution-senior" class="solution-section">
                             <h4>✅ เฉลย (Collapsed Logic)</h4>
                             <table><thead><tr><th>Rules</th><th class="bg-red">R1</th><th class="bg-green">R2</th><th class="bg-blue">R3</th><th class="bg-red">R4</th></tr></thead><tbody><tr><td>Income >= 50k</td><td class="bg-red">False</td><td class="bg-green">True</td><td class="bg-blue">True</td><td class="bg-red">True</td></tr><tr><td>DTI <= 40%</td><td class="dont-care">-</td><td class="bg-green">True</td><td class="bg-blue">False</td><td class="bg-red">False</td></tr><tr><td>Guarantor</td><td class="dont-care">-</td><td class="dont-care">-</td><td class="bg-blue">True</td><td class="bg-red">False</td></tr><tr><td><b>Result</b></td><td class="bg-red">Reject</td><td class="bg-green">Fast Track</td><td class="bg-blue">Regular</td><td class="bg-red">Reject</td></tr></tbody></table>
                             <div style="margin-top:10px; background:#e8f6f3; padding:10px; border-left:4px solid #1abc9c; font-size:0.9rem;"><b>💡 Senior Check:</b> การใช้ Don't care (-) ใน Rule 2 (Fast Track) สำคัญมาก เพราะ DTI ดี ไม่ต้องเสียเวลาเช็คคนค้ำ</div>
+                            <div style="margin-top:10px; background:#fff3cd; padding:12px; border-left:4px solid #f39c12; font-size:0.9rem;">
+                                <b>🎯 จุดสังเกต Senior:</b>
+                                <ol style="margin:8px 0; padding-left:20px;">
+                                    <li>ใช้ "-" (Don't Care) ได้ถูกต้องใน Rule 1 และ Rule 2</li>
+                                    <li>แยก Fast Track กับ Regular ออกจากกันชัดเจน (ไม่ใช่แค่ Approve)</li>
+                                    <li>มองเห็นเคส Rule 4 (รายได้ถึง แต่หนี้เยอะและไม่มีคนค้ำ) ซึ่งเป็น Negative Case ที่สำคัญ</li>
+                                </ol>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div id="topic-2" class="topic-content hidden"><div class="placeholder-content"><h3>🏗️ Technical - JSON Question</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div></div>
+                <div id="topic-2" class="topic-content hidden">
+                    <div class="section-title">🏗️ Technical - JSON Path Question</div>
+                    
+                    <div class="json-interactive-container">
+                        <div class="json-code-view">
+                            <div class="code-line"><span class="line-num">1</span><span class="code-content">{</span></div>
+                            <div class="code-line"><span class="line-num">2</span><span class="code-content indent1">"department": <span id="ans-dept" class="json-val">"Engineering"</span>,</span></div>
+                            <div class="code-line"><span class="line-num">3</span><span class="code-content indent1">"budget": 500000,</span></div>
+                            <div class="code-line"><span class="line-num">4</span><span class="code-content indent1">"members": [</span></div>
+                            <div class="code-line"><span class="line-num">5</span><span class="code-content indent2">{</span></div>
+                            <div class="code-line"><span class="line-num">6</span><span class="code-content indent3">"name": <span id="ans-alice" class="json-val">"Alice"</span>,</span></div>
+                            <div class="code-line"><span class="line-num">7</span><span class="code-content indent3">"salary": <span id="ans-sal-alice" class="json-val">60000</span>,</span></div>
+                            <div class="code-line"><span class="line-num">8</span><span class="code-content indent3">"is_active": <span id="ans-active-alice" class="json-val">true</span>,</span></div>
+                            <div class="code-line"><span class="line-num">9</span><span class="code-content indent3">"skills": [<span id="ans-1" class="json-val">"Java"</span>, "SQL"]</span></div>
+                            <div class="code-line"><span class="line-num">10</span><span class="code-content indent2">},</span></div>
+                            <div class="code-line"><span class="line-num">11</span><span class="code-content indent2">{</span></div>
+                            <div class="code-line"><span class="line-num">12</span><span class="code-content indent3">"name": <span id="ans-bob" class="json-val">"Bob"</span>,</span></div>
+                            <div class="code-line"><span class="line-num">13</span><span class="code-content indent3">"salary": <span id="ans-sal-bob" class="json-val">45000</span>,</span></div>
+                            <div class="code-line"><span class="line-num">14</span><span class="code-content indent3">"is_active": <span id="ans-active-bob" class="json-val">false</span>,</span></div>
+                            <div class="code-line"><span class="line-num">15</span><span class="code-content indent3">"skills": <span id="ans-4" class="json-obj">[</span><span id="ans-4-val" class="json-val">"Python"</span>]</span></div>
+                            <div class="code-line"><span class="line-num">16</span><span class="code-content indent2">},</span></div>
+                            <div class="code-line"><span class="line-num">17</span><span class="code-content indent2">{</span></div>
+                            <div class="code-line"><span class="line-num">18</span><span class="code-content indent3">"name": <span id="ans-charlie" class="json-val">"Charlie"</span>,</span></div>
+                            <div class="code-line"><span class="line-num">19</span><span class="code-content indent3">"salary": <span id="ans-sal-charlie" class="json-val">80000</span>,</span></div>
+                            <div class="code-line"><span class="line-num">20</span><span class="code-content indent3">"is_active": <span id="ans-active-charlie" class="json-val">true</span>,</span></div>
+                            <div class="code-line"><span class="line-num">21</span><span class="code-content indent3">"skills": ["Go", "Docker", "K8s"]</span></div>
+                            <div class="code-line"><span class="line-num">22</span><span class="code-content indent2">}</span></div>
+                            <div class="code-line"><span class="line-num">23</span><span class="code-content indent1">]</span></div>
+                            <div class="code-line"><span class="line-num">24</span><span class="code-content">}</span></div>
+                        </div>
+
+                        <div class="json-qa-panel">
+                            <h3>หากใช้ JSONPath ต่อไปนี้จะได้ค่าอะไร?</h3>
+                            <p style="color:#666; font-size:0.85rem; margin-bottom:15px;">(คลิกเพื่อดูคำตอบ)</p>
+                            
+                            <button class="json-btn" onclick="checkJsonAnswer(1)">1) $.members[0].skills[0]</button>
+                            <button class="json-btn" onclick="checkJsonAnswer(2)">2) $.members[?(@.is_active == false)].name</button>
+                            <button class="json-btn" onclick="checkJsonAnswer(3)">3) $.members[?(@.salary > 50000)].name</button>
+                            <button class="json-btn" onclick="checkJsonAnswer(4)">4) $.members[?(@.name == 'Bob')].skills</button>
+                            <button class="json-btn" onclick="checkJsonAnswer(5)">5) $.members[*].salary</button>
+
+                            <div id="json-result-display" class="result-box hidden">
+                                <strong>Result:</strong> <span id="json-output-text" style="font-family: 'Fira Code'; color: #e83e8c;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="topic-3" class="topic-content hidden"><div class="placeholder-content"><h3>💾 Technical - SQL Question</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div></div>
                 <div id="topic-4" class="topic-content hidden"><div class="placeholder-content"><h3>🤖 Technical - Coding / Automate</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div></div>
             </div>
