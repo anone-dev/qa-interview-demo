@@ -351,3 +351,59 @@ th {
 .fb-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
 
 @media (max-width: 600px) { .sql-options-grid { grid-template-columns: 1fr; } }
+
+/* --- Coding Section Styles --- */
+.coding-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.code-editor {
+    flex: 1.5;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 20px;
+    border-radius: 8px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    min-width: 320px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+.code-qa-panel {
+    flex: 1;
+    min-width: 280px;
+}
+
+.code-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.code-opt-btn {
+    padding: 15px;
+    text-align: left;
+    background: white;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    font-family: 'Fira Code', monospace;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1rem;
+}
+
+.code-opt-btn:hover { border-color: #3498db; background: #f8fbff; }
+.code-opt-btn.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+.code-opt-btn.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+
+.code-instruction { text-align: center; font-size: 1rem; margin-bottom: 15px; color: #555; }
+
+/* Syntax Highlighting */
+.kwd { color: #569cd6; font-weight: bold; }
+.func { color: #dcdcaa; }
+.num { color: #b5cea8; }
+.str { color: #ce9178; }
+.comment { color: #6a9955; font-style: italic; }

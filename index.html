@@ -291,13 +291,13 @@
             <div class="level-card junior" onclick="selectInterviewLevel('junior')">
                 <span class="level-icon">👶</span>
                 <span class="level-title">Junior Level</span>
-                <span class="level-desc">Fundamental Logic, Basic API, Manual Test Cases</span>
+                <span class="level-desc">Logic Exam, JSON/SQL Basics, JS/Python/Robot/Cypress Fundamentals</span>
             </div>
             
             <div class="level-card senior" onclick="selectInterviewLevel('senior')">
                 <span class="level-icon">🦁</span>
                 <span class="level-title">Senior Level</span>
-                <span class="level-desc">Advanced Logic, Risk Assessment, Strategy</span>
+                <span class="level-desc">Advanced Logic, Complex Queries, Error Handling & Anti-Patterns</span>
             </div>
         </div>
 
@@ -310,7 +310,7 @@
                 <div class="topic-tabs">
                     <button class="topic-btn active" onclick="switchTopic(1)">1. Logic Exam</button>
                     <button class="topic-btn" onclick="switchTopic(2)">2. Backend Testing</button>
-                    <button class="topic-btn" onclick="switchTopic(3)">3. Automated Testing</button>
+                    <button class="topic-btn" onclick="switchTopic(3)">3. Automation Testing</button>
                 </div>
 
                 <div id="topic-1" class="topic-content">
@@ -571,7 +571,7 @@
                 </div>
                 
                 <div id="topic-3" class="topic-content hidden">
-                    <div class="section-title">🤖 Automated Testing</div>
+                    <div class="section-title">🤖 Automation Testing</div>
                     
                     <div class="sub-topic-tabs" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; flex-wrap: wrap;">
                         <button class="sub-topic-btn active" onclick="switchSubTopic(3, 1)" style="padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">1. Code - JavaScript</button>
@@ -581,19 +581,306 @@
                     </div>
                     
                     <div id="sub-topic-3-1" class="sub-topic-content">
-                        <div class="placeholder-content"><h3>📝 Code - JavaScript</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div>
+                        
+                        <!-- JS: JUNIOR LEVEL -->
+                        <div id="js-junior-view" class="hidden">
+                            <div class="section-title">👶 JS Junior: Control Flow & Boundary</div>
+                            <p class="code-instruction">วิเคราะห์การทำงานของ Loop และเงื่อนไข <code>continue</code> / <code>break</code></p>
+                            
+                            <div class="coding-container">
+                                <div class="code-editor">
+                                    <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">function</span> <span class="func">calculateBonus</span>(scores) {</span></div>
+                                    <div class="code-line"><span class="line-num">2</span><span class="code-content indent1"><span class="kwd">let</span> total = <span class="num">0</span>;</span></div>
+                                    <div class="code-line"><span class="line-num">3</span><span class="code-content indent1"><span class="kwd">for</span> (<span class="kwd">let</span> score <span class="kwd">of</span> scores) {</span></div>
+                                    <div class="code-line"><span class="line-num">4</span><span class="code-content indent2 comment">// Condition 1: Skip low scores</span></div>
+                                    <div class="code-line"><span class="line-num">5</span><span class="code-content indent2"><span class="kwd">if</span> (score < <span class="num">5</span>) <span class="kwd">continue</span>;</span></div>
+                                    <div class="code-line"><span class="line-num">6</span><span class="code-content indent2 comment">// Condition 2: Stop if max score found</span></div>
+                                    <div class="code-line"><span class="line-num">7</span><span class="code-content indent2"><span class="kwd">if</span> (score <span class="kwd">===</span> <span class="num">10</span>) <span class="kwd">break</span>;</span></div>
+                                    <div class="code-line"><span class="line-num">8</span><span class="code-content indent2">total += score;</span></div>
+                                    <div class="code-line"><span class="line-num">9</span><span class="code-content indent1">}</span></div>
+                                    <div class="code-line"><span class="line-num">10</span><span class="code-content indent1"><span class="kwd">return</span> total;</span></div>
+                                    <div class="code-line"><span class="line-num">11</span><span class="code-content">}</span></div>
+                                    <div class="code-line"><span class="line-num">12</span><span class="code-content">&nbsp;</span></div>
+                                    <div class="code-line"><span class="line-num">13</span><span class="code-content"><span class="kwd">const</span> scores = [<span class="num">6</span>, <span class="num">4</span>, <span class="num">8</span>, <span class="num">10</span>, <span class="num">7</span>];</span></div>
+                                    <div class="code-line"><span class="line-num">14</span><span class="code-content"><span class="kwd">const</span> result = <span class="func">calculateBonus</span>(scores);</span></div>
+                                    <div class="code-line"><span class="line-num">15</span><span class="code-content comment">// result = ?</span></div>
+                                </div>
+
+                                <div class="code-qa-panel">
+                                    <h3>ค่าของตัวแปร 'result' คือเท่าไร?</h3>
+                                    <div class="code-options">
+                                        <button class="code-opt-btn" onclick="checkJsAnswer('jr', 35)">A) 35</button>
+                                        <button class="code-opt-btn" onclick="checkJsAnswer('jr', 31)">B) 31</button>
+                                        <button class="code-opt-btn" onclick="checkJsAnswer('jr', 14)">C) 14</button>
+                                        <button class="code-opt-btn" onclick="checkJsAnswer('jr', 24)">D) 24</button>
+                                    </div>
+                                    <div id="js-jr-feedback" class="feedback-box hidden"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- JS: SENIOR LEVEL -->
+                        <div id="js-senior-view" class="hidden">
+                            <div class="section-title">🦁 JS Senior: Robustness & Data Types</div>
+                            <p class="code-instruction">วิเคราะห์การจัดการ Data Type (Coercion) เมื่อข้อมูล Input ไม่สะอาด</p>
+                            
+                            <div class="coding-container">
+                                <div class="code-editor">
+                                    <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">function</span> <span class="func">sumSales</span>(items) {</span></div>
+                                    <div class="code-line"><span class="line-num">2</span><span class="code-content indent1"><span class="kwd">let</span> total = <span class="num">0</span>;</span></div>
+                                    <div class="code-line"><span class="line-num">3</span><span class="code-content indent1"><span class="kwd">for</span> (<span class="kwd">let</span> item <span class="kwd">of</span> items) {</span></div>
+                                    <div class="code-line"><span class="line-num">4</span><span class="code-content indent2"><span class="kwd">if</span> (item > <span class="num">0</span>) {</span></div>
+                                    <div class="code-line"><span class="line-num">5</span><span class="code-content indent3 comment">// ⚠️ Watch out for data types!</span></div>
+                                    <div class="code-line"><span class="line-num">6</span><span class="code-content indent3">total = total + item;</span></div>
+                                    <div class="code-line"><span class="line-num">7</span><span class="code-content indent2">}</span></div>
+                                    <div class="code-line"><span class="line-num">8</span><span class="code-content indent1">}</span></div>
+                                    <div class="code-line"><span class="line-num">9</span><span class="code-content indent1"><span class="kwd">return</span> total;</span></div>
+                                    <div class="code-line"><span class="line-num">10</span><span class="code-content">}</span></div>
+                                    <div class="code-line"><span class="line-num">11</span><span class="code-content">&nbsp;</span></div>
+                                    <div class="code-line"><span class="line-num">12</span><span class="code-content"><span class="kwd">const</span> data = [<span class="num">100</span>, <span class="str">"50"</span>, <span class="kwd">null</span>, <span class="num">20</span>];</span></div>
+                                    <div class="code-line"><span class="line-num">13</span><span class="code-content"><span class="kwd">const</span> result = <span class="func">sumSales</span>(data);</span></div>
+                                    <div class="code-line"><span class="line-num">14</span><span class="code-content comment">// result = ?</span></div>
+                                </div>
+
+                                <div class="code-qa-panel">
+                                    <h3>ค่าของตัวแปร 'result' คือเท่าไร?</h3>
+                                    <div class="code-options">
+                                        <button class="code-opt-btn" onclick="checkJsAnswer('sr', 170)">A) 170</button>
+                                        <button class="code-opt-btn" onclick="checkJsAnswer('sr', 'Error')">B) Error (Crash)</button>
+                                        <button class="code-opt-btn" onclick="checkJsAnswer('sr', '1005020')">C) "1005020"</button>
+                                        <button class="code-opt-btn" onclick="checkJsAnswer('sr', 120)">D) 120</button>
+                                    </div>
+                                    <div id="js-sr-feedback" class="feedback-box hidden"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                     
                     <div id="sub-topic-3-2" class="sub-topic-content hidden">
-                        <div class="placeholder-content"><h3>🐍 Code - Python</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div>
+                        
+                        <!-- PY: JUNIOR LEVEL -->
+                        <div id="py-junior-view" class="hidden">
+                            <div class="section-title">👶 Python Junior: Control Flow & Boundary</div>
+                            <p class="code-instruction">วิเคราะห์การทำงานของ Loop และเงื่อนไข <code>continue</code> / <code>break</code></p>
+                            
+                            <div class="coding-container">
+                                <div class="code-editor">
+                                    <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">def</span> <span class="func">calculate_bonus</span>(scores):</span></div>
+                                    <div class="code-line"><span class="line-num">2</span><span class="code-content indent1">total = <span class="num">0</span></span></div>
+                                    <div class="code-line"><span class="line-num">3</span><span class="code-content indent1"><span class="kwd">for</span> score <span class="kwd">in</span> scores:</span></div>
+                                    <div class="code-line"><span class="line-num">4</span><span class="code-content indent2 comment"># Condition 1: Skip low scores</span></div>
+                                    <div class="code-line"><span class="line-num">5</span><span class="code-content indent2"><span class="kwd">if</span> score < <span class="num">5</span>:</span></div>
+                                    <div class="code-line"><span class="line-num">6</span><span class="code-content indent3"><span class="kwd">continue</span></span></div>
+                                    <div class="code-line"><span class="line-num">7</span><span class="code-content indent2 comment"># Condition 2: Stop if max score found</span></div>
+                                    <div class="code-line"><span class="line-num">8</span><span class="code-content indent2"><span class="kwd">if</span> score <span class="kwd">==</span> <span class="num">10</span>:</span></div>
+                                    <div class="code-line"><span class="line-num">9</span><span class="code-content indent3"><span class="kwd">break</span></span></div>
+                                    <div class="code-line"><span class="line-num">10</span><span class="code-content indent2">total += score</span></div>
+                                    <div class="code-line"><span class="line-num">11</span><span class="code-content indent1"><span class="kwd">return</span> total</span></div>
+                                    <div class="code-line"><span class="line-num">12</span><span class="code-content">&nbsp;</span></div>
+                                    <div class="code-line"><span class="line-num">13</span><span class="code-content">scores = [<span class="num">6</span>, <span class="num">4</span>, <span class="num">8</span>, <span class="num">10</span>, <span class="num">7</span>]</span></div>
+                                    <div class="code-line"><span class="line-num">14</span><span class="code-content">result = <span class="func">calculate_bonus</span>(scores)</span></div>
+                                    <div class="code-line"><span class="line-num">15</span><span class="code-content comment"># result = ?</span></div>
+                                </div>
+
+                                <div class="code-qa-panel">
+                                    <h3>ค่าของตัวแปร 'result' คือเท่าไร?</h3>
+                                    <div class="code-options">
+                                        <button class="code-opt-btn" onclick="checkPyAnswer('jr', 35)">A) 35</button>
+                                        <button class="code-opt-btn" onclick="checkPyAnswer('jr', 31)">B) 31</button>
+                                        <button class="code-opt-btn" onclick="checkPyAnswer('jr', 14)">C) 14</button>
+                                        <button class="code-opt-btn" onclick="checkPyAnswer('jr', 24)">D) 24</button>
+                                    </div>
+                                    <div id="py-jr-feedback" class="feedback-box hidden"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PY: SENIOR LEVEL -->
+                        <div id="py-senior-view" class="hidden">
+                            <div class="section-title">🦁 Python Senior: Robustness & Data Types</div>
+                            <p class="code-instruction">วิเคราะห์การจัดการ Data Type เมื่อข้อมูล Input ไม่สะอาด</p>
+                            
+                            <div class="coding-container">
+                                <div class="code-editor">
+                                    <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">def</span> <span class="func">sum_sales</span>(items):</span></div>
+                                    <div class="code-line"><span class="line-num">2</span><span class="code-content indent1">total = <span class="num">0</span></span></div>
+                                    <div class="code-line"><span class="line-num">3</span><span class="code-content indent1"><span class="kwd">for</span> item <span class="kwd">in</span> items:</span></div>
+                                    <div class="code-line"><span class="line-num">4</span><span class="code-content indent2"><span class="kwd">if</span> item > <span class="num">0</span>:</span></div>
+                                    <div class="code-line"><span class="line-num">5</span><span class="code-content indent3 comment"># ⚠️ Watch out for data types!</span></div>
+                                    <div class="code-line"><span class="line-num">6</span><span class="code-content indent3">total = total + item</span></div>
+                                    <div class="code-line"><span class="line-num">7</span><span class="code-content indent1"><span class="kwd">return</span> total</span></div>
+                                    <div class="code-line"><span class="line-num">8</span><span class="code-content">&nbsp;</span></div>
+                                    <div class="code-line"><span class="line-num">9</span><span class="code-content">data = [<span class="num">100</span>, <span class="str">"50"</span>, <span class="kwd">None</span>, <span class="num">20</span>]</span></div>
+                                    <div class="code-line"><span class="line-num">10</span><span class="code-content">result = <span class="func">sum_sales</span>(data)</span></div>
+                                    <div class="code-line"><span class="line-num">11</span><span class="code-content comment"># result = ?</span></div>
+                                </div>
+
+                                <div class="code-qa-panel">
+                                    <h3>ค่าของตัวแปร 'result' คือเท่าไร?</h3>
+                                    <div class="code-options">
+                                        <button class="code-opt-btn" onclick="checkPyAnswer('sr', 170)">A) 170</button>
+                                        <button class="code-opt-btn" onclick="checkPyAnswer('sr', 'Error')">B) Error (TypeError)</button>
+                                        <button class="code-opt-btn" onclick="checkPyAnswer('sr', '10050')">C) "10050"</button>
+                                        <button class="code-opt-btn" onclick="checkPyAnswer('sr', 120)">D) 120</button>
+                                    </div>
+                                    <div id="py-sr-feedback" class="feedback-box hidden"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                     
                     <div id="sub-topic-3-3" class="sub-topic-content hidden">
-                        <div class="placeholder-content"><h3>🤖 Robot Framework</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div>
+                        
+                        <!-- ROBOT FRAMEWORK SECTION -->
+                        <div id="code-content-robot" class="code-content-view">
+                            
+                            <!-- ROBOT: JUNIOR LEVEL -->
+                            <div id="rf-junior-view" class="hidden">
+                                <div class="section-title">🤖 Robot Jr: Keyword Arguments & Syntax</div>
+                                <p class="code-instruction">วิเคราะห์การส่งค่าตัวแปร (Variables) และ Default Arguments</p>
+                                
+                                <div class="coding-container">
+                                    <div class="code-editor">
+                                        <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">*** Test Cases ***</span></span></div>
+                                        <div class="code-line"><span class="line-num">2</span><span class="code-content">Login Scenario</span></div>
+                                        <div class="code-line"><span class="line-num">3</span><span class="code-content indent1">Open Browser With Chrome</span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content indent1 comment"># Call Keyword with 2 arguments</span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content indent1">Login With User <span class="str">"Admin"</span> <span class="str">"Pass999"</span></span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content"><span class="kwd">*** Keywords ***</span></span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content">Login With User</span></div>
+                                        <div class="code-line"><span class="line-num">9</span><span class="code-content indent1"><span class="kwd">[Arguments]</span> ${username} ${password}=<span class="str">1234</span></span></div>
+                                        <div class="code-line"><span class="line-num">10</span><span class="code-content indent1">Input Text id:user ${username}</span></div>
+                                        <div class="code-line"><span class="line-num">11</span><span class="code-content indent1">Input Text id:pass ${password}</span></div>
+                                        <div class="code-line"><span class="line-num">12</span><span class="code-content indent1">Click Button id:login</span></div>
+                                    </div>
+
+                                    <div class="code-qa-panel">
+                                        <h3>รหัสผ่านที่ถูกใช้จะเป็นค่าใด?</h3>
+                                        <div class="code-options">
+                                            <button class="code-opt-btn" onclick="checkRfAnswer('jr', 'error')">A) Error (เกิน Argument)</button>
+                                            <button class="code-opt-btn" onclick="checkRfAnswer('jr', 'default')">B) "1234" (ค่า Default)</button>
+                                            <button class="code-opt-btn" onclick="checkRfAnswer('jr', 'admin')">C) "Admin"</button>
+                                            <button class="code-opt-btn" onclick="checkRfAnswer('jr', 'pass999')">D) "Pass999"</button>
+                                        </div>
+                                        <div id="rf-jr-feedback" class="feedback-box hidden"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ROBOT: SENIOR LEVEL -->
+                            <div id="rf-senior-view" class="hidden">
+                                <div class="section-title">🤖 Robot Sr: Test Lifecycle & Error Handling</div>
+                                <p class="code-instruction">วิเคราะห์โครงสร้าง Test Case นี้: <b>"จะเกิดผลกระทบอย่างไร หากบรรทัดที่ 9 (Validation) เกิด Error ขึ้น?"</b></p>
+                                
+                                <div class="coding-container">
+                                    <div class="code-editor">
+                                        <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">*** Test Cases ***</span></span></div>
+                                        <div class="code-line"><span class="line-num">2</span><span class="code-content">Purchase Item Flow</span></div>
+                                        <div class="code-line"><span class="line-num">3</span><span class="code-content indent1"><span class="kwd">Open Browser</span> ${URL} chrome</span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content indent1">Login ${USER} ${PASS}</span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content indent1">Add Item To Cart <span class="str">"iPhone 15"</span></span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content indent1">Click Element id:checkout_btn</span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content indent1">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content indent1 comment"># ⚠️ จุดตรวจสอบความถูกต้อง (Validation)</span></div>
+                                        <div class="code-line"><span class="line-num">9</span><span class="code-content indent1"><span class="kwd">Element Should Be Visible</span> id:payment_success</span></div>
+                                        <div class="code-line"><span class="line-num">10</span><span class="code-content indent1">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">11</span><span class="code-content indent1 comment"># ขั้นตอนการคืนค่าระบบ (Cleanup)</span></div>
+                                        <div class="code-line"><span class="line-num">12</span><span class="code-content indent1">Logout</span></div>
+                                        <div class="code-line"><span class="line-num">13</span><span class="code-content indent1"><span class="kwd">Close Browser</span></span></div>
+                                    </div>
+
+                                    <div class="code-qa-panel">
+                                        <h3>ข้อบกพร่องร้ายแรงที่สุด (Major Flaw) ของโครงสร้างนี้คืออะไร?</h3>
+                                        <div class="code-options">
+                                            <button class="code-opt-btn" onclick="checkRfAnswer('sr', 'syntax')">A) Syntax Error: คำสั่ง 'Open Browser' ต้องอยู่ในส่วน 'Settings' เท่านั้น</button>
+                                            <button class="code-opt-btn" onclick="checkRfAnswer('sr', 'orphan')">B) Cascading Failure: Browser จะเปิดค้างไว้ หากการ Validation ล้มเหลว</button>
+                                            <button class="code-opt-btn" onclick="checkRfAnswer('sr', 'hardcode')">C) Data Issue: มีการฝังค่า (Hardcode) "iPhone 15" ไว้ใน Code</button>
+                                            <button class="code-opt-btn" onclick="checkRfAnswer('sr', 'variable')">D) Variable Scope: ตัวแปร ${URL} ไม่ได้ถูกประกาศไว้ในไฟล์นี้</button>
+                                        </div>
+                                        <div id="rf-sr-feedback" class="feedback-box hidden"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        
                     </div>
                     
                     <div id="sub-topic-3-4" class="sub-topic-content hidden">
-                        <div class="placeholder-content"><h3>🌲 Cypress</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div>
+                        
+                        <!-- CYPRESS SECTION (THAI VERSION) -->
+                        <div id="code-content-cypress" class="code-content-view">
+                            
+                            <!-- CYPRESS: JUNIOR LEVEL -->
+                            <div id="cy-junior-view" class="hidden">
+                                <div class="section-title">🌲 Cypress Jr: Selectors & Chaining</div>
+                                <p class="code-instruction">วิเคราะห์การทำงานของคำสั่ง <b>Get</b> และ <b>Contains</b> เมื่อมี Element ที่มี Class ซ้ำกัน</p>
+                                
+                                <div class="coding-container">
+                                    <div class="code-editor">
+                                        <div class="code-line"><span class="line-num">1</span><span class="code-content comment">// HTML Structure:</span></div>
+                                        <div class="code-line"><span class="line-num">2</span><span class="code-content comment">// &lt;button class="btn"&gt;Cancel&lt;/button&gt;</span></div>
+                                        <div class="code-line"><span class="line-num">3</span><span class="code-content comment">// &lt;button class="btn"&gt;Submit&lt;/button&gt;</span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content"><span class="func">it</span>(<span class="str">'Submit Form'</span>, () => {</span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content indent1"><span class="kwd">cy</span>.get(<span class="str">'.btn'</span>)</span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content indent2">.contains(<span class="str">'Submit'</span>)</span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content indent2">.click();</span></div>
+                                        <div class="code-line"><span class="line-num">9</span><span class="code-content">});</span></div>
+                                    </div>
+
+                                    <div class="code-qa-panel">
+                                        <h3>Cypress จะทำงานอย่างไรกับคำสั่งชุดนี้?</h3>
+                                        <div class="code-options">
+                                            <button class="code-opt-btn" onclick="checkCyAnswer('jr', 'error')">A) Error: เพราะ '.btn' คืนค่า Element กลับมาหลายตัว</button>
+                                            <button class="code-opt-btn" onclick="checkCyAnswer('jr', 'cancel')">B) คลิกปุ่ม 'Cancel' (เพราะเป็นปุ่มแรกที่เจอ)</button>
+                                            <button class="code-opt-btn" onclick="checkCyAnswer('jr', 'submit')">C) คลิกปุ่ม 'Submit' ได้อย่างถูกต้อง</button>
+                                            <button class="code-opt-btn" onclick="checkCyAnswer('jr', 'random')">D) คลิกปุ่มไหนก็ได้ ที่โหลดเสร็จก่อน</button>
+                                        </div>
+                                        <div id="cy-jr-feedback" class="feedback-box hidden"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CYPRESS: SENIOR LEVEL -->
+                            <div id="cy-senior-view" class="hidden">
+                                <div class="section-title">🌲 Cypress Sr: Async & Variables (Anti-Pattern)</div>
+                                <p class="code-instruction">วิเคราะห์ <b>"ความเสี่ยง"</b> ของการใช้ตัวแปร <code>let/var</code> ภายนอก Chain ของ Cypress</p>
+                                
+                                <div class="coding-container">
+                                    <div class="code-editor">
+                                        <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">let</span> userData; <span class="comment">// Global Variable</span></span></div>
+                                        <div class="code-line"><span class="line-num">2</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">3</span><span class="code-content"><span class="func">beforeEach</span>(() => {</span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content indent1"><span class="kwd">cy</span>.fixture(<span class="str">'users'</span>).then((data) => {</span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content indent2">userData = data; <span class="comment">// Assign value</span></span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content indent1">});</span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content">});</span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">9</span><span class="code-content"><span class="func">it</span>(<span class="str">'Test Login'</span>, () => {</span></div>
+                                        <div class="code-line"><span class="line-num">10</span><span class="code-content indent1"><span class="comment">// ⚠️ Risk Point</span></span></div>
+                                        <div class="code-line"><span class="line-num">11</span><span class="code-content indent1"><span class="kwd">cy</span>.login(userData.username, userData.password);</span></div>
+                                        <div class="code-line"><span class="line-num">12</span><span class="code-content">});</span></div>
+                                    </div>
+
+                                    <div class="code-qa-panel">
+                                        <h3>ทำไมรูปแบบการเขียนนี้ถึง "ไม่แนะนำ" ให้ใช้ใน Cypress?</h3>
+                                        <div class="code-options">
+                                            <button class="code-opt-btn" onclick="checkCyAnswer('sr', 'scope')">A) ปัญหาสโคป: ตัวแปร 'let' ไม่สามารถเข้าถึงได้ภายใน 'it'</button>
+                                            <button class="code-opt-btn" onclick="checkCyAnswer('sr', 'async')">B) ปัญหา Sync/Async: ตัวแปร 'userData' อาจมีค่าเป็น undefined ตอนที่ Test เริ่มทำงาน</button>
+                                            <button class="code-opt-btn" onclick="checkCyAnswer('sr', 'fixture')">C) Syntax Error: คำสั่ง cy.fixture() ห้ามใช้ใน beforeEach</button>
+                                            <button class="code-opt-btn" onclick="checkCyAnswer('sr', 'alias')">D) ใช้งานได้ปกติ ไม่มีปัญหาอะไร</button>
+                                        </div>
+                                        <div id="cy-sr-feedback" class="feedback-box hidden"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        
                     </div>
             </div>
         </div>
