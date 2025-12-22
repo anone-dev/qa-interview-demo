@@ -6,6 +6,7 @@
 <title>QA Technical Interview Portal</title>
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&display=swap" rel="stylesheet">
 <style>
     :root {
         --primary-color: #2c3e50;
@@ -16,6 +17,12 @@
         --success-color: #27ae60;
         --danger-color: #c0392b;
         --text-color: #333;
+        
+        /* Method Colors */
+        --method-get: #61affe;
+        --method-post: #49cc90;
+        --method-bg-get: #ebf3fb;
+        --method-bg-post: #e8f6f0;
     }
 
     body {
@@ -90,7 +97,7 @@
         display: block;
     }
 
-    /* --- Cards (Used for App & Exam) --- */
+    /* --- Cards --- */
     .card {
         background: white;
         border-radius: 12px;
@@ -109,96 +116,127 @@
         font-size: 1.4rem;
     }
 
-    /* --- Forms (Mock App Styles) --- */
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-row {
-        display: flex;
-        gap: 15px;
-    }
-
-    input, select {
-        width: 100%;
-        padding: 10px 12px;
+    /* --- API Accordion Styles --- */
+    .api-endpoint {
         border: 1px solid #ddd;
         border-radius: 6px;
-        font-family: 'Sarabun', sans-serif;
-        font-size: 1rem;
-        box-sizing: border-box; /* Fix padding issue */
-        transition: border-color 0.3s;
+        margin-bottom: 15px;
+        overflow: hidden;
+    }
+    
+    .api-header {
+        padding: 10px 15px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        transition: background 0.2s;
+        font-weight: bold;
+    }
+    
+    .api-header:hover {
+        filter: brightness(0.95);
     }
 
-    input:focus, select:focus {
-        border-color: var(--accent-color);
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    /* Color coding for methods */
+    .api-post .api-header { background-color: var(--method-bg-post); border-left: 5px solid var(--method-post); }
+    .api-get .api-header { background-color: var(--method-bg-get); border-left: 5px solid var(--method-get); }
+
+    .method-badge {
+        display: inline-block;
+        min-width: 60px;
+        text-align: center;
+        color: white;
+        padding: 4px 10px;
+        border-radius: 4px;
+        margin-right: 15px;
+        font-size: 0.9rem;
     }
+    .badge-post { background-color: var(--method-post); }
+    .badge-get { background-color: var(--method-get); }
+
+    .path { font-family: 'Fira Code', monospace; font-size: 1rem; color: #333; flex-grow: 1; }
+    .desc { font-size: 0.85rem; color: #666; margin-right: 15px; font-weight: normal; }
+    .toggle-icon { font-size: 0.8rem; color: #666; transition: transform 0.3s; }
+
+    .api-content {
+        display: none; /* Hidden by default */
+        padding: 20px;
+        background: white;
+        border-top: 1px solid #eee;
+    }
+
+    /* JSON Code Block Styling */
+    .code-block {
+        background: #282c34;
+        color: #abb2bf;
+        padding: 15px;
+        border-radius: 6px;
+        overflow-x: auto;
+        font-family: 'Fira Code', monospace;
+        font-size: 0.9rem;
+        margin: 10px 0;
+        white-space: pre; /* Important for indentation */
+        line-height: 1.5;
+        border: 1px solid #3e4451;
+    }
+    
+    .status-code {
+        font-family: 'Fira Code', monospace;
+        font-weight: bold;
+        font-size: 0.9rem;
+        padding: 2px 8px;
+        border-radius: 4px;
+        margin-left: 10px;
+    }
+    .status-200 { background: #e6fffa; color: #27ae60; border: 1px solid #27ae60; }
+    .status-201 { background: #e6fffa; color: #2980b9; border: 1px solid #2980b9; }
+    
+    .expected-note {
+        background: #e8f4fd; 
+        padding: 10px; 
+        border-left: 4px solid #3498db; 
+        margin-top: 15px;
+        border-radius: 0 4px 4px 0;
+        font-size: 0.95rem;
+    }
+
+    /* --- Forms (Mock App Styles) --- */
+    .form-group { margin-bottom: 15px; }
+    .form-row { display: flex; gap: 15px; }
+    
+    input, select {
+        width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 6px;
+        font-family: 'Sarabun', sans-serif; font-size: 1rem; box-sizing: border-box; transition: border-color 0.3s;
+    }
+    input:focus, select:focus { border-color: var(--accent-color); outline: none; box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1); }
 
     /* --- Product Grid --- */
-    .product-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 20px;
-    }
-
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
     .product-card {
-        border: 1px solid #eee;
-        border-radius: 8px;
-        padding: 15px;
-        text-align: center;
-        background: #f9f9f9;
-        transition: transform 0.2s;
+        border: 1px solid #eee; border-radius: 8px; padding: 15px; text-align: center;
+        background: #f9f9f9; transition: transform 0.2s;
     }
-    .product-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    }
-
-    .price-tag {
-        display: block;
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: var(--success-color);
-        margin: 10px 0;
-    }
+    .product-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+    .price-tag { display: block; font-size: 1.2rem; font-weight: bold; color: var(--success-color); margin: 10px 0; }
 
     /* --- Buttons --- */
     .btn {
-        padding: 10px 25px;
-        border: none;
-        border-radius: 6px;
-        font-size: 1rem;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background 0.3s;
-        display: inline-block;
-        font-family: 'Sarabun', sans-serif;
+        padding: 10px 25px; border: none; border-radius: 6px; font-size: 1rem; font-weight: bold;
+        cursor: pointer; transition: background 0.3s; display: inline-block; font-family: 'Sarabun', sans-serif;
     }
-
     .btn-primary { background-color: var(--accent-color); color: white; }
     .btn-primary:hover { background-color: #2980b9; }
-
     .btn-success { background-color: var(--success-color); color: white; width: 100%; margin-top: 10px;}
     .btn-success:hover { background-color: #219150; }
-
     .btn-outline { background: transparent; border: 2px solid var(--primary-color); color: var(--primary-color); }
     .btn-outline:hover { background: var(--primary-color); color: white; }
 
-    /* --- Messages & Status --- */
-    .msg-box {
-        margin-top: 15px;
-        padding: 10px;
-        border-radius: 5px;
-        text-align: center;
-        font-weight: bold;
-    }
+    /* --- Messages --- */
+    .msg-box { margin-top: 15px; padding: 10px; border-radius: 5px; text-align: center; font-weight: bold; }
     .msg-success { background-color: #d4edda; color: #155724; }
     .msg-error { background-color: #f8d7da; color: #721c24; }
 
-    /* --- QA EXAM SPECIFIC STYLES --- */
-    /* (Styles merged from previous Request) */
+    /* --- QA EXAM STYLES --- */
     .exam-nav { text-align: center; margin-bottom: 20px; }
     .role-btn {
         padding: 10px 20px; margin: 5px; border-radius: 50px; border: none; cursor: pointer;
@@ -220,12 +258,11 @@
 
     .rules-box {
         background: #fff8e1; border: 1px solid #ffe082; padding: 15px; border-radius: 8px; margin: 15px 0;
-        line-height: 1.8; /* Fixed Line Height for Overlap */
+        line-height: 1.8;
     }
     
     .action-badge {
-        display: inline-block; /* Fix Overlap */
-        padding: 4px 12px; border-radius: 4px; color: white; font-size: 0.85rem; font-weight: bold;
+        display: inline-block; padding: 4px 12px; border-radius: 4px; color: white; font-size: 0.85rem; font-weight: bold;
         vertical-align: middle; margin: 2px 0;
     }
     .act-reject { background: #c0392b; }
@@ -243,14 +280,10 @@
     .bg-blue { background: #d6eaf8; color: #154360; font-weight: bold; }
     .dont-care { color: #999; font-style: italic; font-weight: normal; }
 
-    /* Helper Classes */
     .hidden { display: none; }
     .timer-badge { background: rgba(0,0,0,0.2); padding: 5px 10px; border-radius: 15px; font-size: 0.85rem; }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 </head>
 <body>
@@ -277,98 +310,365 @@
             Please try to register, buy products, and checkout. Note down any anomalies you find.
         </div>
 
-        <!-- 1. Register Page -->
-        <div id="page-register" class="card">
-            <h2>🔐 Register New Account</h2>
-            <div class="form-row">
-                <div class="form-group" style="flex:1">
-                    <label>First Name</label>
-                    <input id="reg-first" placeholder="e.g. Somchai">
+        <!-- Sub Navigation for Bug Hunting App -->
+        <div class="exam-nav" style="margin-bottom: 20px;">
+            <button class="role-btn active-junior" id="btn-ui" onclick="showAppSection('ui')">🖥️ UI Application</button>
+            <button class="role-btn" id="btn-api" onclick="showAppSection('api')">📋 API Specification</button>
+            <button class="role-btn" id="btn-bugs" onclick="showAppSection('bugs')">🐞 Bug Summary</button>
+        </div>
+
+        <!-- UI Application Section -->
+        <div id="app-ui-section" class="app-section">
+            <!-- 1. Register Page -->
+            <div id="page-register" class="card">
+                <h2>🔐 Register New Account</h2>
+                <div class="form-row">
+                    <div class="form-group" style="flex:1">
+                        <label>First Name</label>
+                        <input id="reg-first" placeholder="e.g. Somchai">
+                    </div>
+                    <div class="form-group" style="flex:1">
+                        <label>Last Name</label>
+                        <input id="reg-last" placeholder="e.g. Jaidee">
+                    </div>
                 </div>
-                <div class="form-group" style="flex:1">
-                    <label>Last Name</label>
-                    <input id="reg-last" placeholder="e.g. Jaidee">
+                
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input id="reg-email" placeholder="user@example.com">
                 </div>
-            </div>
-            
-            <div class="form-group">
-                <label>Email Address</label>
-                <input id="reg-email" placeholder="user@example.com">
+
+                <div class="form-row">
+                    <div class="form-group" style="flex:1">
+                        <label>Password</label>
+                        <input id="reg-pass" type="password" placeholder="******">
+                    </div>
+                    <div class="form-group" style="flex:1">
+                        <label>Confirm Password</label>
+                        <input id="reg-confirm" type="password" placeholder="******">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex:1">
+                        <label>Date of Birth</label>
+                        <input id="reg-dob" type="text" placeholder="YYYY-MM-DD">
+                    </div>
+                    <div class="form-group" style="flex:1">
+                        <label>Gender</label>
+                        <select id="reg-gender">
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" style="width:100%" onclick="register()">Create Account</button>
+                <div id="reg-msg"></div>
             </div>
 
-            <div class="form-row">
-                <div class="form-group" style="flex:1">
-                    <label>Password</label>
-                    <input id="reg-pass" type="password" placeholder="******">
-                </div>
-                <div class="form-group" style="flex:1">
-                    <label>Confirm Password</label>
-                    <input id="reg-confirm" type="password" placeholder="******">
-                </div>
+            <!-- 2. Product List -->
+            <div id="page-products" class="card hidden">
+                <h2>🛒 Shop Products</h2>
+                <div id="product-list" class="product-grid"></div>
+                <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+                <button class="btn btn-primary" style="float:right" onclick="checkout()">Proceed to Checkout ➡️</button>
+                <div style="clear:both"></div>
             </div>
 
-            <div class="form-row">
-                <div class="form-group" style="flex:1">
-                    <label>Date of Birth</label>
-                    <input id="reg-dob" type="text" placeholder="YYYY-MM-DD">
-                </div>
-                <div class="form-group" style="flex:1">
-                    <label>Gender</label>
-                    <select id="reg-gender">
-                        <option>Male</option>
-                        <option>Female</option>
+            <!-- 3. Checkout -->
+            <div id="page-checkout" class="card hidden">
+                <h2>📦 Order Summary</h2>
+                <div id="order-summary" style="font-size: 1.5rem; text-align: center; margin: 30px 0; color: var(--primary-color);"></div>
+                <button class="btn btn-success" onclick="goPayment()">Confirm & Pay</button>
+                <button class="btn btn-outline" style="width:100%; margin-top:10px" onclick="location.reload()">Cancel</button>
+            </div>
+
+            <!-- 4. Payment -->
+            <div id="page-payment" class="card hidden">
+                <h2>💳 Payment</h2>
+                
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <select id="pay-method" onchange="toggleCardInput()">
+                        <option>Credit Card</option>
+                        <option>Bank Transfer</option>
+                        <option>e-Wallet</option>
                     </select>
                 </div>
+
+                <div class="form-group" id="card-input-group">
+                    <label>Card Number</label>
+                    <input id="card-num" placeholder="0000 0000 0000 0000">
+                </div>
+
+                <button class="btn btn-primary" style="width:100%" onclick="processPayment()">Pay Now</button>
+                <div id="pay-msg"></div>
             </div>
 
-            <button class="btn btn-primary" style="width:100%" onclick="register()">Create Account</button>
-            <div id="reg-msg"></div>
-        </div>
-
-        <!-- 2. Product List -->
-        <div id="page-products" class="card hidden">
-            <h2>🛒 Shop Products</h2>
-            <div id="product-list" class="product-grid"></div>
-            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
-            <button class="btn btn-primary" style="float:right" onclick="checkout()">Proceed to Checkout ➡️</button>
-            <div style="clear:both"></div>
-        </div>
-
-        <!-- 3. Checkout -->
-        <div id="page-checkout" class="card hidden">
-            <h2>📦 Order Summary</h2>
-            <div id="order-summary" style="font-size: 1.5rem; text-align: center; margin: 30px 0; color: var(--primary-color);"></div>
-            <button class="btn btn-success" onclick="goPayment()">Confirm & Pay</button>
-            <button class="btn btn-outline" style="width:100%; margin-top:10px" onclick="location.reload()">Cancel</button>
-        </div>
-
-        <!-- 4. Payment -->
-        <div id="page-payment" class="card hidden">
-            <h2>💳 Payment</h2>
-            
-            <div class="form-group">
-                <label>Payment Method</label>
-                <select id="pay-method" onchange="toggleCardInput()">
-                    <option>Credit Card</option>
-                    <option>Bank Transfer</option>
-                    <option>e-Wallet</option>
-                </select>
+            <!-- 5. History -->
+            <div id="page-history" class="card hidden">
+                <h2>📜 Order History</h2>
+                <div id="history-list" style="background: #f9f9f9; padding: 15px; border-radius: 5px;"></div>
+                <button class="btn btn-outline" style="margin-top:20px" onclick="location.reload()">Start Over</button>
             </div>
-
-            <div class="form-group" id="card-input-group">
-                <label>Card Number</label>
-                <input id="card-num" placeholder="0000 0000 0000 0000">
-            </div>
-
-            <button class="btn btn-primary" style="width:100%" onclick="processPayment()">Pay Now</button>
-            <div id="pay-msg"></div>
         </div>
 
-        <!-- 5. History -->
-        <div id="page-history" class="card hidden">
-            <h2>📜 Order History</h2>
-            <div id="history-list" style="background: #f9f9f9; padding: 15px; border-radius: 5px;"></div>
-            <button class="btn btn-outline" style="margin-top:20px" onclick="location.reload()">Start Over</button>
+        <!-- API Specification Section (Collapsible) -->
+        <div id="app-api-section" class="app-section hidden">
+            <div class="card">
+                <h2>📋 API Specification</h2>
+                <p style="color:#666; font-size:0.9rem; margin-bottom:20px;">
+                    This document describes the <b>expected behavior</b> of the API endpoints. Click on each endpoint to view details.
+                </p>
+
+                <!-- POST /api/register -->
+                <div class="api-endpoint api-post">
+                    <div class="api-header" onclick="toggleEndpoint(this)">
+                        <span class="method-badge badge-post">POST</span>
+                        <span class="path">/api/register</span>
+                        <span class="desc">สมัครสมาชิกใหม่</span>
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="api-content">
+                        <strong>📥 Request Body:</strong>
+                        <div class="code-block">{
+  "first": "Somchai",
+  "last": "Jaidee",
+  "email": "somchai@example.com",
+  "password": "Password123",
+  "confirmPassword": "Password123",
+  "dob": "2000-01-01",
+  "gender": "Male"
+}</div>
+                        <strong>📤 Response:</strong> <span class="status-code status-201">201 Created</span>
+                        <div class="code-block">{
+  "status": "success",
+  "message": "✅ Registration Successful!"
+}</div>
+                        <div class="expected-note">
+                            <strong>Expected Validation:</strong>
+                            <ul style="margin: 5px 0; padding-left: 20px;">
+                                <li>Email format: name@domain.com</li>
+                                <li>Password: ≥8 characters</li>
+                                <li>Password = Confirm Password</li>
+                                <li>Age ≥18 years (from DOB)</li>
+                                <li>All fields required</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GET /api/products -->
+                <div class="api-endpoint api-get">
+                    <div class="api-header" onclick="toggleEndpoint(this)">
+                        <span class="method-badge badge-get">GET</span>
+                        <span class="path">/api/products</span>
+                        <span class="desc">ดึงรายการสินค้า</span>
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="api-content">
+                        <strong>📥 Request:</strong> No parameters
+                        <br><br>
+                        <strong>📤 Response:</strong> <span class="status-code status-200">200 OK</span>
+                        <div class="code-block">[
+  {
+    "name": "Developer T-Shirt",
+    "price": 120,
+    "img": "👕"
+  },
+  {
+    "name": "Debugging Rubber Duck",
+    "price": 550,
+    "img": "🦆"
+  },
+  {
+    "name": "Coffee Mug",
+    "price": 60,
+    "img": "☕"
+  }
+]</div>
+                    </div>
+                </div>
+
+                <!-- POST /api/checkout -->
+                <div class="api-endpoint api-post">
+                    <div class="api-header" onclick="toggleEndpoint(this)">
+                        <span class="method-badge badge-post">POST</span>
+                        <span class="path">/api/checkout</span>
+                        <span class="desc">คำนวณยอดรวม</span>
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="api-content">
+                        <strong>📥 Request Body:</strong>
+                        <div class="code-block">{
+  "cart": [
+    {
+      "name": "Developer T-Shirt",
+      "price": 120,
+      "qty": 2
+    },
+    {
+      "name": "Coffee Mug",
+      "price": 60,
+      "qty": 1
+    }
+  ]
+}</div>
+                        <strong>📤 Response:</strong> <span class="status-code status-200">200 OK</span>
+                        <div class="code-block">{
+  "total": 300
+}</div>
+                        <div class="expected-note">
+                            <strong>Expected Logic:</strong>
+                            <ul style="margin: 5px 0; padding-left: 20px;">
+                                <li>Quantity must be > 0 for all items.</li>
+                                <li>Total calculation must be accurate (Price × Qty).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- POST /api/payment -->
+                <div class="api-endpoint api-post">
+                    <div class="api-header" onclick="toggleEndpoint(this)">
+                        <span class="method-badge badge-post">POST</span>
+                        <span class="path">/api/payment</span>
+                        <span class="desc">ประมวลผลการชำระเงิน</span>
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="api-content">
+                        <strong>📥 Request Body:</strong>
+                        <div class="code-block">{
+  "method": "Credit Card",
+  "amount": 300,
+  "cardNumber": "1234567890123456"
+}</div>
+                        <strong>📤 Response:</strong> <span class="status-code status-200">200 OK</span>
+                        <div class="code-block">{
+  "status": "success",
+  "recorded": true
+}</div>
+                        <div class="expected-note">
+                            <strong>Expected Behavior:</strong>
+                            <ul style="margin: 5px 0; padding-left: 20px;">
+                                <li>Credit Card Number must be 16 digits.</li>
+                                <li>All payment methods must record transaction history (`recorded: true`).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GET /api/orders -->
+                <div class="api-endpoint api-get">
+                    <div class="api-header" onclick="toggleEndpoint(this)">
+                        <span class="method-badge badge-get">GET</span>
+                        <span class="path">/api/orders</span>
+                        <span class="desc">ดึงประวัติการสั่งซื้อ</span>
+                        <span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="api-content">
+                        <strong>📥 Request:</strong> No parameters
+                        <br><br>
+                        <strong>📤 Response:</strong> <span class="status-code status-200">200 OK</span>
+                        <div class="code-block">[
+  {
+    "item": "Order via Credit Card",
+    "amount": 300,
+    "date": "2024-01-15 10:30:00"
+  },
+  {
+    "item": "Order via Bank Transfer",
+    "amount": 550,
+    "date": "2024-01-15 14:20:00"
+  }
+]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bug Summary Section -->
+        <div id="app-bugs-section" class="app-section hidden">
+            <div class="card">
+                <h2>🐞 Bug Summary Report</h2>
+                
+                <div style="background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <strong>⚠️ Total Bugs Found: 19 Issues</strong><br>
+                    <span style="color: #d63031;">Critical: 2</span> | 
+                    <span style="color: #e17055;">High: 5</span> | 
+                    <span style="color: #fdcb6e;">Medium: 8</span> | 
+                    <span style="color: #6c5ce7;">Low: 4</span>
+                </div>
+
+                <!-- 1. Register Page Bugs -->
+                <div style="background: #f8f9fa; border-left: 5px solid #e17055; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
+                    <h4 style="color: #e17055; margin-top: 0;">🔐 1. Register Page - Validation Bugs</h4>
+                    <ul style="margin: 5px 0;">
+                        <li><strong>Bug #1:</strong> ไม่มีการตรวจสอบ email format (ควรเป็น name@domain.com)</li>
+                        <li><strong>Bug #2:</strong> ไม่มีการตรวจสอบความยาวรหัสผ่าน (ควรอย่างน้อย 8 ตัวอักษร)</li>
+                        <li><strong>Bug #3:</strong> ไม่มีการตรวจสอบ password confirmation (รหัสผ่านกับ confirm password ต้องตรงกัน)</li>
+                        <li><strong>Bug #4:</strong> ไม่มีการตรวจสอบอายุ (ควร >= 18 ปี จาก Date of Birth)</li>
+                        <li><strong>Bug #5:</strong> สามารถสมัครได้โดยไม่กรอกข้อมูลครบถ้วน</li>
+                    </ul>
+                </div>
+
+                <!-- 2. Products & Checkout Bugs -->
+                <div style="background: #fff8e1; border-left: 5px solid #fdcb6e; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
+                    <h4 style="color: #e17055; margin-top: 0;">🛒 2. Products & Checkout Page - Business Logic Bugs</h4>
+                    <ul style="margin: 5px 0;">
+                        <li><strong>Bug #6:</strong> สามารถ checkout ได้เมื่อ quantity = 0</li>
+                        <li><strong>Bug #7:</strong> ราคาสินค้าจาก API อาจไม่ตรงกับที่แสดงใน UI</li>
+                        <li><strong>Bug #8:</strong> การคำนวณราคารวมอาจมีปัญหา (qty × price)</li>
+                    </ul>
+                </div>
+
+                <!-- 3. Payment Page Bugs -->
+                <div style="background: #ffe0e0; border-left: 5px solid #d63031; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
+                    <h4 style="color: #d63031; margin-top: 0;">💳 3. Payment Page - Payment Processing Bugs</h4>
+                    <ul style="margin: 5px 0;">
+                        <li><strong>Bug #9:</strong> Credit Card validation ไม่เข้มงวด (ควรตรวจสอบ 16 หลัก)</li>
+                        <li><strong>Bug #10:</strong> Bank Transfer ไม่บันทึกประวัติการสั่งซื้อ (แต่แสดงว่า Success) <span style="color: #d63031; font-weight: bold;">[CRITICAL]</span></li>
+                        <li><strong>Bug #11:</strong> UI อาจมีปัญหาการแสดง/ซ่อน input fields สำหรับแต่ละวิธีชำระเงิน</li>
+                    </ul>
+                </div>
+
+                <!-- 4. Order History Bugs -->
+                <div style="background: #fff8e1; border-left: 5px solid #fdcb6e; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
+                    <h4 style="color: #e17055; margin-top: 0;">📜 4. Order History Page - Data Display Bugs</h4>
+                    <ul style="margin: 5px 0;">
+                        <li><strong>Bug #12:</strong> Bank Transfer orders ไม่ปรากฏในประวัติการสั่งซื้อ</li>
+                        <li><strong>Bug #13:</strong> ข้อมูลการแสดงผลไม่ครบถ้วน (วันที่, เวลา, วิธีชำระเงิน, ยอดเงิน)</li>
+                        <li><strong>Bug #14:</strong> แสดงข้อความ error เมื่อไม่มี order</li>
+                    </ul>
+                </div>
+
+                <!-- 5. API Level Bugs (Consolidated from API Spec Section) -->
+                <div style="background: #e8f4fd; border-left: 5px solid #6c5ce7; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
+                    <h4 style="color: #6c5ce7; margin-top: 0;">🔗 5. API Level Bugs</h4>
+                    <ul style="margin: 5px 0;">
+                        <li><strong>Bug #15 (POST /register):</strong> API ไม่มี Backend Validation (รับข้อมูลทุกรูปแบบ)</li>
+                        <li><strong>Bug #16 (GET /products):</strong> API ส่งค่าราคาผิด (Price Discrepancy)</li>
+                        <li><strong>Bug #17 (POST /checkout):</strong> API ยอมรับ Payload ที่มี qty=0 หรือติดลบ</li>
+                        <li><strong>Bug #18 (POST /payment):</strong> API ตอบกลับ success แต่ recorded=false สำหรับ Bank Transfer</li>
+                        <li><strong>Bug #19 (GET /orders):</strong> API ส่งข้อมูล Order กลับมาไม่ครบ (Missing Object) หรือ Order ซ้ำซ้อน</li>
+                    </ul>
+                </div>
+
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                    <h4>🎯 ระดับความรุนแรงของ Bug</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 10px 0;">
+                        <div style="background: #ffe0e0; padding: 10px; border-radius: 4px; text-align: center;">
+                            <strong style="color: #d63031;">🔴 Critical (2)</strong><br>
+                            <small>Bug #6, #10</small>
+                        </div>
+                        <div style="background: #ffe8d6; padding: 10px; border-radius: 4px; text-align: center;">
+                            <strong style="color: #e17055;">🟠 High (5)</strong><br>
+                            <small>Bug #1-5, #9</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -428,7 +728,7 @@
         <div id="senior-section" class="card hidden">
             <div class="exam-header header-senior">
                 <h3>Senior QA: สินเชื่อส่วนบุคคล (Advanced)</h3>
-                <span class="timer-badge">Time: 3-5 Minutes</span>
+                <span class="timer-badge">เวลาคิด: 3-5 นาที</span>
             </div>
             
             <div class="section-title">📌 เงื่อนไข (Conditions)</div>
@@ -482,11 +782,17 @@
 <script>
 // === UI Navigation Logic ===
 function switchMainTab(tab) {
-    // Hide all views
     document.querySelectorAll('.section-view').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.nav-tabs button').forEach(el => el.classList.remove('active'));
     
-    // Show selected
+    // Reset app section views
+    if(tab === 'exam') {
+        document.querySelectorAll('.app-section').forEach(el => el.classList.add('hidden'));
+        document.getElementById('app-ui-section').classList.remove('hidden'); // Default back to UI
+        document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('active-junior'));
+        document.getElementById('btn-ui').classList.add('active-junior');
+    }
+    
     document.getElementById('view-' + tab).classList.add('active');
     event.target.classList.add('active');
 }
@@ -494,90 +800,128 @@ function switchMainTab(tab) {
 function showExamLevel(level) {
     document.getElementById('junior-section').classList.add('hidden');
     document.getElementById('senior-section').classList.add('hidden');
-    
     document.getElementById('btn-junior').classList.remove('active-junior');
     document.getElementById('btn-senior').classList.remove('active-senior');
 
     document.getElementById(level + '-section').classList.remove('hidden');
-    
     if(level === 'junior') document.getElementById('btn-junior').classList.add('active-junior');
     else document.getElementById('btn-senior').classList.add('active-senior');
 }
 
-function toggleSolution(level) {
-    var x = document.getElementById("solution-" + level);
-    x.style.display = (x.style.display === "block") ? "none" : "block";
-    if(x.style.display === "block") setTimeout(() => x.scrollIntoView({behavior: 'smooth'}), 100);
+// Password input function
+function getPasswordInput(message) {
+    return new Promise((resolve) => {
+        const overlay = document.createElement('div');
+        overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:10000;display:flex;align-items:center;justify-content:center;';
+        
+        const modal = document.createElement('div');
+        modal.style.cssText = 'background:white;padding:30px;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.3);text-align:center;min-width:300px;';
+        
+        modal.innerHTML = `
+            <h3 style="margin-top:0;color:#333;">🔒 ${message}</h3>
+            <input type="password" id="pwd-input" style="width:200px;padding:10px;border:2px solid #ddd;border-radius:5px;font-size:16px;text-align:center;" placeholder="•••••">
+            <div style="margin-top:20px;">
+                <button id="pwd-ok" style="background:#3498db;color:white;border:none;padding:10px 20px;border-radius:5px;margin-right:10px;cursor:pointer;">OK</button>
+                <button id="pwd-cancel" style="background:#95a5a6;color:white;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;">Cancel</button>
+            </div>
+        `;
+        
+        overlay.appendChild(modal);
+        document.body.appendChild(overlay);
+        
+        const input = document.getElementById('pwd-input');
+        const okBtn = document.getElementById('pwd-ok');
+        const cancelBtn = document.getElementById('pwd-cancel');
+        
+        input.focus();
+        
+        function cleanup() { document.body.removeChild(overlay); }
+        
+        okBtn.onclick = () => { const password = input.value; cleanup(); resolve(password); };
+        cancelBtn.onclick = () => { cleanup(); resolve(null); };
+        input.onkeypress = (e) => { if(e.key === 'Enter') okBtn.click(); };
+    });
 }
 
-// === Mock Application Logic (Contains Intentional Bugs) ===
-let orders = [];
-let products = [];
+function showAppSection(section) {
+    if(section === 'bugs') {
+        getPasswordInput('กรุณาใส่รหัสผ่านเพื่อดู Bug Summary').then(password => {
+            if(password !== 'qacoe') {
+                if(password !== null) alert('รหัสผ่านไม่ถูกต้อง!');
+                return;
+            }
+            switchAppSectionView(section);
+        });
+        return;
+    }
+    switchAppSectionView(section);
+}
 
-// Mock API 
+function switchAppSectionView(section) {
+    document.querySelectorAll('.app-section').forEach(el => el.classList.add('hidden'));
+    document.getElementById('btn-ui').classList.remove('active-junior');
+    document.getElementById('btn-api').classList.remove('active-junior');
+    document.getElementById('btn-bugs').classList.remove('active-junior');
+    
+    document.getElementById('app-' + section + '-section').classList.remove('hidden');
+    document.getElementById('btn-' + section).classList.add('active-junior');
+}
+
+function toggleEndpoint(headerElement) {
+    const content = headerElement.nextElementSibling;
+    const arrow = headerElement.querySelector('.toggle-icon');
+    
+    if(content.style.display === 'block') {
+        content.style.display = 'none';
+        arrow.style.transform = 'rotate(0deg)';
+    } else {
+        content.style.display = 'block';
+        arrow.style.transform = 'rotate(90deg)';
+    }
+}
+
+function toggleSolution(level) {
+    getPasswordInput('กรุณาใส่รหัสผ่านเพื่อดูเฉลย').then(password => {
+        if(password !== 'qacoe') {
+            if(password !== null) alert('รหัสผ่านไม่ถูกต้อง!');
+            return;
+        }
+        var x = document.getElementById("solution-" + level);
+        x.style.display = (x.style.display === "block") ? "none" : "block";
+        if(x.style.display === "block") setTimeout(() => x.scrollIntoView({behavior: 'smooth'}), 100);
+    });
+}
+
+// === Mock Application Logic ===
+let orders = [];
+let products = []; 
+
 function apiRegister(data){
-  return new Promise(resolve => {
-    // ❌ Bug: Always success, no validation
-    setTimeout(() => resolve({status:"success", message:"✅ Registration Successful!"}), 600);
-  });
+  return new Promise(resolve => { setTimeout(() => resolve({status:"success", message:"✅ Registration Successful!"}), 600); });
 }
 
 function apiGetProducts(){
-  return new Promise(resolve => {
-    // ❌ Bug: Prices are slightly wrong or weird
-    resolve([
-      {name:"Developer T-Shirt", price:120, img:"👕"}, 
-      {name:"Debugging Rubber Duck", price:550, img:"🦆"}, 
-      {name:"Coffee Mug", price:60, img:"☕"} 
-    ]);
-  });
+  return new Promise(resolve => { resolve([ {name:"Developer T-Shirt", price:120, img:"👕"}, {name:"Debugging Rubber Duck", price:550, img:"🦆"}, {name:"Coffee Mug", price:60, img:"☕"} ]); });
 }
 
 function apiCheckout(cart){
-  return new Promise(resolve => {
-    // ❌ Bug: Calculation logic might be simplistic
-    let total = 0;
-    cart.forEach(item => total += item.qty * item.price);
-    resolve({total: total});
-  });
+  return new Promise(resolve => { let total = 0; cart.forEach(item => total += item.qty * item.price); resolve({total: total}); });
 }
 
 function apiPayment(method, amount, cardNum){
-  return new Promise(resolve => {
-    // ❌ Bug: Bank Transfer fails silently
-    setTimeout(() => {
-        if(method === "Bank Transfer"){
-            resolve({status:"success", recorded:false}); // Bug!
-        } else {
-            resolve({status:"success", recorded:true});
-        }
-    }, 800);
-  });
+  return new Promise(resolve => { setTimeout(() => { if(method === "Bank Transfer"){ resolve({status:"success", recorded:false}); } else { resolve({status:"success", recorded:true}); } }, 800); });
 }
 
-function apiGetOrders(){
-  return new Promise(resolve => resolve(orders));
-}
+function apiGetOrders(){ return new Promise(resolve => resolve(orders)); }
 
-// App Functions
 function register(){
-    document.getElementById('reg-msg').className = 'msg-box'; // Reset
+    document.getElementById('reg-msg').className = 'msg-box';
     document.getElementById('reg-msg').innerText = 'Processing...';
-    
-    const data = {
-        first: document.getElementById('reg-first').value,
-        email: document.getElementById('reg-email').value
-    };
-
-    apiRegister(data).then(res => {
+    apiRegister({}).then(res => {
         const msgDiv = document.getElementById('reg-msg');
         msgDiv.innerText = res.message;
         msgDiv.classList.add('msg-success');
-        
-        setTimeout(() => {
-            document.getElementById('page-register').classList.add('hidden');
-            loadProducts();
-        }, 1000);
+        setTimeout(() => { document.getElementById('page-register').classList.add('hidden'); loadProducts(); }, 1000);
     });
 }
 
@@ -586,84 +930,43 @@ function loadProducts(){
     products = items;
     const listDiv = document.getElementById('product-list');
     listDiv.innerHTML = "";
-    items.forEach((p,i)=>{
-      listDiv.innerHTML += `
-      <div class="product-card">
-        <div style="font-size:3rem;">${p.img}</div>
-        <h3>${p.name}</h3>
-        <span class="price-tag">${p.price} THB</span>
-        <div style="margin-top:10px;">
-            Qty: <input id="qty-${i}" type="number" value="1" style="width:60px; text-align:center;">
-        </div>
-      </div>`;
-    });
+    items.forEach((p,i)=>{ listDiv.innerHTML += `<div class="product-card"><div style="font-size:3rem;">${p.img}</div><h3>${p.name}</h3><span class="price-tag">${p.price} THB</span><div style="margin-top:10px;">Qty: <input id="qty-${i}" type="number" value="1" style="width:60px; text-align:center;"></div></div>`; });
     document.getElementById('page-products').classList.remove('hidden');
   });
 }
 
 function checkout(){
-  const cart = products.map((p,i)=>{
-    return {name:p.name, price:p.price, qty:parseInt(document.getElementById(`qty-${i}`).value)};
-  });
-  
-  apiCheckout(cart).then(res=>{
-    document.getElementById('order-summary').innerHTML = `Total Amount:<br><span style="font-size:3rem; font-weight:bold;">${res.total} THB</span>`;
-    document.getElementById('page-products').classList.add('hidden');
-    document.getElementById('page-checkout').classList.remove('hidden');
-  });
+  const cart = products.map((p,i)=>{ return {name:p.name, price:p.price, qty:parseInt(document.getElementById(`qty-${i}`).value)}; });
+  apiCheckout(cart).then(res=>{ document.getElementById('order-summary').innerHTML = `Total Amount:<br><span style="font-size:3rem; font-weight:bold;">${res.total} THB</span>`; document.getElementById('page-products').classList.add('hidden'); document.getElementById('page-checkout').classList.remove('hidden'); });
 }
 
-function goPayment(){
-  document.getElementById('page-checkout').classList.add('hidden');
-  document.getElementById('page-payment').classList.remove('hidden');
-}
+function goPayment(){ document.getElementById('page-checkout').classList.add('hidden'); document.getElementById('page-payment').classList.remove('hidden'); }
 
 function toggleCardInput() {
     const method = document.getElementById('pay-method').value;
     const cardGroup = document.getElementById('card-input-group');
-    if(method === 'Credit Card') cardGroup.style.display = 'block';
-    else cardGroup.style.display = 'none';
+    cardGroup.style.display = (method === 'Credit Card') ? 'block' : 'none';
 }
 
 function processPayment(){
   const method = document.getElementById('pay-method').value;
-  const card = document.getElementById('card-num').value;
   const amountText = document.getElementById('order-summary').innerText;
   const amount = parseInt(amountText.replace(/[^0-9]/g,""));
-  
   document.getElementById('pay-msg').innerText = "Processing Payment...";
   
-  apiPayment(method, amount, card).then(res=>{
-    if(res.recorded){
-        orders.push({item:"Order via " + method, amount:amount, date: new Date().toLocaleString()});
-        document.getElementById('pay-msg').innerText = "✅ Payment Successful!";
-        document.getElementById('pay-msg').className = "msg-box msg-success";
-    } else {
-        // Simulating the bug where Bank Transfer says success but doesn't record
-        document.getElementById('pay-msg').innerText = "✅ Payment Successful! (Wait, did it record?)";
-        document.getElementById('pay-msg').className = "msg-box msg-success";
-    }
-
-    setTimeout(() => {
-        showHistory();
-        document.getElementById('page-payment').classList.add('hidden');
-        document.getElementById('page-history').classList.remove('hidden');
-    }, 1500);
+  apiPayment(method, amount, "").then(res=>{
+    const msg = (res.recorded) ? "✅ Payment Successful!" : "✅ Payment Successful! (Wait, did it record?)";
+    document.getElementById('pay-msg').innerText = msg;
+    document.getElementById('pay-msg').className = "msg-box msg-success";
+    if(res.recorded) orders.push({item:"Order via " + method, amount:amount, date: new Date().toLocaleString()});
+    setTimeout(() => { showHistory(); document.getElementById('page-payment').classList.add('hidden'); document.getElementById('page-history').classList.remove('hidden'); }, 1500);
   });
 }
 
 function showHistory(){
   apiGetOrders().then(hist=>{
-    if(hist.length === 0) {
-        document.getElementById('history-list').innerHTML = "<p style='text-align:center; color:red;'>⚠️ No orders found! (Bug?)</p>";
-    } else {
-        document.getElementById('history-list').innerHTML = hist.map(o=> 
-            `<div style="border-bottom:1px solid #ddd; padding:10px;">
-                <b>${o.item}</b> <span style="float:right; color:green; font-weight:bold;">${o.amount} THB</span>
-                <div style="font-size:0.8rem; color:#888;">${o.date}</div>
-             </div>`
-        ).join("");
-    }
+    if(hist.length === 0) { document.getElementById('history-list').innerHTML = "<p style='text-align:center; color:red;'>⚠️ No orders found! (Bug?)</p>"; } 
+    else { document.getElementById('history-list').innerHTML = hist.map(o=> `<div style="border-bottom:1px solid #ddd; padding:10px;"><b>${o.item}</b> <span style="float:right; color:green; font-weight:bold;">${o.amount} THB</span><div style="font-size:0.8rem; color:#888;">${o.date}</div></div>`).join(""); }
   });
 }
 </script>
