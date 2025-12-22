@@ -309,9 +309,8 @@
 
                 <div class="topic-tabs">
                     <button class="topic-btn active" onclick="switchTopic(1)">1. Logic Exam</button>
-                    <button class="topic-btn" onclick="switchTopic(2)">2. Technical - JSON</button>
-                    <button class="topic-btn" onclick="switchTopic(3)">3. Technical - SQL</button>
-                    <button class="topic-btn" onclick="switchTopic(4)">4. Coding / Automate</button>
+                    <button class="topic-btn" onclick="switchTopic(2)">2. Backend Testing</button>
+                    <button class="topic-btn" onclick="switchTopic(3)">3. Automated Testing</button>
                 </div>
 
                 <div id="topic-1" class="topic-content">
@@ -387,6 +386,14 @@
                 </div>
 
                 <div id="topic-2" class="topic-content hidden">
+                    <div class="section-title">🏗️ Backend Testing</div>
+                    
+                    <div class="sub-topic-tabs" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;">
+                        <button class="sub-topic-btn active" onclick="switchSubTopic(2, 1)" style="padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">1. Technical - JSON</button>
+                        <button class="sub-topic-btn" onclick="switchSubTopic(2, 2)" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">2. Technical - SQL</button>
+                    </div>
+                    
+                    <div id="sub-topic-2-1" class="sub-topic-content">
                     <div class="section-title">🏗️ Technical - JSON Path Question</div>
                     
                     <div class="json-interactive-container">
@@ -432,9 +439,162 @@
                             </div>
                         </div>
                     </div>
+                    </div>
+                    
+                    <div id="sub-topic-2-2" class="sub-topic-content hidden">
+                    
+                    <!-- ================= JUNIOR SQL ================= -->
+                    <div id="sql-content-junior" class="hidden">
+                        <div class="section-title">🗄️ SQL: Join & Filtering (Junior)</div>
+                        <p class="sql-instruction">Scenario: ต้องการรายชื่อลูกค้าและสินค้า ที่มี <b>ยอดซื้อมากกว่า 1,000</b> (Amount > 1000)</p>
+                        
+                        <div class="sql-container">
+                            <!-- Tables Visualization -->
+                            <div class="sql-tables-row">
+                                <div class="sql-table-wrapper">
+                                    <div class="table-name">Table: Customers</div>
+                                    <table class="sql-mini-table">
+                                        <tr><th>id</th><th>name</th></tr>
+                                        <tr><td>1</td><td>Ann</td></tr>
+                                        <tr><td>2</td><td>Ben</td></tr>
+                                        <tr><td>3</td><td>Cat</td></tr>
+                                    </table>
+                                </div>
+                                <div class="sql-connector">➕</div>
+                                <div class="sql-table-wrapper">
+                                    <div class="table-name">Table: Orders</div>
+                                    <table class="sql-mini-table">
+                                        <tr><th>order_id</th><th>customer_id</th><th>product</th><th>amount</th></tr>
+                                        <tr><td>101</td><td>1</td><td>Mouse</td><td>500</td></tr>
+                                        <tr class="row-highlight-success"><td>102</td><td>1</td><td>Keyboard</td><td>1,200</td></tr>
+                                        <tr class="row-highlight-success"><td>103</td><td>2</td><td>Monitor</td><td>4,500</td></tr>
+                                        <tr><td>104</td><td>3</td><td>Cable</td><td>200</td></tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Expected Result -->
+                            <div class="sql-expected">
+                                <strong>🎯 Expected Result:</strong>
+                                <table class="sql-result-table">
+                                    <tr><th>name</th><th>product</th></tr>
+                                    <tr><td>Ann</td><td>Keyboard</td></tr>
+                                    <tr><td>Ben</td><td>Monitor</td></tr>
+                                </table>
+                            </div>
+
+                            <!-- Options -->
+                            <div class="sql-options-grid">
+                                <button class="sql-btn" onclick="checkSqlJunior('A')">
+                                    <span class="opt-label">A</span>
+                                    <code class="sql-code">SELECT c.name, o.product<br>FROM Customers c, Orders o<br>WHERE o.amount > 1000;</code>
+                                </button>
+                                <button class="sql-btn" onclick="checkSqlJunior('B')">
+                                    <span class="opt-label">B</span>
+                                    <code class="sql-code">SELECT c.name, o.product<br>FROM Customers c<br>JOIN Orders o ON c.id = o.order_id<br>WHERE o.amount > 1000;</code>
+                                </button>
+                                <button class="sql-btn" onclick="checkSqlJunior('C')">
+                                    <span class="opt-label">C</span>
+                                    <code class="sql-code">SELECT c.name, o.product<br>FROM Customers c<br>JOIN Orders o ON c.id = o.customer_id<br>WHERE o.amount > 1000;</code>
+                                </button>
+                                <button class="sql-btn" onclick="checkSqlJunior('D')">
+                                    <span class="opt-label">D</span>
+                                    <code class="sql-code">SELECT c.name, o.product<br>FROM Customers c<br>JOIN Orders o ON c.id = o.customer_id<br>WHERE o.amount < 1000;</code>
+                                </button>
+                            </div>
+                            
+                            <div id="sql-junior-feedback" class="feedback-box hidden"></div>
+                        </div>
+                    </div>
+
+                    <!-- ================= SENIOR SQL ================= -->
+                    <div id="sql-content-senior" class="hidden">
+                        <div class="section-title">🕵️♀️ SQL: Find Missing Data (Senior)</div>
+                        <p class="sql-instruction">Scenario: ต้องการหาลูกค้าที่สมัครสมาชิกแล้ว แต่ <b>ไม่เคยสั่งซื้อสินค้าเลย</b> (Customers WITHOUT Orders)</p>
+                        
+                        <div class="sql-container">
+                            <!-- Tables Visualization -->
+                            <div class="sql-tables-row">
+                                <div class="sql-table-wrapper">
+                                    <div class="table-name">Table: Customers</div>
+                                    <table class="sql-mini-table">
+                                        <tr><th>id</th><th>name</th></tr>
+                                        <tr><td>1</td><td>Alan</td></tr>
+                                        <tr class="row-target"><td>2</td><td>Bob</td></tr>
+                                        <tr><td>3</td><td>Cindy</td></tr>
+                                    </table>
+                                </div>
+                                <div class="sql-connector">❓</div>
+                                <div class="sql-table-wrapper">
+                                    <div class="table-name">Table: Orders</div>
+                                    <table class="sql-mini-table">
+                                        <tr><th>order_id</th><th>customer_id</th><th>amount</th></tr>
+                                        <tr><td>901</td><td>1</td><td>500</td></tr>
+                                        <tr><td>902</td><td>3</td><td>1,200</td></tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Expected Result -->
+                            <div class="sql-expected">
+                                <strong>🎯 Expected Result:</strong>
+                                <table class="sql-result-table">
+                                    <tr><th>name</th></tr>
+                                    <tr><td>Bob</td></tr>
+                                </table>
+                            </div>
+
+                            <!-- Options -->
+                            <div class="sql-options-grid">
+                                <button class="sql-btn" onclick="checkSqlSenior('A')">
+                                    <span class="opt-label">A</span>
+                                    <code class="sql-code">SELECT c.name FROM Customers c<br>JOIN Orders o ON c.id = o.customer_id<br>WHERE o.order_id IS NULL;</code>
+                                </button>
+                                <button class="sql-btn" onclick="checkSqlSenior('B')">
+                                    <span class="opt-label">B</span>
+                                    <code class="sql-code">SELECT name FROM Customers<br>WHERE id NOT IN<br>(SELECT customer_id FROM Orders);</code>
+                                </button>
+                                <button class="sql-btn" onclick="checkSqlSenior('C')">
+                                    <span class="opt-label">C</span>
+                                    <code class="sql-code">SELECT name FROM Customers<br>WHERE id IN<br>(SELECT customer_id FROM Orders);</code>
+                                </button>
+                                <button class="sql-btn" onclick="checkSqlSenior('D')">
+                                    <span class="opt-label">D</span>
+                                    <code class="sql-code">SELECT name FROM Customers<br>WHERE id !=<br>(SELECT customer_id FROM Orders);</code>
+                                </button>
+                            </div>
+
+                            <div id="sql-senior-feedback" class="feedback-box hidden"></div>
+                        </div>
+                    </div>
+                    </div>
                 </div>
-                <div id="topic-3" class="topic-content hidden"><div class="placeholder-content"><h3>💾 Technical - SQL Question</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div></div>
-                <div id="topic-4" class="topic-content hidden"><div class="placeholder-content"><h3>🤖 Technical - Coding / Automate</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div></div>
+                
+                <div id="topic-3" class="topic-content hidden">
+                    <div class="section-title">🤖 Automated Testing</div>
+                    
+                    <div class="sub-topic-tabs" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; flex-wrap: wrap;">
+                        <button class="sub-topic-btn active" onclick="switchSubTopic(3, 1)" style="padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">1. Code - JavaScript</button>
+                        <button class="sub-topic-btn" onclick="switchSubTopic(3, 2)" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">2. Code - Python</button>
+                        <button class="sub-topic-btn" onclick="switchSubTopic(3, 3)" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">3. Robot Framework</button>
+                        <button class="sub-topic-btn" onclick="switchSubTopic(3, 4)" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">4. Cypress</button>
+                    </div>
+                    
+                    <div id="sub-topic-3-1" class="sub-topic-content">
+                        <div class="placeholder-content"><h3>📝 Code - JavaScript</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div>
+                    </div>
+                    
+                    <div id="sub-topic-3-2" class="sub-topic-content hidden">
+                        <div class="placeholder-content"><h3>🐍 Code - Python</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div>
+                    </div>
+                    
+                    <div id="sub-topic-3-3" class="sub-topic-content hidden">
+                        <div class="placeholder-content"><h3>🤖 Robot Framework</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div>
+                    </div>
+                    
+                    <div id="sub-topic-3-4" class="sub-topic-content hidden">
+                        <div class="placeholder-content"><h3>🌲 Cypress</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div>
+                    </div>
             </div>
         </div>
     </div>
