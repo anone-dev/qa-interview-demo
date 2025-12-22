@@ -236,19 +236,61 @@
     .msg-success { background-color: #d4edda; color: #155724; }
     .msg-error { background-color: #f8d7da; color: #721c24; }
 
-    /* --- QA EXAM STYLES --- */
-    .exam-nav { text-align: center; margin-bottom: 20px; }
-    .role-btn {
-        padding: 10px 20px; margin: 5px; border-radius: 50px; border: none; cursor: pointer;
-        background: #e0e0e0; color: #555; font-weight: bold; transition: 0.3s;
+    /* --- INTERVIEW SECTION STYLES --- */
+    .level-selector-container {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 40px;
     }
-    .role-btn.active-junior { background: #3498db; color: white; }
-    .role-btn.active-senior { background: #e67e22; color: white; }
 
-    .exam-header { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; color: white; border-radius: 12px 12px 0 0; margin: -30px -30px 20px -30px; }
-    .header-junior { background: #34495e; }
-    .header-senior { background: #2c3e50; }
+    .level-card {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        text-align: center;
+        width: 300px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        cursor: pointer;
+        transition: all 0.3s;
+        border: 2px solid transparent;
+    }
 
+    .level-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    
+    .level-card.junior:hover { border-color: var(--accent-color); }
+    .level-card.senior:hover { border-color: #e67e22; }
+
+    .level-icon { font-size: 3rem; margin-bottom: 15px; display: block; }
+    .level-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; display: block; }
+    .level-desc { color: #666; font-size: 0.9rem; }
+
+    /* Topic Tabs */
+    .topic-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 25px;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+    }
+    
+    .topic-btn {
+        background: none;
+        border: none;
+        padding: 8px 16px;
+        font-size: 1rem;
+        font-family: 'Sarabun', sans-serif;
+        color: #7f8c8d;
+        cursor: pointer;
+        border-radius: 4px;
+        font-weight: 600;
+    }
+    
+    .topic-btn:hover { background: #ecf0f1; }
+    .topic-btn.active { background: var(--primary-color); color: white; }
+
+    /* Logic Exam Specifics */
     .condition-list li {
         background: #f8f9fa; margin: 8px 0; padding: 10px 15px; border-radius: 6px;
         display: flex; justify-content: space-between; border-left: 4px solid #bdc3c7;
@@ -280,6 +322,23 @@
     .bg-blue { background: #d6eaf8; color: #154360; font-weight: bold; }
     .dont-care { color: #999; font-style: italic; font-weight: normal; }
 
+    /* Exam Sub-Nav specific */
+    .exam-nav { text-align: center; margin-bottom: 20px; }
+    .role-btn {
+        padding: 10px 20px; margin: 5px; border-radius: 50px; border: none; cursor: pointer;
+        background: #e0e0e0; color: #555; font-weight: bold; transition: 0.3s;
+    }
+    .role-btn.active-junior { background: #3498db; color: white; }
+    
+    .placeholder-content {
+        text-align: center;
+        padding: 50px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border: 2px dashed #ddd;
+        color: #7f8c8d;
+    }
+
     .hidden { display: none; }
     .timer-badge { background: rgba(0,0,0,0.2); padding: 5px 10px; border-radius: 15px; font-size: 0.85rem; }
 
@@ -295,7 +354,7 @@
     </div>
     <div class="nav-tabs">
         <button class="active" onclick="switchMainTab('app')">📱 Bug Hunting App</button>
-        <button onclick="switchMainTab('exam')">📝 Logic Exam</button>
+        <button onclick="authInterviewAccess()">🧩 Interview Questions</button>
     </div>
 </nav>
 
@@ -381,7 +440,7 @@
                 <h2>📦 Order Summary</h2>
                 <div id="order-summary" style="font-size: 1.5rem; text-align: center; margin: 30px 0; color: var(--primary-color);"></div>
                 <button class="btn btn-success" onclick="goPayment()">Confirm & Pay</button>
-                <button class="btn btn-outline" style="width:100%; margin-top:10px" onclick="location.reload()">Cancel</button>
+                <button class="btn btn-outline" style="width:100%; margin-top:10px" onclick="resetApp()">Cancel</button>
             </div>
 
             <!-- 4. Payment -->
@@ -410,29 +469,18 @@
             <div id="page-history" class="card hidden">
                 <h2>📜 Order History</h2>
                 <div id="history-list" style="background: #f9f9f9; padding: 15px; border-radius: 5px;"></div>
-                <button class="btn btn-outline" style="margin-top:20px" onclick="location.reload()">Start Over</button>
+                <button class="btn btn-outline" style="margin-top:20px" onclick="resetApp()">Start Over</button>
             </div>
         </div>
 
-        <!-- API Specification Section (Collapsible) -->
+        <!-- API Specification Section -->
         <div id="app-api-section" class="app-section hidden">
             <div class="card">
                 <h2>📋 API Specification</h2>
-                <p style="color:#666; font-size:0.9rem; margin-bottom:20px;">
-                    This document describes the <b>expected behavior</b> of the API endpoints. Click on each endpoint to view details.
-                </p>
-
-                <!-- POST /api/register -->
-                <div class="api-endpoint api-post">
-                    <div class="api-header" onclick="toggleEndpoint(this)">
-                        <span class="method-badge badge-post">POST</span>
-                        <span class="path">/api/register</span>
-                        <span class="desc">สมัครสมาชิกใหม่</span>
-                        <span class="toggle-icon">▶</span>
-                    </div>
-                    <div class="api-content">
-                        <strong>📥 Request Body:</strong>
-                        <div class="code-block">{
+                <p style="color:#666;font-size:0.9rem;margin-bottom:20px;">This document describes the <b>expected behavior</b>.</p>
+                
+                <!-- API: Register -->
+                <div class="api-endpoint api-post"><div class="api-header" onclick="toggleEndpoint(this)"><span class="method-badge badge-post">POST</span><span class="path">/api/register</span><span class="desc">สมัครสมาชิกใหม่</span><span class="toggle-icon">▶</span></div><div class="api-content"><strong>📥 Request Body:</strong><div class="code-block">{
   "first": "Somchai",
   "last": "Jaidee",
   "email": "somchai@example.com",
@@ -440,38 +488,13 @@
   "confirmPassword": "Password123",
   "dob": "2000-01-01",
   "gender": "Male"
-}</div>
-                        <strong>📤 Response:</strong> <span class="status-code status-201">201 Created</span>
-                        <div class="code-block">{
+}</div><strong>📤 Response:</strong> <span class="status-code status-201">201 Created</span><div class="code-block">{
   "status": "success",
   "message": "✅ Registration Successful!"
-}</div>
-                        <div class="expected-note">
-                            <strong>Expected Validation:</strong>
-                            <ul style="margin: 5px 0; padding-left: 20px;">
-                                <li>Email format: name@domain.com</li>
-                                <li>Password: ≥8 characters</li>
-                                <li>Password = Confirm Password</li>
-                                <li>Age ≥18 years (from DOB)</li>
-                                <li>All fields required</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- GET /api/products -->
-                <div class="api-endpoint api-get">
-                    <div class="api-header" onclick="toggleEndpoint(this)">
-                        <span class="method-badge badge-get">GET</span>
-                        <span class="path">/api/products</span>
-                        <span class="desc">ดึงรายการสินค้า</span>
-                        <span class="toggle-icon">▶</span>
-                    </div>
-                    <div class="api-content">
-                        <strong>📥 Request:</strong> No parameters
-                        <br><br>
-                        <strong>📤 Response:</strong> <span class="status-code status-200">200 OK</span>
-                        <div class="code-block">[
+}</div><div class="expected-note">Expected Validation: Email format, Password length.</div></div></div>
+                
+                <!-- API: Products -->
+                <div class="api-endpoint api-get"><div class="api-header" onclick="toggleEndpoint(this)"><span class="method-badge badge-get">GET</span><span class="path">/api/products</span><span class="desc">ดึงรายการสินค้า</span><span class="toggle-icon">▶</span></div><div class="api-content"><strong>📥 Request:</strong> None<br><br><strong>📤 Response:</strong> <span class="status-code status-200">200 OK</span><div class="code-block">[
   {
     "name": "Developer T-Shirt",
     "price": 120,
@@ -487,91 +510,30 @@
     "price": 60,
     "img": "☕"
   }
-]</div>
-                    </div>
-                </div>
-
-                <!-- POST /api/checkout -->
-                <div class="api-endpoint api-post">
-                    <div class="api-header" onclick="toggleEndpoint(this)">
-                        <span class="method-badge badge-post">POST</span>
-                        <span class="path">/api/checkout</span>
-                        <span class="desc">คำนวณยอดรวม</span>
-                        <span class="toggle-icon">▶</span>
-                    </div>
-                    <div class="api-content">
-                        <strong>📥 Request Body:</strong>
-                        <div class="code-block">{
+]</div></div></div>
+                
+                <!-- API: Checkout -->
+                <div class="api-endpoint api-post"><div class="api-header" onclick="toggleEndpoint(this)"><span class="method-badge badge-post">POST</span><span class="path">/api/checkout</span><span class="desc">คำนวณยอดรวม</span><span class="toggle-icon">▶</span></div><div class="api-content"><strong>📥 Request Body:</strong><div class="code-block">{
   "cart": [
-    {
-      "name": "Developer T-Shirt",
-      "price": 120,
-      "qty": 2
-    },
-    {
-      "name": "Coffee Mug",
-      "price": 60,
-      "qty": 1
-    }
+    { "name": "Developer T-Shirt", "price": 120, "qty": 2 },
+    { "name": "Coffee Mug", "price": 60, "qty": 1 }
   ]
-}</div>
-                        <strong>📤 Response:</strong> <span class="status-code status-200">200 OK</span>
-                        <div class="code-block">{
+}</div><strong>📤 Response:</strong> <span class="status-code status-200">200 OK</span><div class="code-block">{
   "total": 300
-}</div>
-                        <div class="expected-note">
-                            <strong>Expected Logic:</strong>
-                            <ul style="margin: 5px 0; padding-left: 20px;">
-                                <li>Quantity must be > 0 for all items.</li>
-                                <li>Total calculation must be accurate (Price × Qty).</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- POST /api/payment -->
-                <div class="api-endpoint api-post">
-                    <div class="api-header" onclick="toggleEndpoint(this)">
-                        <span class="method-badge badge-post">POST</span>
-                        <span class="path">/api/payment</span>
-                        <span class="desc">ประมวลผลการชำระเงิน</span>
-                        <span class="toggle-icon">▶</span>
-                    </div>
-                    <div class="api-content">
-                        <strong>📥 Request Body:</strong>
-                        <div class="code-block">{
+}</div><div class="expected-note">Expected Logic: Qty > 0.</div></div></div>
+                
+                <!-- API: Payment -->
+                <div class="api-endpoint api-post"><div class="api-header" onclick="toggleEndpoint(this)"><span class="method-badge badge-post">POST</span><span class="path">/api/payment</span><span class="desc">ประมวลผลการชำระเงิน</span><span class="toggle-icon">▶</span></div><div class="api-content"><strong>📥 Request Body:</strong><div class="code-block">{
   "method": "Credit Card",
   "amount": 300,
   "cardNumber": "1234567890123456"
-}</div>
-                        <strong>📤 Response:</strong> <span class="status-code status-200">200 OK</span>
-                        <div class="code-block">{
+}</div><strong>📤 Response:</strong> <span class="status-code status-200">200 OK</span><div class="code-block">{
   "status": "success",
   "recorded": true
-}</div>
-                        <div class="expected-note">
-                            <strong>Expected Behavior:</strong>
-                            <ul style="margin: 5px 0; padding-left: 20px;">
-                                <li>Credit Card Number must be 16 digits.</li>
-                                <li>All payment methods must record transaction history (`recorded: true`).</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- GET /api/orders -->
-                <div class="api-endpoint api-get">
-                    <div class="api-header" onclick="toggleEndpoint(this)">
-                        <span class="method-badge badge-get">GET</span>
-                        <span class="path">/api/orders</span>
-                        <span class="desc">ดึงประวัติการสั่งซื้อ</span>
-                        <span class="toggle-icon">▶</span>
-                    </div>
-                    <div class="api-content">
-                        <strong>📥 Request:</strong> No parameters
-                        <br><br>
-                        <strong>📤 Response:</strong> <span class="status-code status-200">200 OK</span>
-                        <div class="code-block">[
+}</div><div class="expected-note">Expected Behavior: All methods must record history.</div></div></div>
+                 
+                 <!-- API: Orders -->
+                 <div class="api-endpoint api-get"><div class="api-header" onclick="toggleEndpoint(this)"><span class="method-badge badge-get">GET</span><span class="path">/api/orders</span><span class="desc">ดึงประวัติการสั่งซื้อ</span><span class="toggle-icon">▶</span></div><div class="api-content"><strong>📥 Request:</strong> None<br><br><strong>📤 Response:</strong> <span class="status-code status-200">200 OK</span><div class="code-block">[
   {
     "item": "Order via Credit Card",
     "amount": 300,
@@ -582,9 +544,7 @@
     "amount": 550,
     "date": "2024-01-15 14:20:00"
   }
-]</div>
-                    </div>
-                </div>
+]</div></div></div>
             </div>
         </div>
 
@@ -643,7 +603,7 @@
                     </ul>
                 </div>
 
-                <!-- 5. API Level Bugs (Consolidated from API Spec Section) -->
+                <!-- 5. API Level Bugs -->
                 <div style="background: #e8f4fd; border-left: 5px solid #6c5ce7; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
                     <h4 style="color: #6c5ce7; margin-top: 0;">🔗 5. API Level Bugs</h4>
                     <ul style="margin: 5px 0;">
@@ -666,6 +626,14 @@
                             <strong style="color: #e17055;">🟠 High (5)</strong><br>
                             <small>Bug #1-5, #9</small>
                         </div>
+                        <div style="background: #fff8e1; padding: 10px; border-radius: 4px; text-align: center;">
+                            <strong style="color: #fdcb6e;">🟡 Medium (8)</strong><br>
+                            <small>Bug #7-8, #12-19</small>
+                        </div>
+                        <div style="background: #e8f4fd; padding: 10px; border-radius: 4px; text-align: center;">
+                            <strong style="color: #6c5ce7;">🔵 Low (4)</strong><br>
+                            <small>Bug #11</small>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -673,108 +641,105 @@
 
     </div>
 
-    <!-- ==================== TAB 2: QA EXAM (Logic) ==================== -->
-    <div id="view-exam" class="section-view">
+    <!-- ==================== TAB 2: INTERVIEW QUESTIONS (Protected) ==================== -->
+    <div id="view-interview" class="section-view">
         
-        <div class="exam-nav">
-            <button class="role-btn" id="btn-junior" onclick="showExamLevel('junior')">Junior Level</button>
-            <button class="role-btn" id="btn-senior" onclick="showExamLevel('senior')">Senior Level</button>
-        </div>
-
-        <!-- Junior Exam Card -->
-        <div id="junior-section" class="card hidden">
-            <div class="exam-header header-junior">
-                <h3>Junior QA: ระบบอนุมัติบัตรเครดิต</h3>
-                <span class="timer-badge">เวลาคิด: 3 นาที</span>
+        <!-- Step 1: Level Selector -->
+        <div id="interview-level-select" class="level-selector-container">
+            <div class="level-card junior" onclick="selectInterviewLevel('junior')">
+                <span class="level-icon">👶</span>
+                <span class="level-title">Junior Level</span>
+                <span class="level-desc">Fundamental Logic, Basic API, Manual Test Cases</span>
             </div>
             
-            <div class="section-title">📌 เงื่อนไข (Conditions)</div>
-            <div class="condition-list junior-list">
-                <ul>
-                    <li><span>C1: เงินเดือน (Salary)</span> <b>> 30,000 THB</b></li>
-                    <li><span>C2: อายุงาน (Exp)</span> <b>> 1 ปี (Year)</b></li>
-                    <li><span>C3: ประวัติบูโร</span> <b>ต้องไม่ติด (Clean)</b></li>
-                </ul>
-            </div>
-
-            <div class="rules-box" style="text-align: center;">
-                <p>ลูกค้าต้องผ่านเกณฑ์ <b>ทั้ง 3 ข้อ</b> ถึงจะได้รับการ <span class="action-badge act-approve">Approve</span></p>
-                <p>หากขาดข้อใดข้อหนึ่ง จะถูก <span class="action-badge act-reject">Reject</span> ทันที</p>
-            </div>
-            
-            <p style="text-align: center; font-style: italic; color: #888;">
-                คำสั่ง: จงเขียน <b>Test Case / Decision Table (แบบลดรูป)</b> ที่จำเป็นต้องทดสอบ
-            </p>
-            
-            <center><button class="btn btn-secondary" style="background:#555; color:white;" onclick="toggleSolution('junior')">เฉลย (Solution)</button></center>
-
-            <div id="solution-junior" class="solution-section">
-                <h4>✅ เฉลย: Collapsed Decision Table</h4>
-                <table>
-                    <thead>
-                        <tr><th>Rules</th><th class="bg-green">Pass</th><th class="bg-red">Fail C1</th><th class="bg-red">Fail C2</th><th class="bg-red">Fail C3</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>C1</td><td class="bg-green">True</td><td class="bg-red">False</td><td class="bg-green">True</td><td class="bg-green">True</td></tr>
-                        <tr><td>C2</td><td class="bg-green">True</td><td class="dont-care">-</td><td class="bg-red">False</td><td class="bg-green">True</td></tr>
-                        <tr><td>C3</td><td class="bg-green">True</td><td class="dont-care">-</td><td class="dont-care">-</td><td class="bg-red">False</td></tr>
-                        <tr><td><b>Result</b></td><td class="bg-green">Approve</td><td class="bg-red">Reject</td><td class="bg-red">Reject</td><td class="bg-red">Reject</td></tr>
-                    </tbody>
-                </table>
+            <div class="level-card senior" onclick="selectInterviewLevel('senior')">
+                <span class="level-icon">🦁</span>
+                <span class="level-title">Senior Level</span>
+                <span class="level-desc">Advanced Logic, Risk Assessment, Strategy</span>
             </div>
         </div>
 
-        <!-- Senior Exam Card -->
-        <div id="senior-section" class="card hidden">
-            <div class="exam-header header-senior">
-                <h3>Senior QA: สินเชื่อส่วนบุคคล (Advanced)</h3>
-                <span class="timer-badge">เวลาคิด: 3-5 นาที</span>
+        <!-- Step 2: Content Area (Hidden until level selected) -->
+        <div id="interview-content-area" class="hidden">
+            <div style="text-align: left; margin-bottom: 10px;">
+                <button class="btn btn-outline" style="padding: 5px 15px; font-size: 0.9rem;" onclick="resetInterviewLevel()">⬅️ Back to Level Selection</button>
             </div>
             
-            <div class="section-title">📌 เงื่อนไข (Conditions)</div>
-            <div class="condition-list senior-list">
-                <ul>
-                    <li><span>C1: รายได้ (Income)</span> <b>>= 50,000 THB</b></li>
-                    <li><span>C2: ภาระหนี้ (DTI)</span> <b><= 40%</b></li>
-                    <li><span>C3: มีคนค้ำ (Guarantor)</span> <b>Yes / No</b></li>
-                </ul>
-            </div>
-
-            <div class="rules-box">
-                <p>1. <b>Income < 50k</b> ➔ <span class="action-badge act-reject">Reject</span> (ทันที)</p>
-                <p>2. <b>Income Pass</b> + <b>DTI Pass</b> (<=40%) ➔ <span class="action-badge act-fast">Approve Fast Track</span> (ไม่สนคนค้ำ)</p>
-                <p>3. <b>Income Pass</b> + <b>DTI Fail</b> (>40%) :</p>
-                <ul style="margin-left: 20px;">
-                    <li>ถ้ามี <b>Guarantor</b> ➔ <span class="action-badge act-reg">Approve Regular</span></li>
-                    <li>ถ้าไม่มี <b>Guarantor</b> ➔ <span class="action-badge act-reject">Reject</span></li>
-                </ul>
-            </div>
-
-            <p style="text-align: center; font-style: italic; color: #888;">
-                คำสั่ง: จงเขียน <b>Test Case / Decision Table (แบบลดรูป)</b> ที่จำเป็นต้องทดสอบ
-            </p>
-            
-            <center><button class="btn btn-secondary" style="background:#555; color:white;" onclick="toggleSolution('senior')">เฉลย (Solution)</button></center>
-
-            <div id="solution-senior" class="solution-section">
-                <h4>✅ เฉลย (Collapsed Logic)</h4>
-                <table>
-                    <thead>
-                        <tr><th>Rules</th><th class="bg-red">R1</th><th class="bg-green">R2</th><th class="bg-blue">R3</th><th class="bg-red">R4</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Income >= 50k</td><td class="bg-red">False</td><td class="bg-green">True</td><td class="bg-blue">True</td><td class="bg-red">True</td></tr>
-                        <tr><td>DTI <= 40%</td><td class="dont-care">-</td><td class="bg-green">True</td><td class="bg-blue">False</td><td class="bg-red">False</td></tr>
-                        <tr><td>Guarantor</td><td class="dont-care">-</td><td class="dont-care">-</td><td class="bg-blue">True</td><td class="bg-red">False</td></tr>
-                        <tr><td><b>Result</b></td><td class="bg-red">Reject</td><td class="bg-green">Fast Track</td><td class="bg-blue">Regular</td><td class="bg-red">Reject</td></tr>
-                    </tbody>
-                </table>
-                <div style="margin-top:10px; background:#e8f6f3; padding:10px; border-left:4px solid #1abc9c; font-size:0.9rem;">
-                    <b>💡 Senior Check:</b> การใช้ Don't care (-) ใน Rule 2 (Fast Track) สำคัญมาก เพราะ DTI ดี ไม่ต้องเสียเวลาเช็คคนค้ำ
+            <div class="card">
+                <div class="header" id="interview-header" style="background:#2c3e50; color:white; padding:15px 25px; border-radius:10px 10px 0 0; margin:-30px -30px 20px -30px; display:flex; justify-content:space-between; align-items:center;">
+                    <h2 style="margin:0; color:white; border:none; padding:0;">Selected: <span id="selected-level-text">...</span></h2>
                 </div>
+
+                <!-- Topic Navigation -->
+                <div class="topic-tabs">
+                    <button class="topic-btn active" onclick="switchTopic(1)">1. Logic Exam</button>
+                    <button class="topic-btn" onclick="switchTopic(2)">2. Technical - JSON</button>
+                    <button class="topic-btn" onclick="switchTopic(3)">3. Technical - SQL</button>
+                    <button class="topic-btn" onclick="switchTopic(4)">4. Coding / Automate</button>
+                </div>
+
+                <!-- TOPIC 1: LOGIC EXAM -->
+                <div id="topic-1" class="topic-content">
+                    
+                    <!-- Junior Logic Content -->
+                    <div id="logic-content-junior" class="hidden">
+                        <div class="section-title">📌 โจทย์: ระบบอนุมัติบัตรเครดิต</div>
+                        <div class="condition-list junior-list">
+                            <ul>
+                                <li><span>C1: เงินเดือน (Salary)</span> <b>> 30,000 THB</b></li>
+                                <li><span>C2: อายุงาน (Exp)</span> <b>> 1 ปี (Year)</b></li>
+                                <li><span>C3: ประวัติบูโร</span> <b>ต้องไม่ติด (Clean)</b></li>
+                            </ul>
+                        </div>
+                        <div class="rules-box" style="text-align: center;">
+                            <p>ลูกค้าต้องผ่านเกณฑ์ <b>ทั้ง 3 ข้อ</b> ถึงจะได้รับการ <span class="action-badge act-approve">Approve</span></p>
+                            <p>หากขาดข้อใดข้อหนึ่ง จะถูก <span class="action-badge act-reject">Reject</span> ทันที</p>
+                        </div>
+                        <p style="text-align: center; font-style: italic; color: #888;">คำสั่ง: จงเขียน <b>Test Case / Decision Table (แบบลดรูป)</b> ที่จำเป็นต้องทดสอบ</p>
+                        <center><button class="btn btn-secondary" style="background:#555; color:white;" onclick="toggleSolution('junior')">เฉลย (Solution)</button></center>
+                        <div id="solution-junior" class="solution-section">
+                            <h4>✅ เฉลย: Collapsed Decision Table</h4>
+                            <table><thead><tr><th>Rules</th><th class="bg-green">Pass</th><th class="bg-red">Fail C1</th><th class="bg-red">Fail C2</th><th class="bg-red">Fail C3</th></tr></thead><tbody><tr><td>C1</td><td class="bg-green">True</td><td class="bg-red">False</td><td class="bg-green">True</td><td class="bg-green">True</td></tr><tr><td>C2</td><td class="bg-green">True</td><td class="dont-care">-</td><td class="bg-red">False</td><td class="bg-green">True</td></tr><tr><td>C3</td><td class="bg-green">True</td><td class="dont-care">-</td><td class="dont-care">-</td><td class="bg-red">False</td></tr><tr><td><b>Result</b></td><td class="bg-green">Approve</td><td class="bg-red">Reject</td><td class="bg-red">Reject</td><td class="bg-red">Reject</td></tr></tbody></table>
+                        </div>
+                    </div>
+
+                    <!-- Senior Logic Content -->
+                    <div id="logic-content-senior" class="hidden">
+                        <div class="section-title">📌 โจทย์: สินเชื่อส่วนบุคคล (Advanced)</div>
+                        <div class="condition-list senior-list">
+                            <ul>
+                                <li><span>C1: รายได้ (Income)</span> <b>>= 50,000 THB</b></li>
+                                <li><span>C2: ภาระหนี้ (DTI)</span> <b><= 40%</b></li>
+                                <li><span>C3: มีคนค้ำ (Guarantor)</span> <b>Yes / No</b></li>
+                            </ul>
+                        </div>
+                        <div class="rules-box">
+                            <p>1. <b>Income < 50k</b> ➔ <span class="action-badge act-reject">Reject</span> (ทันที)</p>
+                            <p>2. <b>Income Pass</b> + <b>DTI Pass</b> (<=40%) ➔ <span class="action-badge act-fast">Approve Fast Track</span> (ไม่สนคนค้ำ)</p>
+                            <p>3. <b>Income Pass</b> + <b>DTI Fail</b> (>40%) :</p>
+                            <ul style="margin-left: 20px;">
+                                <li>ถ้ามี <b>Guarantor</b> ➔ <span class="action-badge act-reg">Approve Regular</span></li>
+                                <li>ถ้าไม่มี <b>Guarantor</b> ➔ <span class="action-badge act-reject">Reject</span></li>
+                            </ul>
+                        </div>
+                        <p style="text-align: center; font-style: italic; color: #888;">คำสั่ง: จงเขียน <b>Decision Table (แบบลดรูป)</b> ที่ถูกต้องที่สุด</p>
+                        <center><button class="btn btn-secondary" style="background:#555; color:white;" onclick="toggleSolution('senior')">เฉลย (Solution)</button></center>
+                        <div id="solution-senior" class="solution-section">
+                            <h4>✅ เฉลย (Collapsed Logic)</h4>
+                            <table><thead><tr><th>Rules</th><th class="bg-red">R1</th><th class="bg-green">R2</th><th class="bg-blue">R3</th><th class="bg-red">R4</th></tr></thead><tbody><tr><td>Income >= 50k</td><td class="bg-red">False</td><td class="bg-green">True</td><td class="bg-blue">True</td><td class="bg-red">True</td></tr><tr><td>DTI <= 40%</td><td class="dont-care">-</td><td class="bg-green">True</td><td class="bg-blue">False</td><td class="bg-red">False</td></tr><tr><td>Guarantor</td><td class="dont-care">-</td><td class="dont-care">-</td><td class="bg-blue">True</td><td class="bg-red">False</td></tr><tr><td><b>Result</b></td><td class="bg-red">Reject</td><td class="bg-green">Fast Track</td><td class="bg-blue">Regular</td><td class="bg-red">Reject</td></tr></tbody></table>
+                            <div style="margin-top:10px; background:#e8f6f3; padding:10px; border-left:4px solid #1abc9c; font-size:0.9rem;"><b>💡 Senior Check:</b> การใช้ Don't care (-) ใน Rule 2 (Fast Track) สำคัญมาก เพราะ DTI ดี ไม่ต้องเสียเวลาเช็คคนค้ำ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOPIC 2: JSON -->
+                <div id="topic-2" class="topic-content hidden"><div class="placeholder-content"><h3>🏗️ Technical - JSON Question</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div></div>
+                <!-- TOPIC 3: SQL -->
+                <div id="topic-3" class="topic-content hidden"><div class="placeholder-content"><h3>💾 Technical - SQL Question</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div></div>
+                <!-- TOPIC 4: CODING -->
+                <div id="topic-4" class="topic-content hidden"><div class="placeholder-content"><h3>🤖 Technical - Coding / Automate</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div></div>
             </div>
         </div>
-
     </div>
 
 </div>
@@ -785,27 +750,55 @@ function switchMainTab(tab) {
     document.querySelectorAll('.section-view').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.nav-tabs button').forEach(el => el.classList.remove('active'));
     
-    // Reset app section views
-    if(tab === 'exam') {
-        document.querySelectorAll('.app-section').forEach(el => el.classList.add('hidden'));
-        document.getElementById('app-ui-section').classList.remove('hidden'); // Default back to UI
-        document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('active-junior'));
-        document.getElementById('btn-ui').classList.add('active-junior');
+    if(tab === 'app') {
+        document.getElementById('view-app').classList.add('active');
+        document.querySelectorAll('.nav-tabs button')[0].classList.add('active');
+    } else if(tab === 'interview') {
+        document.getElementById('view-interview').classList.add('active');
+        document.querySelectorAll('.nav-tabs button')[1].classList.add('active');
     }
-    
-    document.getElementById('view-' + tab).classList.add('active');
-    event.target.classList.add('active');
 }
 
-function showExamLevel(level) {
-    document.getElementById('junior-section').classList.add('hidden');
-    document.getElementById('senior-section').classList.add('hidden');
-    document.getElementById('btn-junior').classList.remove('active-junior');
-    document.getElementById('btn-senior').classList.remove('active-senior');
+// Password Protection for Interview Section
+function authInterviewAccess() {
+    getPasswordInput('Enter Password to Access Interview Questions').then(password => {
+        // Plaintext Check as requested
+        if(password === 'axonsqa') {
+            switchMainTab('interview');
+        } else {
+            if(password !== null) alert('⛔ Access Denied: Incorrect Password');
+        }
+    });
+}
 
-    document.getElementById(level + '-section').classList.remove('hidden');
-    if(level === 'junior') document.getElementById('btn-junior').classList.add('active-junior');
-    else document.getElementById('btn-senior').classList.add('active-senior');
+// === Interview Section Logic ===
+let currentLevel = '';
+function selectInterviewLevel(level) {
+    currentLevel = level;
+    document.getElementById('interview-level-select').classList.add('hidden');
+    document.getElementById('interview-content-area').classList.remove('hidden');
+    const headerTitle = document.getElementById('selected-level-text');
+    const headerBox = document.getElementById('interview-header');
+    if(level === 'junior') { headerTitle.innerText = "Junior Level"; headerBox.style.background = "#3498db"; } 
+    else { headerTitle.innerText = "Senior Level"; headerBox.style.background = "#e67e22"; }
+    switchTopic(1);
+}
+function resetInterviewLevel() {
+    document.getElementById('interview-level-select').classList.remove('hidden');
+    document.getElementById('interview-content-area').classList.add('hidden');
+    currentLevel = '';
+}
+function switchTopic(topicId) {
+    document.querySelectorAll('.topic-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.topic-btn')[topicId-1].classList.add('active');
+    document.querySelectorAll('.topic-content').forEach(content => content.classList.add('hidden'));
+    document.getElementById('topic-' + topicId).classList.remove('hidden');
+    if(topicId === 1) {
+        document.getElementById('logic-content-junior').classList.add('hidden');
+        document.getElementById('logic-content-senior').classList.add('hidden');
+        if(currentLevel === 'junior') document.getElementById('logic-content-junior').classList.remove('hidden');
+        else document.getElementById('logic-content-senior').classList.remove('hidden');
+    }
 }
 
 // Password input function
@@ -813,44 +806,28 @@ function getPasswordInput(message) {
     return new Promise((resolve) => {
         const overlay = document.createElement('div');
         overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:10000;display:flex;align-items:center;justify-content:center;';
-        
         const modal = document.createElement('div');
         modal.style.cssText = 'background:white;padding:30px;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.3);text-align:center;min-width:300px;';
-        
-        modal.innerHTML = `
-            <h3 style="margin-top:0;color:#333;">🔒 ${message}</h3>
-            <input type="password" id="pwd-input" style="width:200px;padding:10px;border:2px solid #ddd;border-radius:5px;font-size:16px;text-align:center;" placeholder="•••••">
-            <div style="margin-top:20px;">
-                <button id="pwd-ok" style="background:#3498db;color:white;border:none;padding:10px 20px;border-radius:5px;margin-right:10px;cursor:pointer;">OK</button>
-                <button id="pwd-cancel" style="background:#95a5a6;color:white;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;">Cancel</button>
-            </div>
-        `;
-        
-        overlay.appendChild(modal);
-        document.body.appendChild(overlay);
-        
+        modal.innerHTML = `<h3 style="margin-top:0;color:#333;">🔒 ${message}</h3><input type="password" id="pwd-input" style="width:200px;padding:10px;border:2px solid #ddd;border-radius:5px;font-size:16px;text-align:center;" placeholder="•••••"><div style="margin-top:20px;"><button id="pwd-ok" style="background:#3498db;color:white;border:none;padding:10px 20px;border-radius:5px;margin-right:10px;cursor:pointer;">OK</button><button id="pwd-cancel" style="background:#95a5a6;color:white;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;">Cancel</button></div>`;
+        overlay.appendChild(modal); document.body.appendChild(overlay);
         const input = document.getElementById('pwd-input');
-        const okBtn = document.getElementById('pwd-ok');
-        const cancelBtn = document.getElementById('pwd-cancel');
-        
         input.focus();
-        
         function cleanup() { document.body.removeChild(overlay); }
-        
-        okBtn.onclick = () => { const password = input.value; cleanup(); resolve(password); };
-        cancelBtn.onclick = () => { cleanup(); resolve(null); };
-        input.onkeypress = (e) => { if(e.key === 'Enter') okBtn.click(); };
+        document.getElementById('pwd-ok').onclick = () => { const password = input.value.trim(); cleanup(); resolve(password); };
+        document.getElementById('pwd-cancel').onclick = () => { cleanup(); resolve(null); };
+        input.onkeypress = (e) => { if(e.key === 'Enter') document.getElementById('pwd-ok').click(); };
     });
 }
 
 function showAppSection(section) {
     if(section === 'bugs') {
-        getPasswordInput('กรุณาใส่รหัสผ่านเพื่อดู Bug Summary').then(password => {
-            if(password !== 'qacoe') {
-                if(password !== null) alert('รหัสผ่านไม่ถูกต้อง!');
-                return;
+        getPasswordInput('Enter Password to View Bug Summary').then(password => {
+            // Plaintext Check
+            if(password === 'qacoe') {
+                switchAppSectionView(section);
+            } else { 
+                if(password !== null) alert('⛔ Access Denied: Incorrect Password'); 
             }
-            switchAppSectionView(section);
         });
         return;
     }
@@ -862,112 +839,107 @@ function switchAppSectionView(section) {
     document.getElementById('btn-ui').classList.remove('active-junior');
     document.getElementById('btn-api').classList.remove('active-junior');
     document.getElementById('btn-bugs').classList.remove('active-junior');
-    
     document.getElementById('app-' + section + '-section').classList.remove('hidden');
     document.getElementById('btn-' + section).classList.add('active-junior');
 }
-
-function toggleEndpoint(headerElement) {
-    const content = headerElement.nextElementSibling;
-    const arrow = headerElement.querySelector('.toggle-icon');
-    
-    if(content.style.display === 'block') {
-        content.style.display = 'none';
-        arrow.style.transform = 'rotate(0deg)';
-    } else {
-        content.style.display = 'block';
-        arrow.style.transform = 'rotate(90deg)';
-    }
-}
+function toggleEndpoint(headerElement) { const content = headerElement.nextElementSibling; const arrow = headerElement.querySelector('.toggle-icon'); if(content.style.display === 'block') { content.style.display = 'none'; arrow.style.transform = 'rotate(0deg)'; } else { content.style.display = 'block'; arrow.style.transform = 'rotate(90deg)'; } }
 
 function toggleSolution(level) {
-    getPasswordInput('กรุณาใส่รหัสผ่านเพื่อดูเฉลย').then(password => {
-        if(password !== 'qacoe') {
-            if(password !== null) alert('รหัสผ่านไม่ถูกต้อง!');
-            return;
-        }
-        var x = document.getElementById("solution-" + level);
-        x.style.display = (x.style.display === "block") ? "none" : "block";
-        if(x.style.display === "block") setTimeout(() => x.scrollIntoView({behavior: 'smooth'}), 100);
+    getPasswordInput('Enter Password to View Solution').then(password => {
+         // Plaintext Check
+         if(password === 'qacoe') {
+            var x = document.getElementById("solution-" + level);
+            x.style.display = (x.style.display === "block") ? "none" : "block";
+            if(x.style.display === "block") setTimeout(() => x.scrollIntoView({behavior: 'smooth'}), 100);
+        } else { if(password !== null) alert('⛔ Access Denied: Incorrect Password'); }
     });
 }
 
 // === Mock Application Logic ===
 let orders = [];
 let products = []; 
-
-function apiRegister(data){
-  return new Promise(resolve => { setTimeout(() => resolve({status:"success", message:"✅ Registration Successful!"}), 600); });
-}
-
-function apiGetProducts(){
-  return new Promise(resolve => { resolve([ {name:"Developer T-Shirt", price:120, img:"👕"}, {name:"Debugging Rubber Duck", price:550, img:"🦆"}, {name:"Coffee Mug", price:60, img:"☕"} ]); });
-}
-
-function apiCheckout(cart){
-  return new Promise(resolve => { let total = 0; cart.forEach(item => total += item.qty * item.price); resolve({total: total}); });
-}
-
-function apiPayment(method, amount, cardNum){
-  return new Promise(resolve => { setTimeout(() => { if(method === "Bank Transfer"){ resolve({status:"success", recorded:false}); } else { resolve({status:"success", recorded:true}); } }, 800); });
-}
-
+function apiRegister(data){ return new Promise(resolve => { setTimeout(() => resolve({status:"success", message:"✅ Registration Successful!"}), 600); }); }
+function apiGetProducts(){ return new Promise(resolve => { resolve([ {name:"Developer T-Shirt", price:120, img:"👕"}, {name:"Debugging Rubber Duck", price:550, img:"🦆"}, {name:"Coffee Mug", price:60, img:"☕"} ]); }); }
+function apiCheckout(cart){ return new Promise(resolve => { let total = 0; cart.forEach(item => total += item.qty * item.price); resolve({total: total}); }); }
+function apiPayment(method, amount, cardNum){ return new Promise(resolve => { setTimeout(() => { if(method === "Bank Transfer"){ resolve({status:"success", recorded:false}); } else { resolve({status:"success", recorded:true}); } }, 800); }); }
 function apiGetOrders(){ return new Promise(resolve => resolve(orders)); }
 
-function register(){
-    document.getElementById('reg-msg').className = 'msg-box';
-    document.getElementById('reg-msg').innerText = 'Processing...';
-    apiRegister({}).then(res => {
-        const msgDiv = document.getElementById('reg-msg');
-        msgDiv.innerText = res.message;
-        msgDiv.classList.add('msg-success');
-        setTimeout(() => { document.getElementById('page-register').classList.add('hidden'); loadProducts(); }, 1000);
-    });
+function register(){ 
+    document.getElementById('reg-msg').className = 'msg-box'; 
+    document.getElementById('reg-msg').innerText = 'Processing...'; 
+    apiRegister({}).then(res => { 
+        const msgDiv = document.getElementById('reg-msg'); 
+        msgDiv.innerText = res.message; 
+        msgDiv.classList.add('msg-success'); 
+        setTimeout(() => { document.getElementById('page-register').classList.add('hidden'); loadProducts(); }, 1000); 
+    }); 
 }
 
-function loadProducts(){
-  apiGetProducts().then(items => {
-    products = items;
-    const listDiv = document.getElementById('product-list');
-    listDiv.innerHTML = "";
-    items.forEach((p,i)=>{ listDiv.innerHTML += `<div class="product-card"><div style="font-size:3rem;">${p.img}</div><h3>${p.name}</h3><span class="price-tag">${p.price} THB</span><div style="margin-top:10px;">Qty: <input id="qty-${i}" type="number" value="1" style="width:60px; text-align:center;"></div></div>`; });
-    document.getElementById('page-products').classList.remove('hidden');
-  });
+function loadProducts(){ 
+    apiGetProducts().then(items => { 
+        products = items; 
+        const listDiv = document.getElementById('product-list'); 
+        listDiv.innerHTML = ""; 
+        items.forEach((p,i)=>{ listDiv.innerHTML += `<div class="product-card"><div style="font-size:3rem;">${p.img}</div><h3>${p.name}</h3><span class="price-tag">${p.price} THB</span><div style="margin-top:10px;">Qty: <input id="qty-${i}" type="number" value="1" style="width:60px; text-align:center;"></div></div>`; }); 
+        document.getElementById('page-products').classList.remove('hidden'); 
+    }); 
 }
 
-function checkout(){
-  const cart = products.map((p,i)=>{ return {name:p.name, price:p.price, qty:parseInt(document.getElementById(`qty-${i}`).value)}; });
-  apiCheckout(cart).then(res=>{ document.getElementById('order-summary').innerHTML = `Total Amount:<br><span style="font-size:3rem; font-weight:bold;">${res.total} THB</span>`; document.getElementById('page-products').classList.add('hidden'); document.getElementById('page-checkout').classList.remove('hidden'); });
+function checkout(){ 
+    const cart = products.map((p,i)=>{ return {name:p.name, price:p.price, qty:parseInt(document.getElementById(`qty-${i}`).value)}; }); 
+    apiCheckout(cart).then(res=>{ document.getElementById('order-summary').innerHTML = `Total Amount:<br><span style="font-size:3rem; font-weight:bold;">${res.total} THB</span>`; document.getElementById('page-products').classList.add('hidden'); document.getElementById('page-checkout').classList.remove('hidden'); }); 
 }
 
 function goPayment(){ document.getElementById('page-checkout').classList.add('hidden'); document.getElementById('page-payment').classList.remove('hidden'); }
 
-function toggleCardInput() {
-    const method = document.getElementById('pay-method').value;
-    const cardGroup = document.getElementById('card-input-group');
-    cardGroup.style.display = (method === 'Credit Card') ? 'block' : 'none';
+function toggleCardInput() { const method = document.getElementById('pay-method').value; document.getElementById('card-input-group').style.display = (method === 'Credit Card') ? 'block' : 'none'; }
+
+function processPayment(){ 
+    const method = document.getElementById('pay-method').value; 
+    const amountText = document.getElementById('order-summary').innerText; 
+    const amount = parseInt(amountText.replace(/[^0-9]/g,"")); 
+    document.getElementById('pay-msg').innerText = "Processing Payment..."; 
+    apiPayment(method, amount, "").then(res=>{ 
+        const msg = (res.recorded) ? "✅ Payment Successful!" : "✅ Payment Successful! (Wait, did it record?)"; 
+        document.getElementById('pay-msg').innerText = msg; 
+        document.getElementById('pay-msg').className = "msg-box msg-success"; 
+        if(res.recorded) orders.push({item:"Order via " + method, amount:amount, date: new Date().toLocaleString()}); 
+        setTimeout(() => { showHistory(); document.getElementById('page-payment').classList.add('hidden'); document.getElementById('page-history').classList.remove('hidden'); }, 1500); 
+    }); 
 }
 
-function processPayment(){
-  const method = document.getElementById('pay-method').value;
-  const amountText = document.getElementById('order-summary').innerText;
-  const amount = parseInt(amountText.replace(/[^0-9]/g,""));
-  document.getElementById('pay-msg').innerText = "Processing Payment...";
-  
-  apiPayment(method, amount, "").then(res=>{
-    const msg = (res.recorded) ? "✅ Payment Successful!" : "✅ Payment Successful! (Wait, did it record?)";
-    document.getElementById('pay-msg').innerText = msg;
-    document.getElementById('pay-msg').className = "msg-box msg-success";
-    if(res.recorded) orders.push({item:"Order via " + method, amount:amount, date: new Date().toLocaleString()});
-    setTimeout(() => { showHistory(); document.getElementById('page-payment').classList.add('hidden'); document.getElementById('page-history').classList.remove('hidden'); }, 1500);
-  });
+function showHistory(){ 
+    apiGetOrders().then(hist=>{ 
+        if(hist.length === 0) { document.getElementById('history-list').innerHTML = "<p style='text-align:center; color:red;'>⚠️ No orders found! (Bug?)</p>"; } 
+        else { document.getElementById('history-list').innerHTML = hist.map(o=> `<div style="border-bottom:1px solid #ddd; padding:10px;"><b>${o.item}</b> <span style="float:right; color:green; font-weight:bold;">${o.amount} THB</span><div style="font-size:0.8rem; color:#888;">${o.date}</div></div>`).join(""); } 
+    }); 
 }
 
-function showHistory(){
-  apiGetOrders().then(hist=>{
-    if(hist.length === 0) { document.getElementById('history-list').innerHTML = "<p style='text-align:center; color:red;'>⚠️ No orders found! (Bug?)</p>"; } 
-    else { document.getElementById('history-list').innerHTML = hist.map(o=> `<div style="border-bottom:1px solid #ddd; padding:10px;"><b>${o.item}</b> <span style="float:right; color:green; font-weight:bold;">${o.amount} THB</span><div style="font-size:0.8rem; color:#888;">${o.date}</div></div>`).join(""); }
-  });
+// Function to Reset App State (Replaces location.reload)
+function resetApp() {
+    // 1. Reset Data
+    orders = [];
+    products = [];
+    
+    // 2. Hide all pages
+    document.getElementById('page-products').classList.add('hidden');
+    document.getElementById('page-checkout').classList.add('hidden');
+    document.getElementById('page-payment').classList.add('hidden');
+    document.getElementById('page-history').classList.add('hidden');
+    
+    // 3. Clear Inputs
+    document.getElementById('reg-first').value = '';
+    document.getElementById('reg-last').value = '';
+    document.getElementById('reg-email').value = '';
+    document.getElementById('reg-pass').value = '';
+    document.getElementById('reg-confirm').value = '';
+    document.getElementById('reg-dob').value = '';
+    document.getElementById('pay-msg').innerText = '';
+    document.getElementById('reg-msg').innerText = '';
+    document.getElementById('reg-msg').className = '';
+    
+    // 4. Show Register Page
+    document.getElementById('page-register').classList.remove('hidden');
 }
 </script>
 
