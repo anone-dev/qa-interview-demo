@@ -1,137 +1,600 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
 <meta charset="UTF-8">
-<title>QA Interview Demo with Mock API</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QA Technical Interview Portal</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-body { font-family: Arial; margin: 20px; }
-.hidden { display: none; }
-.product { border: 1px solid #ccc; margin: 5px; padding: 10px; }
+    :root {
+        --primary-color: #2c3e50;
+        --secondary-color: #34495e;
+        --accent-color: #3498db;
+        --bg-color: #f4f6f9;
+        --card-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        --success-color: #27ae60;
+        --danger-color: #c0392b;
+        --text-color: #333;
+    }
+
+    body {
+        font-family: 'Sarabun', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+    }
+
+    /* --- Navigation --- */
+    .navbar {
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .brand {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .nav-tabs button {
+        background: transparent;
+        border: none;
+        padding: 10px 20px;
+        margin-left: 10px;
+        font-family: 'Sarabun', sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #7f8c8d;
+        cursor: pointer;
+        border-radius: 50px;
+        transition: all 0.3s;
+    }
+
+    .nav-tabs button.active {
+        background-color: var(--primary-color);
+        color: white;
+        box-shadow: 0 4px 6px rgba(44, 62, 80, 0.2);
+    }
+
+    .nav-tabs button:hover:not(.active) {
+        background-color: #ecf0f1;
+        color: var(--primary-color);
+    }
+
+    /* --- Container & Layout --- */
+    .main-container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .section-view {
+        display: none;
+        animation: fadeIn 0.4s ease-out;
+    }
+    
+    .section-view.active {
+        display: block;
+    }
+
+    /* --- Cards (Used for App & Exam) --- */
+    .card {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: var(--card-shadow);
+        margin-bottom: 25px;
+        border: 1px solid #eee;
+    }
+
+    .card h2 {
+        margin-top: 0;
+        color: var(--primary-color);
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+        font-size: 1.4rem;
+    }
+
+    /* --- Forms (Mock App Styles) --- */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 15px;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-family: 'Sarabun', sans-serif;
+        font-size: 1rem;
+        box-sizing: border-box; /* Fix padding issue */
+        transition: border-color 0.3s;
+    }
+
+    input:focus, select:focus {
+        border-color: var(--accent-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    }
+
+    /* --- Product Grid --- */
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .product-card {
+        border: 1px solid #eee;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        background: #f9f9f9;
+        transition: transform 0.2s;
+    }
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .price-tag {
+        display: block;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--success-color);
+        margin: 10px 0;
+    }
+
+    /* --- Buttons --- */
+    .btn {
+        padding: 10px 25px;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s;
+        display: inline-block;
+        font-family: 'Sarabun', sans-serif;
+    }
+
+    .btn-primary { background-color: var(--accent-color); color: white; }
+    .btn-primary:hover { background-color: #2980b9; }
+
+    .btn-success { background-color: var(--success-color); color: white; width: 100%; margin-top: 10px;}
+    .btn-success:hover { background-color: #219150; }
+
+    .btn-outline { background: transparent; border: 2px solid var(--primary-color); color: var(--primary-color); }
+    .btn-outline:hover { background: var(--primary-color); color: white; }
+
+    /* --- Messages & Status --- */
+    .msg-box {
+        margin-top: 15px;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .msg-success { background-color: #d4edda; color: #155724; }
+    .msg-error { background-color: #f8d7da; color: #721c24; }
+
+    /* --- QA EXAM SPECIFIC STYLES --- */
+    /* (Styles merged from previous Request) */
+    .exam-nav { text-align: center; margin-bottom: 20px; }
+    .role-btn {
+        padding: 10px 20px; margin: 5px; border-radius: 50px; border: none; cursor: pointer;
+        background: #e0e0e0; color: #555; font-weight: bold; transition: 0.3s;
+    }
+    .role-btn.active-junior { background: #3498db; color: white; }
+    .role-btn.active-senior { background: #e67e22; color: white; }
+
+    .exam-header { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; color: white; border-radius: 12px 12px 0 0; margin: -30px -30px 20px -30px; }
+    .header-junior { background: #34495e; }
+    .header-senior { background: #2c3e50; }
+
+    .condition-list li {
+        background: #f8f9fa; margin: 8px 0; padding: 10px 15px; border-radius: 6px;
+        display: flex; justify-content: space-between; border-left: 4px solid #bdc3c7;
+    }
+    .junior-list li { border-left-color: #3498db; }
+    .senior-list li { border-left-color: #e67e22; }
+
+    .rules-box {
+        background: #fff8e1; border: 1px solid #ffe082; padding: 15px; border-radius: 8px; margin: 15px 0;
+        line-height: 1.8; /* Fixed Line Height for Overlap */
+    }
+    
+    .action-badge {
+        display: inline-block; /* Fix Overlap */
+        padding: 4px 12px; border-radius: 4px; color: white; font-size: 0.85rem; font-weight: bold;
+        vertical-align: middle; margin: 2px 0;
+    }
+    .act-reject { background: #c0392b; }
+    .act-fast { background: #27ae60; }
+    .act-reg { background: #2980b9; }
+    .act-approve { background: #27ae60; }
+
+    .solution-section { display: none; margin-top: 20px; padding-top: 20px; border-top: 2px dashed #ddd; }
+    
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: center; font-size: 0.9rem; }
+    th { background: #f2f2f2; }
+    .bg-green { background: #d5f5e3; color: #145a32; font-weight: bold; }
+    .bg-red { background: #fadbd8; color: #7b241c; font-weight: bold; }
+    .bg-blue { background: #d6eaf8; color: #154360; font-weight: bold; }
+    .dont-care { color: #999; font-style: italic; font-weight: normal; }
+
+    /* Helper Classes */
+    .hidden { display: none; }
+    .timer-badge { background: rgba(0,0,0,0.2); padding: 5px 10px; border-radius: 15px; font-size: 0.85rem; }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
 </style>
 </head>
 <body>
-<h1>QA Interview Demo (Web + API)</h1>
-<div id="page-register">
-  <h2>Register</h2>
-  <input id="reg-first" placeholder="First Name"><br>
-  <input id="reg-last" placeholder="Last Name"><br>
-  <input id="reg-email" placeholder="Email"><br>
-  <input id="reg-pass" placeholder="Password" type="password"><br>
-  <input id="reg-confirm" placeholder="Confirm Password" type="password"><br>
-  <input id="reg-dob" placeholder="Date of Birth (YYYY-MM-DD)"><br>
-  <select id="reg-gender"><option>Male</option><option>Female</option></select><br>
-  <button onclick="register()">Register</button>
-  <div id="reg-msg"></div>
-</div>
 
-<div id="page-products" class="hidden">
-  <h2>Products</h2>
-  <div id="product-list"></div>
-  <button onclick="checkout()">Checkout</button>
-</div>
+<!-- Navigation Bar -->
+<nav class="navbar">
+    <div class="brand">
+        <span>🐞 QA Interview Portal</span>
+    </div>
+    <div class="nav-tabs">
+        <button class="active" onclick="switchMainTab('app')">📱 Bug Hunting App</button>
+        <button onclick="switchMainTab('exam')">📝 Logic Exam</button>
+    </div>
+</nav>
 
-<div id="page-checkout" class="hidden">
-  <h2>Checkout</h2>
-  <div id="order-summary"></div>
-  <button onclick="goPayment()">Proceed to Payment</button>
-</div>
+<div class="main-container">
 
-<div id="page-payment" class="hidden">
-  <h2>Payment</h2>
-  Method:
-  <select id="pay-method">
-    <option>Credit Card</option>
-    <option>Bank Transfer</option>
-    <option>e-Wallet</option>
-  </select><br>
-  Card Number (for Credit Card only): <input id="card-num"><br>
-  <button onclick="processPayment()">Pay Now</button>
-  <div id="pay-msg"></div>
-</div>
+    <!-- ==================== TAB 1: MOCK APP (Bug Hunting) ==================== -->
+    <div id="view-app" class="section-view active">
+        
+        <div style="background: #e8f4fd; padding: 15px; border-radius: 8px; border-left: 5px solid #3498db; margin-bottom: 20px; font-size: 0.9rem;">
+            <strong>ℹ️ Instructions for Candidate:</strong> 
+            This is a mock application containing several <b>bugs</b>. <br>
+            Please try to register, buy products, and checkout. Note down any anomalies you find.
+        </div>
 
-<div id="page-history" class="hidden">
-  <h2>Order History</h2>
-  <div id="history-list"></div>
+        <!-- 1. Register Page -->
+        <div id="page-register" class="card">
+            <h2>🔐 Register New Account</h2>
+            <div class="form-row">
+                <div class="form-group" style="flex:1">
+                    <label>First Name</label>
+                    <input id="reg-first" placeholder="e.g. Somchai">
+                </div>
+                <div class="form-group" style="flex:1">
+                    <label>Last Name</label>
+                    <input id="reg-last" placeholder="e.g. Jaidee">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Email Address</label>
+                <input id="reg-email" placeholder="user@example.com">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group" style="flex:1">
+                    <label>Password</label>
+                    <input id="reg-pass" type="password" placeholder="******">
+                </div>
+                <div class="form-group" style="flex:1">
+                    <label>Confirm Password</label>
+                    <input id="reg-confirm" type="password" placeholder="******">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group" style="flex:1">
+                    <label>Date of Birth</label>
+                    <input id="reg-dob" type="text" placeholder="YYYY-MM-DD">
+                </div>
+                <div class="form-group" style="flex:1">
+                    <label>Gender</label>
+                    <select id="reg-gender">
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" style="width:100%" onclick="register()">Create Account</button>
+            <div id="reg-msg"></div>
+        </div>
+
+        <!-- 2. Product List -->
+        <div id="page-products" class="card hidden">
+            <h2>🛒 Shop Products</h2>
+            <div id="product-list" class="product-grid"></div>
+            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+            <button class="btn btn-primary" style="float:right" onclick="checkout()">Proceed to Checkout ➡️</button>
+            <div style="clear:both"></div>
+        </div>
+
+        <!-- 3. Checkout -->
+        <div id="page-checkout" class="card hidden">
+            <h2>📦 Order Summary</h2>
+            <div id="order-summary" style="font-size: 1.5rem; text-align: center; margin: 30px 0; color: var(--primary-color);"></div>
+            <button class="btn btn-success" onclick="goPayment()">Confirm & Pay</button>
+            <button class="btn btn-outline" style="width:100%; margin-top:10px" onclick="location.reload()">Cancel</button>
+        </div>
+
+        <!-- 4. Payment -->
+        <div id="page-payment" class="card hidden">
+            <h2>💳 Payment</h2>
+            
+            <div class="form-group">
+                <label>Payment Method</label>
+                <select id="pay-method" onchange="toggleCardInput()">
+                    <option>Credit Card</option>
+                    <option>Bank Transfer</option>
+                    <option>e-Wallet</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="card-input-group">
+                <label>Card Number</label>
+                <input id="card-num" placeholder="0000 0000 0000 0000">
+            </div>
+
+            <button class="btn btn-primary" style="width:100%" onclick="processPayment()">Pay Now</button>
+            <div id="pay-msg"></div>
+        </div>
+
+        <!-- 5. History -->
+        <div id="page-history" class="card hidden">
+            <h2>📜 Order History</h2>
+            <div id="history-list" style="background: #f9f9f9; padding: 15px; border-radius: 5px;"></div>
+            <button class="btn btn-outline" style="margin-top:20px" onclick="location.reload()">Start Over</button>
+        </div>
+
+    </div>
+
+    <!-- ==================== TAB 2: QA EXAM (Logic) ==================== -->
+    <div id="view-exam" class="section-view">
+        
+        <div class="exam-nav">
+            <button class="role-btn" id="btn-junior" onclick="showExamLevel('junior')">Junior Level</button>
+            <button class="role-btn" id="btn-senior" onclick="showExamLevel('senior')">Senior Level</button>
+        </div>
+
+        <!-- Junior Exam Card -->
+        <div id="junior-section" class="card hidden">
+            <div class="exam-header header-junior">
+                <h3>Junior QA: ระบบอนุมัติบัตรเครดิต</h3>
+                <span class="timer-badge">เวลาคิด: 3 นาที</span>
+            </div>
+            
+            <div class="section-title">📌 เงื่อนไข (Conditions)</div>
+            <div class="condition-list junior-list">
+                <ul>
+                    <li><span>C1: เงินเดือน (Salary)</span> <b>> 30,000 THB</b></li>
+                    <li><span>C2: อายุงาน (Exp)</span> <b>> 1 ปี (Year)</b></li>
+                    <li><span>C3: ประวัติบูโร</span> <b>ต้องไม่ติด (Clean)</b></li>
+                </ul>
+            </div>
+
+            <div class="rules-box" style="text-align: center;">
+                <p>ลูกค้าต้องผ่านเกณฑ์ <b>ทั้ง 3 ข้อ</b> ถึงจะได้รับการ <span class="action-badge act-approve">Approve</span></p>
+                <p>หากขาดข้อใดข้อหนึ่ง จะถูก <span class="action-badge act-reject">Reject</span> ทันที</p>
+            </div>
+            
+            <p style="text-align: center; font-style: italic; color: #888;">
+                คำสั่ง: จงเขียน <b>Test Case / Decision Table (แบบลดรูป)</b> ที่จำเป็นต้องทดสอบ
+            </p>
+            
+            <center><button class="btn btn-secondary" style="background:#555; color:white;" onclick="toggleSolution('junior')">เฉลย (Solution)</button></center>
+
+            <div id="solution-junior" class="solution-section">
+                <h4>✅ เฉลย: Collapsed Decision Table</h4>
+                <table>
+                    <thead>
+                        <tr><th>Rules</th><th class="bg-green">Pass</th><th class="bg-red">Fail C1</th><th class="bg-red">Fail C2</th><th class="bg-red">Fail C3</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>C1</td><td class="bg-green">True</td><td class="bg-red">False</td><td class="bg-green">True</td><td class="bg-green">True</td></tr>
+                        <tr><td>C2</td><td class="bg-green">True</td><td class="dont-care">-</td><td class="bg-red">False</td><td class="bg-green">True</td></tr>
+                        <tr><td>C3</td><td class="bg-green">True</td><td class="dont-care">-</td><td class="dont-care">-</td><td class="bg-red">False</td></tr>
+                        <tr><td><b>Result</b></td><td class="bg-green">Approve</td><td class="bg-red">Reject</td><td class="bg-red">Reject</td><td class="bg-red">Reject</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Senior Exam Card -->
+        <div id="senior-section" class="card hidden">
+            <div class="exam-header header-senior">
+                <h3>Senior QA: สินเชื่อส่วนบุคคล (Advanced)</h3>
+                <span class="timer-badge">Time: 3-5 Minutes</span>
+            </div>
+            
+            <div class="section-title">📌 เงื่อนไข (Conditions)</div>
+            <div class="condition-list senior-list">
+                <ul>
+                    <li><span>C1: รายได้ (Income)</span> <b>>= 50,000 THB</b></li>
+                    <li><span>C2: ภาระหนี้ (DTI)</span> <b><= 40%</b></li>
+                    <li><span>C3: มีคนค้ำ (Guarantor)</span> <b>Yes / No</b></li>
+                </ul>
+            </div>
+
+            <div class="rules-box">
+                <p>1. <b>Income < 50k</b> ➔ <span class="action-badge act-reject">Reject</span> (ทันที)</p>
+                <p>2. <b>Income Pass</b> + <b>DTI Pass</b> (<=40%) ➔ <span class="action-badge act-fast">Approve Fast Track</span> (ไม่สนคนค้ำ)</p>
+                <p>3. <b>Income Pass</b> + <b>DTI Fail</b> (>40%) :</p>
+                <ul style="margin-left: 20px;">
+                    <li>ถ้ามี <b>Guarantor</b> ➔ <span class="action-badge act-reg">Approve Regular</span></li>
+                    <li>ถ้าไม่มี <b>Guarantor</b> ➔ <span class="action-badge act-reject">Reject</span></li>
+                </ul>
+            </div>
+
+            <p style="text-align: center; font-style: italic; color: #888;">
+                คำสั่ง: จงเขียน <b>Test Case / Decision Table (แบบลดรูป)</b> ที่จำเป็นต้องทดสอบ
+            </p>
+            
+            <center><button class="btn btn-secondary" style="background:#555; color:white;" onclick="toggleSolution('senior')">เฉลย (Solution)</button></center>
+
+            <div id="solution-senior" class="solution-section">
+                <h4>✅ เฉลย (Collapsed Logic)</h4>
+                <table>
+                    <thead>
+                        <tr><th>Rules</th><th class="bg-red">R1</th><th class="bg-green">R2</th><th class="bg-blue">R3</th><th class="bg-red">R4</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Income >= 50k</td><td class="bg-red">False</td><td class="bg-green">True</td><td class="bg-blue">True</td><td class="bg-red">True</td></tr>
+                        <tr><td>DTI <= 40%</td><td class="dont-care">-</td><td class="bg-green">True</td><td class="bg-blue">False</td><td class="bg-red">False</td></tr>
+                        <tr><td>Guarantor</td><td class="dont-care">-</td><td class="dont-care">-</td><td class="bg-blue">True</td><td class="bg-red">False</td></tr>
+                        <tr><td><b>Result</b></td><td class="bg-red">Reject</td><td class="bg-green">Fast Track</td><td class="bg-blue">Regular</td><td class="bg-red">Reject</td></tr>
+                    </tbody>
+                </table>
+                <div style="margin-top:10px; background:#e8f6f3; padding:10px; border-left:4px solid #1abc9c; font-size:0.9rem;">
+                    <b>💡 Senior Check:</b> การใช้ Don't care (-) ใน Rule 2 (Fast Track) สำคัญมาก เพราะ DTI ดี ไม่ต้องเสียเวลาเช็คคนค้ำ
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </div>
 
 <script>
+// === UI Navigation Logic ===
+function switchMainTab(tab) {
+    // Hide all views
+    document.querySelectorAll('.section-view').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-tabs button').forEach(el => el.classList.remove('active'));
+    
+    // Show selected
+    document.getElementById('view-' + tab).classList.add('active');
+    event.target.classList.add('active');
+}
+
+function showExamLevel(level) {
+    document.getElementById('junior-section').classList.add('hidden');
+    document.getElementById('senior-section').classList.add('hidden');
+    
+    document.getElementById('btn-junior').classList.remove('active-junior');
+    document.getElementById('btn-senior').classList.remove('active-senior');
+
+    document.getElementById(level + '-section').classList.remove('hidden');
+    
+    if(level === 'junior') document.getElementById('btn-junior').classList.add('active-junior');
+    else document.getElementById('btn-senior').classList.add('active-senior');
+}
+
+function toggleSolution(level) {
+    var x = document.getElementById("solution-" + level);
+    x.style.display = (x.style.display === "block") ? "none" : "block";
+    if(x.style.display === "block") setTimeout(() => x.scrollIntoView({behavior: 'smooth'}), 100);
+}
+
+// === Mock Application Logic (Contains Intentional Bugs) ===
 let orders = [];
 let products = [];
 
-// Mock API Simulation
+// Mock API 
 function apiRegister(data){
-  return new Promise(resolve=>{
-    // ❌ Bug: No proper email/password validation
-    resolve({status:"success", message:"Register Success"});
+  return new Promise(resolve => {
+    // ❌ Bug: Always success, no validation
+    setTimeout(() => resolve({status:"success", message:"✅ Registration Successful!"}), 600);
   });
 }
 
 function apiGetProducts(){
-  return new Promise(resolve=>{
-    // ❌ Bug: Wrong price data from backend
+  return new Promise(resolve => {
+    // ❌ Bug: Prices are slightly wrong or weird
     resolve([
-      {name:"T-Shirt", price:120}, // Should be 100
-      {name:"Shoes", price:550},   // Should be 500
-      {name:"Hat", price:60}       // Should be 50
+      {name:"Developer T-Shirt", price:120, img:"👕"}, 
+      {name:"Debugging Rubber Duck", price:550, img:"🦆"}, 
+      {name:"Coffee Mug", price:60, img:"☕"} 
     ]);
   });
 }
 
 function apiCheckout(cart){
-  return new Promise(resolve=>{
-    // ❌ Bug: qty=0 allowed
+  return new Promise(resolve => {
+    // ❌ Bug: Calculation logic might be simplistic
     let total = 0;
-    cart.forEach(item=> total += item.qty * item.price);
+    cart.forEach(item => total += item.qty * item.price);
     resolve({total: total});
   });
 }
 
 function apiPayment(method, amount, cardNum){
-  return new Promise(resolve=>{
-    // ❌ Bug: Credit card not validated
-    if(method === "Bank Transfer"){
-      resolve({status:"success", recorded:false}); // ❌ Not recorded
-    } else {
-      resolve({status:"success", recorded:true});
-    }
+  return new Promise(resolve => {
+    // ❌ Bug: Bank Transfer fails silently
+    setTimeout(() => {
+        if(method === "Bank Transfer"){
+            resolve({status:"success", recorded:false}); // Bug!
+        } else {
+            resolve({status:"success", recorded:true});
+        }
+    }, 800);
   });
 }
 
 function apiGetOrders(){
-  return new Promise(resolve=>{
-    // ❌ Bug: Duplicate merges
-    resolve(orders);
-  });
+  return new Promise(resolve => resolve(orders));
 }
 
-// Page functions
+// App Functions
 function register(){
-  const data = {
-    first: document.getElementById('reg-first').value,
-    last: document.getElementById('reg-last').value,
-    email: document.getElementById('reg-email').value,
-    pass: document.getElementById('reg-pass').value,
-    dob: document.getElementById('reg-dob').value,
-    gender: document.getElementById('reg-gender').value
-  };
-  apiRegister(data).then(res=>{
-    document.getElementById('reg-msg').innerText = res.message;
-    if(res.status === "success"){
-      document.getElementById('page-register').classList.add('hidden');
-      loadProducts();
-    }
-  });
+    document.getElementById('reg-msg').className = 'msg-box'; // Reset
+    document.getElementById('reg-msg').innerText = 'Processing...';
+    
+    const data = {
+        first: document.getElementById('reg-first').value,
+        email: document.getElementById('reg-email').value
+    };
+
+    apiRegister(data).then(res => {
+        const msgDiv = document.getElementById('reg-msg');
+        msgDiv.innerText = res.message;
+        msgDiv.classList.add('msg-success');
+        
+        setTimeout(() => {
+            document.getElementById('page-register').classList.add('hidden');
+            loadProducts();
+        }, 1000);
+    });
 }
 
 function loadProducts(){
-  apiGetProducts().then(items=>{
+  apiGetProducts().then(items => {
     products = items;
     const listDiv = document.getElementById('product-list');
     listDiv.innerHTML = "";
     items.forEach((p,i)=>{
-      listDiv.innerHTML += `<div class="product">
-        ${p.name} (${p.price} THB)<br>
-        Qty: <input id="qty-${i}" type="number" value="1">
+      listDiv.innerHTML += `
+      <div class="product-card">
+        <div style="font-size:3rem;">${p.img}</div>
+        <h3>${p.name}</h3>
+        <span class="price-tag">${p.price} THB</span>
+        <div style="margin-top:10px;">
+            Qty: <input id="qty-${i}" type="number" value="1" style="width:60px; text-align:center;">
+        </div>
       </div>`;
     });
     document.getElementById('page-products').classList.remove('hidden');
@@ -142,8 +605,9 @@ function checkout(){
   const cart = products.map((p,i)=>{
     return {name:p.name, price:p.price, qty:parseInt(document.getElementById(`qty-${i}`).value)};
   });
+  
   apiCheckout(cart).then(res=>{
-    document.getElementById('order-summary').innerText = `Total: ${res.total} THB`;
+    document.getElementById('order-summary').innerHTML = `Total Amount:<br><span style="font-size:3rem; font-weight:bold;">${res.total} THB</span>`;
     document.getElementById('page-products').classList.add('hidden');
     document.getElementById('page-checkout').classList.remove('hidden');
   });
@@ -154,28 +618,55 @@ function goPayment(){
   document.getElementById('page-payment').classList.remove('hidden');
 }
 
+function toggleCardInput() {
+    const method = document.getElementById('pay-method').value;
+    const cardGroup = document.getElementById('card-input-group');
+    if(method === 'Credit Card') cardGroup.style.display = 'block';
+    else cardGroup.style.display = 'none';
+}
+
 function processPayment(){
   const method = document.getElementById('pay-method').value;
   const card = document.getElementById('card-num').value;
   const amountText = document.getElementById('order-summary').innerText;
   const amount = parseInt(amountText.replace(/[^0-9]/g,""));
   
+  document.getElementById('pay-msg').innerText = "Processing Payment...";
+  
   apiPayment(method, amount, card).then(res=>{
-    document.getElementById('pay-msg').innerText = "Payment " + res.status;
     if(res.recorded){
-      orders.push({item:"Order via "+method, amount:amount});
+        orders.push({item:"Order via " + method, amount:amount, date: new Date().toLocaleString()});
+        document.getElementById('pay-msg').innerText = "✅ Payment Successful!";
+        document.getElementById('pay-msg').className = "msg-box msg-success";
+    } else {
+        // Simulating the bug where Bank Transfer says success but doesn't record
+        document.getElementById('pay-msg').innerText = "✅ Payment Successful! (Wait, did it record?)";
+        document.getElementById('pay-msg').className = "msg-box msg-success";
     }
-    showHistory();
-    document.getElementById('page-payment').classList.add('hidden');
-    document.getElementById('page-history').classList.remove('hidden');
+
+    setTimeout(() => {
+        showHistory();
+        document.getElementById('page-payment').classList.add('hidden');
+        document.getElementById('page-history').classList.remove('hidden');
+    }, 1500);
   });
 }
 
 function showHistory(){
   apiGetOrders().then(hist=>{
-    document.getElementById('history-list').innerHTML = hist.map(o=> `${o.item} - ${o.amount} THB`).join("<br>");
+    if(hist.length === 0) {
+        document.getElementById('history-list').innerHTML = "<p style='text-align:center; color:red;'>⚠️ No orders found! (Bug?)</p>";
+    } else {
+        document.getElementById('history-list').innerHTML = hist.map(o=> 
+            `<div style="border-bottom:1px solid #ddd; padding:10px;">
+                <b>${o.item}</b> <span style="float:right; color:green; font-weight:bold;">${o.amount} THB</span>
+                <div style="font-size:0.8rem; color:#888;">${o.date}</div>
+             </div>`
+        ).join("");
+    }
   });
 }
 </script>
+
 </body>
 </html>
