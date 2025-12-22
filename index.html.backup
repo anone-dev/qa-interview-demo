@@ -4,14 +4,350 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>QA Technical Interview Portal</title>
+<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/app-ui.css">
-<link rel="stylesheet" href="css/exam.css">
+<style>
+    :root {
+        --primary-color: #2c3e50;
+        --secondary-color: #34495e;
+        --accent-color: #3498db;
+        --bg-color: #f4f6f9;
+        --card-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        --success-color: #27ae60;
+        --danger-color: #c0392b;
+        --text-color: #333;
+        
+        /* Method Colors */
+        --method-get: #61affe;
+        --method-post: #49cc90;
+        --method-bg-get: #ebf3fb;
+        --method-bg-post: #e8f6f0;
+    }
+
+    body {
+        font-family: 'Sarabun', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+    }
+
+    /* --- Navigation --- */
+    .navbar {
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .brand {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .nav-tabs button {
+        background: transparent;
+        border: none;
+        padding: 10px 20px;
+        margin-left: 10px;
+        font-family: 'Sarabun', sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #7f8c8d;
+        cursor: pointer;
+        border-radius: 50px;
+        transition: all 0.3s;
+    }
+
+    .nav-tabs button.active {
+        background-color: var(--primary-color);
+        color: white;
+        box-shadow: 0 4px 6px rgba(44, 62, 80, 0.2);
+    }
+
+    .nav-tabs button:hover:not(.active) {
+        background-color: #ecf0f1;
+        color: var(--primary-color);
+    }
+
+    /* --- Container & Layout --- */
+    .main-container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .section-view {
+        display: none;
+        animation: fadeIn 0.4s ease-out;
+    }
+    
+    .section-view.active {
+        display: block;
+    }
+
+    /* --- Cards --- */
+    .card {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: var(--card-shadow);
+        margin-bottom: 25px;
+        border: 1px solid #eee;
+    }
+
+    .card h2 {
+        margin-top: 0;
+        color: var(--primary-color);
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+        font-size: 1.4rem;
+    }
+
+    /* --- API Accordion Styles --- */
+    .api-endpoint {
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        overflow: hidden;
+    }
+    
+    .api-header {
+        padding: 10px 15px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        transition: background 0.2s;
+        font-weight: bold;
+    }
+    
+    .api-header:hover {
+        filter: brightness(0.95);
+    }
+
+    /* Color coding for methods */
+    .api-post .api-header { background-color: var(--method-bg-post); border-left: 5px solid var(--method-post); }
+    .api-get .api-header { background-color: var(--method-bg-get); border-left: 5px solid var(--method-get); }
+
+    .method-badge {
+        display: inline-block;
+        min-width: 60px;
+        text-align: center;
+        color: white;
+        padding: 4px 10px;
+        border-radius: 4px;
+        margin-right: 15px;
+        font-size: 0.9rem;
+    }
+    .badge-post { background-color: var(--method-post); }
+    .badge-get { background-color: var(--method-get); }
+
+    .path { font-family: 'Fira Code', monospace; font-size: 1rem; color: #333; flex-grow: 1; }
+    .desc { font-size: 0.85rem; color: #666; margin-right: 15px; font-weight: normal; }
+    .toggle-icon { font-size: 0.8rem; color: #666; transition: transform 0.3s; }
+
+    .api-content {
+        display: none; /* Hidden by default */
+        padding: 20px;
+        background: white;
+        border-top: 1px solid #eee;
+    }
+
+    /* JSON Code Block Styling */
+    .code-block {
+        background: #282c34;
+        color: #abb2bf;
+        padding: 15px;
+        border-radius: 6px;
+        overflow-x: auto;
+        font-family: 'Fira Code', monospace;
+        font-size: 0.9rem;
+        margin: 10px 0;
+        white-space: pre; /* Important for indentation */
+        line-height: 1.5;
+        border: 1px solid #3e4451;
+    }
+    
+    .status-code {
+        font-family: 'Fira Code', monospace;
+        font-weight: bold;
+        font-size: 0.9rem;
+        padding: 2px 8px;
+        border-radius: 4px;
+        margin-left: 10px;
+    }
+    .status-200 { background: #e6fffa; color: #27ae60; border: 1px solid #27ae60; }
+    .status-201 { background: #e6fffa; color: #2980b9; border: 1px solid #2980b9; }
+    
+    .expected-note {
+        background: #e8f4fd; 
+        padding: 10px; 
+        border-left: 4px solid #3498db; 
+        margin-top: 15px;
+        border-radius: 0 4px 4px 0;
+        font-size: 0.95rem;
+    }
+
+    /* --- Forms (Mock App Styles) --- */
+    .form-group { margin-bottom: 15px; }
+    .form-row { display: flex; gap: 15px; }
+    
+    input, select {
+        width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 6px;
+        font-family: 'Sarabun', sans-serif; font-size: 1rem; box-sizing: border-box; transition: border-color 0.3s;
+    }
+    input:focus, select:focus { border-color: var(--accent-color); outline: none; box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1); }
+
+    /* --- Product Grid --- */
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+    .product-card {
+        border: 1px solid #eee; border-radius: 8px; padding: 15px; text-align: center;
+        background: #f9f9f9; transition: transform 0.2s;
+    }
+    .product-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+    .price-tag { display: block; font-size: 1.2rem; font-weight: bold; color: var(--success-color); margin: 10px 0; }
+
+    /* --- Buttons --- */
+    .btn {
+        padding: 10px 25px; border: none; border-radius: 6px; font-size: 1rem; font-weight: bold;
+        cursor: pointer; transition: background 0.3s; display: inline-block; font-family: 'Sarabun', sans-serif;
+    }
+    .btn-primary { background-color: var(--accent-color); color: white; }
+    .btn-primary:hover { background-color: #2980b9; }
+    .btn-success { background-color: var(--success-color); color: white; width: 100%; margin-top: 10px;}
+    .btn-success:hover { background-color: #219150; }
+    .btn-outline { background: transparent; border: 2px solid var(--primary-color); color: var(--primary-color); }
+    .btn-outline:hover { background: var(--primary-color); color: white; }
+
+    /* --- Messages --- */
+    .msg-box { margin-top: 15px; padding: 10px; border-radius: 5px; text-align: center; font-weight: bold; }
+    .msg-success { background-color: #d4edda; color: #155724; }
+    .msg-error { background-color: #f8d7da; color: #721c24; }
+
+    /* --- INTERVIEW SECTION STYLES --- */
+    .level-selector-container {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 40px;
+    }
+
+    .level-card {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        text-align: center;
+        width: 300px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        cursor: pointer;
+        transition: all 0.3s;
+        border: 2px solid transparent;
+    }
+
+    .level-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    
+    .level-card.junior:hover { border-color: var(--accent-color); }
+    .level-card.senior:hover { border-color: #e67e22; }
+
+    .level-icon { font-size: 3rem; margin-bottom: 15px; display: block; }
+    .level-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; display: block; }
+    .level-desc { color: #666; font-size: 0.9rem; }
+
+    /* Topic Tabs */
+    .topic-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 25px;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+    }
+    
+    .topic-btn {
+        background: none;
+        border: none;
+        padding: 8px 16px;
+        font-size: 1rem;
+        font-family: 'Sarabun', sans-serif;
+        color: #7f8c8d;
+        cursor: pointer;
+        border-radius: 4px;
+        font-weight: 600;
+    }
+    
+    .topic-btn:hover { background: #ecf0f1; }
+    .topic-btn.active { background: var(--primary-color); color: white; }
+
+    /* Logic Exam Specifics */
+    .condition-list li {
+        background: #f8f9fa; margin: 8px 0; padding: 10px 15px; border-radius: 6px;
+        display: flex; justify-content: space-between; border-left: 4px solid #bdc3c7;
+    }
+    .junior-list li { border-left-color: #3498db; }
+    .senior-list li { border-left-color: #e67e22; }
+
+    .rules-box {
+        background: #fff8e1; border: 1px solid #ffe082; padding: 15px; border-radius: 8px; margin: 15px 0;
+        line-height: 1.8;
+    }
+    
+    .action-badge {
+        display: inline-block; padding: 4px 12px; border-radius: 4px; color: white; font-size: 0.85rem; font-weight: bold;
+        vertical-align: middle; margin: 2px 0;
+    }
+    .act-reject { background: #c0392b; }
+    .act-fast { background: #27ae60; }
+    .act-reg { background: #2980b9; }
+    .act-approve { background: #27ae60; }
+
+    .solution-section { display: none; margin-top: 20px; padding-top: 20px; border-top: 2px dashed #ddd; }
+    
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: center; font-size: 0.9rem; }
+    th { background: #f2f2f2; }
+    .bg-green { background: #d5f5e3; color: #145a32; font-weight: bold; }
+    .bg-red { background: #fadbd8; color: #7b241c; font-weight: bold; }
+    .bg-blue { background: #d6eaf8; color: #154360; font-weight: bold; }
+    .dont-care { color: #999; font-style: italic; font-weight: normal; }
+
+    /* Exam Sub-Nav specific */
+    .exam-nav { text-align: center; margin-bottom: 20px; }
+    .role-btn {
+        padding: 10px 20px; margin: 5px; border-radius: 50px; border: none; cursor: pointer;
+        background: #e0e0e0; color: #555; font-weight: bold; transition: 0.3s;
+    }
+    .role-btn.active-junior { background: #3498db; color: white; }
+    
+    .placeholder-content {
+        text-align: center;
+        padding: 50px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border: 2px dashed #ddd;
+        color: #7f8c8d;
+    }
+
+    .hidden { display: none; }
+    .timer-badge { background: rgba(0,0,0,0.2); padding: 5px 10px; border-radius: 15px; font-size: 0.85rem; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
 </head>
 <body>
 
+<!-- Navigation Bar -->
 <nav class="navbar">
     <div class="brand">
         <span>🐞 QA Interview Portal</span>
@@ -24,6 +360,7 @@
 
 <div class="main-container">
 
+    <!-- ==================== TAB 1: MOCK APP (Bug Hunting) ==================== -->
     <div id="view-app" class="section-view active">
         
         <div style="background: #e8f4fd; padding: 15px; border-radius: 8px; border-left: 5px solid #3498db; margin-bottom: 20px; font-size: 0.9rem;">
@@ -32,13 +369,16 @@
             Please try to register, buy products, and checkout. Note down any anomalies you find.
         </div>
 
+        <!-- Sub Navigation for Bug Hunting App -->
         <div class="exam-nav" style="margin-bottom: 20px;">
             <button class="role-btn active-junior" id="btn-ui" onclick="showAppSection('ui')">🖥️ UI Application</button>
             <button class="role-btn" id="btn-api" onclick="showAppSection('api')">📋 API Specification</button>
             <button class="role-btn" id="btn-bugs" onclick="showAppSection('bugs')">🐞 Bug Summary</button>
         </div>
 
+        <!-- UI Application Section -->
         <div id="app-ui-section" class="app-section">
+            <!-- 1. Register Page -->
             <div id="page-register" class="card">
                 <h2>🔐 Register New Account</h2>
                 <div class="form-row">
@@ -86,6 +426,7 @@
                 <div id="reg-msg"></div>
             </div>
 
+            <!-- 2. Product List -->
             <div id="page-products" class="card hidden">
                 <h2>🛒 Shop Products</h2>
                 <div id="product-list" class="product-grid"></div>
@@ -94,6 +435,7 @@
                 <div style="clear:both"></div>
             </div>
 
+            <!-- 3. Checkout -->
             <div id="page-checkout" class="card hidden">
                 <h2>📦 Order Summary</h2>
                 <div id="order-summary" style="font-size: 1.5rem; text-align: center; margin: 30px 0; color: var(--primary-color);"></div>
@@ -101,6 +443,7 @@
                 <button class="btn btn-outline" style="width:100%; margin-top:10px" onclick="resetApp()">Cancel</button>
             </div>
 
+            <!-- 4. Payment -->
             <div id="page-payment" class="card hidden">
                 <h2>💳 Payment</h2>
                 
@@ -122,6 +465,7 @@
                 <div id="pay-msg"></div>
             </div>
 
+            <!-- 5. History -->
             <div id="page-history" class="card hidden">
                 <h2>📜 Order History</h2>
                 <div id="history-list" style="background: #f9f9f9; padding: 15px; border-radius: 5px;"></div>
@@ -129,11 +473,13 @@
             </div>
         </div>
 
+        <!-- API Specification Section -->
         <div id="app-api-section" class="app-section hidden">
             <div class="card">
                 <h2>📋 API Specification</h2>
                 <p style="color:#666;font-size:0.9rem;margin-bottom:20px;">This document describes the <b>expected behavior</b>.</p>
                 
+                <!-- API: Register -->
                 <div class="api-endpoint api-post"><div class="api-header" onclick="toggleEndpoint(this)"><span class="method-badge badge-post">POST</span><span class="path">/api/register</span><span class="desc">สมัครสมาชิกใหม่</span><span class="toggle-icon">▶</span></div><div class="api-content"><strong>📥 Request Body:</strong><div class="code-block">{
   "first": "Somchai",
   "last": "Jaidee",
@@ -147,6 +493,7 @@
   "message": "✅ Registration Successful!"
 }</div><div class="expected-note">Expected Validation: Email format, Password length.</div></div></div>
                 
+                <!-- API: Products -->
                 <div class="api-endpoint api-get"><div class="api-header" onclick="toggleEndpoint(this)"><span class="method-badge badge-get">GET</span><span class="path">/api/products</span><span class="desc">ดึงรายการสินค้า</span><span class="toggle-icon">▶</span></div><div class="api-content"><strong>📥 Request:</strong> None<br><br><strong>📤 Response:</strong> <span class="status-code status-200">200 OK</span><div class="code-block">[
   {
     "name": "Developer T-Shirt",
@@ -165,6 +512,7 @@
   }
 ]</div></div></div>
                 
+                <!-- API: Checkout -->
                 <div class="api-endpoint api-post"><div class="api-header" onclick="toggleEndpoint(this)"><span class="method-badge badge-post">POST</span><span class="path">/api/checkout</span><span class="desc">คำนวณยอดรวม</span><span class="toggle-icon">▶</span></div><div class="api-content"><strong>📥 Request Body:</strong><div class="code-block">{
   "cart": [
     { "name": "Developer T-Shirt", "price": 120, "qty": 2 },
@@ -174,6 +522,7 @@
   "total": 300
 }</div><div class="expected-note">Expected Logic: Qty > 0.</div></div></div>
                 
+                <!-- API: Payment -->
                 <div class="api-endpoint api-post"><div class="api-header" onclick="toggleEndpoint(this)"><span class="method-badge badge-post">POST</span><span class="path">/api/payment</span><span class="desc">ประมวลผลการชำระเงิน</span><span class="toggle-icon">▶</span></div><div class="api-content"><strong>📥 Request Body:</strong><div class="code-block">{
   "method": "Credit Card",
   "amount": 300,
@@ -183,6 +532,7 @@
   "recorded": true
 }</div><div class="expected-note">Expected Behavior: All methods must record history.</div></div></div>
                  
+                 <!-- API: Orders -->
                  <div class="api-endpoint api-get"><div class="api-header" onclick="toggleEndpoint(this)"><span class="method-badge badge-get">GET</span><span class="path">/api/orders</span><span class="desc">ดึงประวัติการสั่งซื้อ</span><span class="toggle-icon">▶</span></div><div class="api-content"><strong>📥 Request:</strong> None<br><br><strong>📤 Response:</strong> <span class="status-code status-200">200 OK</span><div class="code-block">[
   {
     "item": "Order via Credit Card",
@@ -198,6 +548,7 @@
             </div>
         </div>
 
+        <!-- Bug Summary Section -->
         <div id="app-bugs-section" class="app-section hidden">
             <div class="card">
                 <h2>🐞 Bug Summary Report</h2>
@@ -210,6 +561,7 @@
                     <span style="color: #6c5ce7;">Low: 4</span>
                 </div>
 
+                <!-- 1. Register Page Bugs -->
                 <div style="background: #f8f9fa; border-left: 5px solid #e17055; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
                     <h4 style="color: #e17055; margin-top: 0;">🔐 1. Register Page - Validation Bugs</h4>
                     <ul style="margin: 5px 0;">
@@ -221,6 +573,7 @@
                     </ul>
                 </div>
 
+                <!-- 2. Products & Checkout Bugs -->
                 <div style="background: #fff8e1; border-left: 5px solid #fdcb6e; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
                     <h4 style="color: #e17055; margin-top: 0;">🛒 2. Products & Checkout Page - Business Logic Bugs</h4>
                     <ul style="margin: 5px 0;">
@@ -230,6 +583,7 @@
                     </ul>
                 </div>
 
+                <!-- 3. Payment Page Bugs -->
                 <div style="background: #ffe0e0; border-left: 5px solid #d63031; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
                     <h4 style="color: #d63031; margin-top: 0;">💳 3. Payment Page - Payment Processing Bugs</h4>
                     <ul style="margin: 5px 0;">
@@ -239,6 +593,7 @@
                     </ul>
                 </div>
 
+                <!-- 4. Order History Bugs -->
                 <div style="background: #fff8e1; border-left: 5px solid #fdcb6e; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
                     <h4 style="color: #e17055; margin-top: 0;">📜 4. Order History Page - Data Display Bugs</h4>
                     <ul style="margin: 5px 0;">
@@ -248,6 +603,7 @@
                     </ul>
                 </div>
 
+                <!-- 5. API Level Bugs -->
                 <div style="background: #e8f4fd; border-left: 5px solid #6c5ce7; padding: 15px; border-radius: 4px; margin-bottom: 15px;">
                     <h4 style="color: #6c5ce7; margin-top: 0;">🔗 5. API Level Bugs</h4>
                     <ul style="margin: 5px 0;">
@@ -285,8 +641,10 @@
 
     </div>
 
+    <!-- ==================== TAB 2: INTERVIEW QUESTIONS (Protected) ==================== -->
     <div id="view-interview" class="section-view">
         
+        <!-- Step 1: Level Selector -->
         <div id="interview-level-select" class="level-selector-container">
             <div class="level-card junior" onclick="selectInterviewLevel('junior')">
                 <span class="level-icon">👶</span>
@@ -301,6 +659,7 @@
             </div>
         </div>
 
+        <!-- Step 2: Content Area (Hidden until level selected) -->
         <div id="interview-content-area" class="hidden">
             <div style="text-align: left; margin-bottom: 10px;">
                 <button class="btn btn-outline" style="padding: 5px 15px; font-size: 0.9rem;" onclick="resetInterviewLevel()">⬅️ Back to Level Selection</button>
@@ -311,6 +670,7 @@
                     <h2 style="margin:0; color:white; border:none; padding:0;">Selected: <span id="selected-level-text">...</span></h2>
                 </div>
 
+                <!-- Topic Navigation -->
                 <div class="topic-tabs">
                     <button class="topic-btn active" onclick="switchTopic(1)">1. Logic Exam</button>
                     <button class="topic-btn" onclick="switchTopic(2)">2. Technical - JSON</button>
@@ -318,8 +678,10 @@
                     <button class="topic-btn" onclick="switchTopic(4)">4. Coding / Automate</button>
                 </div>
 
+                <!-- TOPIC 1: LOGIC EXAM -->
                 <div id="topic-1" class="topic-content">
                     
+                    <!-- Junior Logic Content -->
                     <div id="logic-content-junior" class="hidden">
                         <div class="section-title">📌 โจทย์: ระบบอนุมัติบัตรเครดิต</div>
                         <div class="condition-list junior-list">
@@ -341,6 +703,7 @@
                         </div>
                     </div>
 
+                    <!-- Senior Logic Content -->
                     <div id="logic-content-senior" class="hidden">
                         <div class="section-title">📌 โจทย์: สินเชื่อส่วนบุคคล (Advanced)</div>
                         <div class="condition-list senior-list">
@@ -369,8 +732,11 @@
                     </div>
                 </div>
 
+                <!-- TOPIC 2: JSON -->
                 <div id="topic-2" class="topic-content hidden"><div class="placeholder-content"><h3>🏗️ Technical - JSON Question</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div></div>
+                <!-- TOPIC 3: SQL -->
                 <div id="topic-3" class="topic-content hidden"><div class="placeholder-content"><h3>💾 Technical - SQL Question</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div></div>
+                <!-- TOPIC 4: CODING -->
                 <div id="topic-4" class="topic-content hidden"><div class="placeholder-content"><h3>🤖 Technical - Coding / Automate</h3><p>ส่วนนี้กำลังดำเนินการสร้าง (Coming Soon)</p></div></div>
             </div>
         </div>
@@ -378,9 +744,204 @@
 
 </div>
 
-<script src="js/main.js"></script>
-<script src="js/mock-app.js"></script>
-<script src="js/interview.js"></script>
+<script>
+// === UI Navigation Logic ===
+function switchMainTab(tab) {
+    document.querySelectorAll('.section-view').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-tabs button').forEach(el => el.classList.remove('active'));
+    
+    if(tab === 'app') {
+        document.getElementById('view-app').classList.add('active');
+        document.querySelectorAll('.nav-tabs button')[0].classList.add('active');
+    } else if(tab === 'interview') {
+        document.getElementById('view-interview').classList.add('active');
+        document.querySelectorAll('.nav-tabs button')[1].classList.add('active');
+    }
+}
+
+// Password Protection for Interview Section
+function authInterviewAccess() {
+    getPasswordInput('Enter Password to Access Interview Questions').then(password => {
+        // Plaintext Check as requested
+        if(password === 'axonsqa') {
+            switchMainTab('interview');
+        } else {
+            if(password !== null) alert('⛔ Access Denied: Incorrect Password');
+        }
+    });
+}
+
+// === Interview Section Logic ===
+let currentLevel = '';
+function selectInterviewLevel(level) {
+    currentLevel = level;
+    document.getElementById('interview-level-select').classList.add('hidden');
+    document.getElementById('interview-content-area').classList.remove('hidden');
+    const headerTitle = document.getElementById('selected-level-text');
+    const headerBox = document.getElementById('interview-header');
+    if(level === 'junior') { headerTitle.innerText = "Junior Level"; headerBox.style.background = "#3498db"; } 
+    else { headerTitle.innerText = "Senior Level"; headerBox.style.background = "#e67e22"; }
+    switchTopic(1);
+}
+function resetInterviewLevel() {
+    document.getElementById('interview-level-select').classList.remove('hidden');
+    document.getElementById('interview-content-area').classList.add('hidden');
+    currentLevel = '';
+}
+function switchTopic(topicId) {
+    document.querySelectorAll('.topic-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.topic-btn')[topicId-1].classList.add('active');
+    document.querySelectorAll('.topic-content').forEach(content => content.classList.add('hidden'));
+    document.getElementById('topic-' + topicId).classList.remove('hidden');
+    if(topicId === 1) {
+        document.getElementById('logic-content-junior').classList.add('hidden');
+        document.getElementById('logic-content-senior').classList.add('hidden');
+        if(currentLevel === 'junior') document.getElementById('logic-content-junior').classList.remove('hidden');
+        else document.getElementById('logic-content-senior').classList.remove('hidden');
+    }
+}
+
+// Password input function
+function getPasswordInput(message) {
+    return new Promise((resolve) => {
+        const overlay = document.createElement('div');
+        overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:10000;display:flex;align-items:center;justify-content:center;';
+        const modal = document.createElement('div');
+        modal.style.cssText = 'background:white;padding:30px;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.3);text-align:center;min-width:300px;';
+        modal.innerHTML = `<h3 style="margin-top:0;color:#333;">🔒 ${message}</h3><input type="password" id="pwd-input" style="width:200px;padding:10px;border:2px solid #ddd;border-radius:5px;font-size:16px;text-align:center;" placeholder="•••••"><div style="margin-top:20px;"><button id="pwd-ok" style="background:#3498db;color:white;border:none;padding:10px 20px;border-radius:5px;margin-right:10px;cursor:pointer;">OK</button><button id="pwd-cancel" style="background:#95a5a6;color:white;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;">Cancel</button></div>`;
+        overlay.appendChild(modal); document.body.appendChild(overlay);
+        const input = document.getElementById('pwd-input');
+        input.focus();
+        function cleanup() { document.body.removeChild(overlay); }
+        document.getElementById('pwd-ok').onclick = () => { const password = input.value.trim(); cleanup(); resolve(password); };
+        document.getElementById('pwd-cancel').onclick = () => { cleanup(); resolve(null); };
+        input.onkeypress = (e) => { if(e.key === 'Enter') document.getElementById('pwd-ok').click(); };
+    });
+}
+
+function showAppSection(section) {
+    if(section === 'bugs') {
+        getPasswordInput('Enter Password to View Bug Summary').then(password => {
+            // Plaintext Check
+            if(password === 'qacoe') {
+                switchAppSectionView(section);
+            } else { 
+                if(password !== null) alert('⛔ Access Denied: Incorrect Password'); 
+            }
+        });
+        return;
+    }
+    switchAppSectionView(section);
+}
+
+function switchAppSectionView(section) {
+    document.querySelectorAll('.app-section').forEach(el => el.classList.add('hidden'));
+    document.getElementById('btn-ui').classList.remove('active-junior');
+    document.getElementById('btn-api').classList.remove('active-junior');
+    document.getElementById('btn-bugs').classList.remove('active-junior');
+    document.getElementById('app-' + section + '-section').classList.remove('hidden');
+    document.getElementById('btn-' + section).classList.add('active-junior');
+}
+function toggleEndpoint(headerElement) { const content = headerElement.nextElementSibling; const arrow = headerElement.querySelector('.toggle-icon'); if(content.style.display === 'block') { content.style.display = 'none'; arrow.style.transform = 'rotate(0deg)'; } else { content.style.display = 'block'; arrow.style.transform = 'rotate(90deg)'; } }
+
+function toggleSolution(level) {
+    getPasswordInput('Enter Password to View Solution').then(password => {
+         // Plaintext Check
+         if(password === 'qacoe') {
+            var x = document.getElementById("solution-" + level);
+            x.style.display = (x.style.display === "block") ? "none" : "block";
+            if(x.style.display === "block") setTimeout(() => x.scrollIntoView({behavior: 'smooth'}), 100);
+        } else { if(password !== null) alert('⛔ Access Denied: Incorrect Password'); }
+    });
+}
+
+// === Mock Application Logic ===
+let orders = [];
+let products = []; 
+function apiRegister(data){ return new Promise(resolve => { setTimeout(() => resolve({status:"success", message:"✅ Registration Successful!"}), 600); }); }
+function apiGetProducts(){ return new Promise(resolve => { resolve([ {name:"Developer T-Shirt", price:120, img:"👕"}, {name:"Debugging Rubber Duck", price:550, img:"🦆"}, {name:"Coffee Mug", price:60, img:"☕"} ]); }); }
+function apiCheckout(cart){ return new Promise(resolve => { let total = 0; cart.forEach(item => total += item.qty * item.price); resolve({total: total}); }); }
+function apiPayment(method, amount, cardNum){ return new Promise(resolve => { setTimeout(() => { if(method === "Bank Transfer"){ resolve({status:"success", recorded:false}); } else { resolve({status:"success", recorded:true}); } }, 800); }); }
+function apiGetOrders(){ return new Promise(resolve => resolve(orders)); }
+
+function register(){ 
+    document.getElementById('reg-msg').className = 'msg-box'; 
+    document.getElementById('reg-msg').innerText = 'Processing...'; 
+    apiRegister({}).then(res => { 
+        const msgDiv = document.getElementById('reg-msg'); 
+        msgDiv.innerText = res.message; 
+        msgDiv.classList.add('msg-success'); 
+        setTimeout(() => { document.getElementById('page-register').classList.add('hidden'); loadProducts(); }, 1000); 
+    }); 
+}
+
+function loadProducts(){ 
+    apiGetProducts().then(items => { 
+        products = items; 
+        const listDiv = document.getElementById('product-list'); 
+        listDiv.innerHTML = ""; 
+        items.forEach((p,i)=>{ listDiv.innerHTML += `<div class="product-card"><div style="font-size:3rem;">${p.img}</div><h3>${p.name}</h3><span class="price-tag">${p.price} THB</span><div style="margin-top:10px;">Qty: <input id="qty-${i}" type="number" value="1" style="width:60px; text-align:center;"></div></div>`; }); 
+        document.getElementById('page-products').classList.remove('hidden'); 
+    }); 
+}
+
+function checkout(){ 
+    const cart = products.map((p,i)=>{ return {name:p.name, price:p.price, qty:parseInt(document.getElementById(`qty-${i}`).value)}; }); 
+    apiCheckout(cart).then(res=>{ document.getElementById('order-summary').innerHTML = `Total Amount:<br><span style="font-size:3rem; font-weight:bold;">${res.total} THB</span>`; document.getElementById('page-products').classList.add('hidden'); document.getElementById('page-checkout').classList.remove('hidden'); }); 
+}
+
+function goPayment(){ document.getElementById('page-checkout').classList.add('hidden'); document.getElementById('page-payment').classList.remove('hidden'); }
+
+function toggleCardInput() { const method = document.getElementById('pay-method').value; document.getElementById('card-input-group').style.display = (method === 'Credit Card') ? 'block' : 'none'; }
+
+function processPayment(){ 
+    const method = document.getElementById('pay-method').value; 
+    const amountText = document.getElementById('order-summary').innerText; 
+    const amount = parseInt(amountText.replace(/[^0-9]/g,"")); 
+    document.getElementById('pay-msg').innerText = "Processing Payment..."; 
+    apiPayment(method, amount, "").then(res=>{ 
+        const msg = (res.recorded) ? "✅ Payment Successful!" : "✅ Payment Successful! (Wait, did it record?)"; 
+        document.getElementById('pay-msg').innerText = msg; 
+        document.getElementById('pay-msg').className = "msg-box msg-success"; 
+        if(res.recorded) orders.push({item:"Order via " + method, amount:amount, date: new Date().toLocaleString()}); 
+        setTimeout(() => { showHistory(); document.getElementById('page-payment').classList.add('hidden'); document.getElementById('page-history').classList.remove('hidden'); }, 1500); 
+    }); 
+}
+
+function showHistory(){ 
+    apiGetOrders().then(hist=>{ 
+        if(hist.length === 0) { document.getElementById('history-list').innerHTML = "<p style='text-align:center; color:red;'>⚠️ No orders found! (Bug?)</p>"; } 
+        else { document.getElementById('history-list').innerHTML = hist.map(o=> `<div style="border-bottom:1px solid #ddd; padding:10px;"><b>${o.item}</b> <span style="float:right; color:green; font-weight:bold;">${o.amount} THB</span><div style="font-size:0.8rem; color:#888;">${o.date}</div></div>`).join(""); } 
+    }); 
+}
+
+// Function to Reset App State (Replaces location.reload)
+function resetApp() {
+    // 1. Reset Data
+    orders = [];
+    products = [];
+    
+    // 2. Hide all pages
+    document.getElementById('page-products').classList.add('hidden');
+    document.getElementById('page-checkout').classList.add('hidden');
+    document.getElementById('page-payment').classList.add('hidden');
+    document.getElementById('page-history').classList.add('hidden');
+    
+    // 3. Clear Inputs
+    document.getElementById('reg-first').value = '';
+    document.getElementById('reg-last').value = '';
+    document.getElementById('reg-email').value = '';
+    document.getElementById('reg-pass').value = '';
+    document.getElementById('reg-confirm').value = '';
+    document.getElementById('reg-dob').value = '';
+    document.getElementById('pay-msg').innerText = '';
+    document.getElementById('reg-msg').innerText = '';
+    document.getElementById('reg-msg').className = '';
+    
+    // 4. Show Register Page
+    document.getElementById('page-register').classList.remove('hidden');
+}
+</script>
 
 </body>
 </html>

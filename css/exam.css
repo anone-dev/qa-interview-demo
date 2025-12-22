@@ -1,0 +1,192 @@
+/* Interview Questions Styles */
+
+.level-selector-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.level-card {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+
+.level-card:hover { 
+    transform: translateY(-5px); 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+}
+
+.level-card.junior:hover { 
+    border-color: var(--accent-color); 
+}
+
+.level-card.senior:hover { 
+    border-color: #e67e22; 
+}
+
+.level-icon { 
+    font-size: 3rem; 
+    margin-bottom: 15px; 
+    display: block; 
+}
+
+.level-title { 
+    font-size: 1.5rem; 
+    font-weight: bold; 
+    margin-bottom: 10px; 
+    display: block; 
+}
+
+.level-desc { 
+    color: #666; 
+    font-size: 0.9rem; 
+}
+
+/* Topic Tabs */
+.topic-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.topic-btn {
+    background: none;
+    border: none;
+    padding: 8px 16px;
+    font-size: 1rem;
+    font-family: 'Sarabun', sans-serif;
+    color: #7f8c8d;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.topic-btn:hover { 
+    background: #ecf0f1; 
+}
+
+.topic-btn.active { 
+    background: var(--primary-color); 
+    color: white; 
+}
+
+/* Logic Exam Specifics */
+.condition-list li {
+    background: #f8f9fa; 
+    margin: 8px 0; 
+    padding: 10px 15px; 
+    border-radius: 6px;
+    display: flex; 
+    justify-content: space-between; 
+    border-left: 4px solid #bdc3c7;
+}
+
+.junior-list li { 
+    border-left-color: #3498db; 
+}
+
+.senior-list li { 
+    border-left-color: #e67e22; 
+}
+
+.rules-box {
+    background: #fff8e1; 
+    border: 1px solid #ffe082; 
+    padding: 15px; 
+    border-radius: 8px; 
+    margin: 15px 0;
+    line-height: 1.8;
+}
+
+.action-badge {
+    display: inline-block; 
+    padding: 4px 12px; 
+    border-radius: 4px; 
+    color: white; 
+    font-size: 0.85rem; 
+    font-weight: bold;
+    vertical-align: middle; 
+    margin: 2px 0;
+}
+
+.act-reject { background: #c0392b; }
+.act-fast { background: #27ae60; }
+.act-reg { background: #2980b9; }
+.act-approve { background: #27ae60; }
+
+.solution-section { 
+    display: none; 
+    margin-top: 20px; 
+    padding-top: 20px; 
+    border-top: 2px dashed #ddd; 
+}
+
+/* Tables */
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 15px; 
+}
+
+th, td { 
+    border: 1px solid #ddd; 
+    padding: 10px; 
+    text-align: center; 
+    font-size: 0.9rem; 
+}
+
+th { 
+    background: #f2f2f2; 
+}
+
+.bg-green { 
+    background: #d5f5e3; 
+    color: #145a32; 
+    font-weight: bold; 
+}
+
+.bg-red { 
+    background: #fadbd8; 
+    color: #7b241c; 
+    font-weight: bold; 
+}
+
+.bg-blue { 
+    background: #d6eaf8; 
+    color: #154360; 
+    font-weight: bold; 
+}
+
+.dont-care { 
+    color: #999; 
+    font-style: italic; 
+    font-weight: normal; 
+}
+
+/* Placeholder Content */
+.placeholder-content {
+    text-align: center;
+    padding: 50px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 2px dashed #ddd;
+    color: #7f8c8d;
+}
+
+.timer-badge { 
+    background: rgba(0,0,0,0.2); 
+    padding: 5px 10px; 
+    border-radius: 15px; 
+    font-size: 0.85rem; 
+}
