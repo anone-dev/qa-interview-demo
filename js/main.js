@@ -128,23 +128,23 @@ const foundErrors = new Set();
 // 1. DEFINITIONS (ข้อมูลโจทย์ตามภาพต้นฉบับ)
 const triangleCases = [
     { id: 1, name: "All fields are empty", desc: "A=, B=, C=" },
-    { id: 2, name: "This is not a triangle", desc: "A+B < C" },
-    { id: 3, name: "Not all fields specified", desc: "Missing inputs" },
-    { id: 4, name: "Equilateral triangle", desc: "A=B=C" },
-    { id: 5, name: "Isosceles triangle", desc: "A=B != C" },
-    { id: 6, name: "Right triangle", desc: "Pythagoras" },
-    { id: 7, name: "Obtuse triangle", desc: "Angle > 90" },
-    { id: 8, name: "Acute triangle", desc: "All angles < 90" },
-    { id: 9, name: "Not a triangle (Boundary)", desc: "A+B = C" },
-    { id: 10, name: "Large numbers", desc: "1,000,000+" },
+    { id: 2, name: "This is not a triangle", desc: "A+B < C (1,2,10)" },
+    { id: 3, name: "Not all fields specified", desc: "A=3, B=4, C=" },
+    { id: 4, name: "Equilateral triangle", desc: "3,3,3" },
+    { id: 5, name: "Isosceles triangle", desc: "5,5,8" },
+    { id: 6, name: "Right triangle", desc: "3,4,5 (Pythagoras)" },
+    { id: 7, name: "Obtuse triangle", desc: "2,3,4" },
+    { id: 8, name: "Acute triangle", desc: "5,6,7" },
+    { id: 9, name: "Not a triangle (Sum=)", desc: "1,2,3 (Boundary)" },
+    { id: 10, name: "Large numbers", desc: "1000000+" },
     { id: 11, name: "SQL injection", desc: "' OR 1=1" },
     { id: 12, name: "XSS attack", desc: "<script>" }
 ];
 
 const bugCases = [
-    { id: 'E1', name: "Field C not being validated", desc: "A,B=Num, C=Text" },
-    { id: 'E2', name: "All zeros - not an equilateral triangle", desc: "0,0,0" },
-    { id: 'E3', name: "Float numbers not handled", desc: "1.5, 1.5, 1.5" },
+    { id: 'E1', name: "Field C not being validated", desc: "Try text in C only" },
+    { id: 'E2', name: "All zeros - not equilateral", desc: "0,0,0" },
+    { id: 'E3', name: "Float numbers not handled", desc: "3.5, 4.5, 5.5" },
     { id: 'E4', name: "Negative values accepted", desc: "-3, -3, -3" }
 ];
 
@@ -186,7 +186,7 @@ function unlockCase(id, type = 'normal') {
         }
         
         const badgeEl = document.getElementById(badge);
-        if(badgeEl) badgeEl.innerText = `${type==='bug'?'Bugs':'Cases'}: ${set.size}/${total}`;
+        if(badgeEl) badgeEl.innerText = `${type==='bug'?'Errors':'Cases'}: ${set.size}/${total}`;
     }
 }
 
@@ -249,32 +249,45 @@ function checkTriangle() {
     // Case #2: Not a triangle (Sum less than 3rd side)
     if(a+b<c || a+c<b || b+c<a) { unlockCase(2); showError("This is not a triangle"); return; }
 
-    // Valid Triangle Types
-    let msg = "";
-    let isEqui = false;
+    // Valid Triangle - Classify by Priority
     
-    // Case #4: Equilateral
-    if(a===b && b===c) { unlockCase(4); msg = "Equilateral triangle"; isEqui = true; }
-    // Case #5: Isosceles
-    else if(a===b || a===c || b===c) { unlockCase(5); msg = "Isosceles triangle"; }
+    // Priority 1: Equilateral (all sides equal)
+    if(a === b && b === c) { 
+        unlockCase(4); 
+        showSuccess("Equilateral triangle");
+        return;
+    }
     
-    // Pythagoras Calculation for Angles
+    // Priority 2: Isosceles (any two sides equal)
+    if(a === b || b === c) { 
+        unlockCase(5); 
+        showSuccess("Isosceles triangle");
+        return;
+    }
+    
+    // Priority 3: Scalene - Check angle types
     const sides = [a,b,c].sort((x,y)=>x-y);
     const [s1, s2, hyp] = sides;
     const pythagoras = s1**2 + s2**2;
     const hypSq = hyp**2;
 
-    // Case #6: Right Triangle (Approx check for floats)
-    if(Math.abs(pythagoras - hypSq) < 0.1) { unlockCase(6); msg = "Right triangle"; }
+    // Right triangle
+    if(Math.abs(pythagoras - hypSq) < 0.1) { 
+        unlockCase(6); 
+        showSuccess("Right triangle");
+        return;
+    }
     
-    // Case #7: Obtuse (a^2 + b^2 < c^2)
-    else if(pythagoras < hypSq) { unlockCase(7); if(!msg) msg = "Obtuse triangle"; } 
+    // Obtuse triangle
+    if(pythagoras < hypSq) { 
+        unlockCase(7); 
+        showSuccess("Obtuse triangle");
+        return;
+    }
     
-    // Case #8: Acute (a^2 + b^2 > c^2)
-    else if(pythagoras > hypSq) { unlockCase(8); if(!msg) msg = "Acute triangle"; }
-
-    // Fallback
-    showSuccess(msg || "Scalene triangle");
+    // Acute triangle
+    unlockCase(8); 
+    showSuccess("Acute triangle");
 }
 
 // --- Helpers ---
@@ -284,6 +297,9 @@ function showError(msg) {
     el.style.color = "#7b241c"; 
     el.innerText = msg; 
     el.style.display = 'block';
+    // Hide triangle visualization on error
+    const visual = document.getElementById('tri-visual');
+    if(visual) visual.style.display = 'none';
 }
 
 function showSuccess(msg) { 
@@ -309,24 +325,24 @@ function toggleCheatSheet() {
 `🕵️♂️ เฉลยและคำอธิบาย (Instructor Solutions)
 
 --- 🎯 1. Test Cases (ต้องทำให้ครบ 12 ข้อ) ---
-#1 Empty: ไม่กรอกข้อมูลเลย (กด Check ทั้งที่ว่างเปล่า)
-#2 Not Triangle: ไม่เป็นสามเหลี่ยม (ด้านสั้นรวมกัน < ด้านยาว) -> 1, 2, 10
-#3 Missing: กรอกไม่ครบ -> 3, 4, [ว่าง]
-#4 Equilateral: ด้านเท่า -> 3, 3, 3
-#5 Isosceles: หน้าจั่ว -> 3, 3, 5
-#6 Right: มุมฉาก -> 3, 4, 5
-#7 Obtuse: มุมป้าน -> 2, 3, 4
-#8 Acute: มุมแหลม -> 4, 4, 4
-#9 Boundary: ผลรวมเท่ากันพอดี (เส้นตรง) -> 1, 2, 3
-#10 Large: เลขหลักล้าน -> 1000000, 1000000, 1000000
-#11 SQL: ทดสอบความปลอดภัย -> ' OR 1=1
-#12 XSS: ทดสอบความปลอดภัย -> <script>
+#1 All fields are empty (A=, B=, C=): ไม่กรอกข้อมูลเลย -> [ว่าง], [ว่าง], [ว่าง]
+#2 This is not a triangle (A+B < C): ไม่เป็นสามเหลี่ยม -> 1, 2, 10
+#3 Not all fields specified (Missing inputs): กรอกไม่ครบ -> 3, 4, [ว่าง]
+#4 Equilateral triangle (A=B=C): ด้านเท่า -> 3, 3, 3
+#5 Isosceles triangle (A=B ≠ C): หน้าจั่ว -> 5, 5, 8
+#6 Right triangle (Pythagoras): มุมฉาก -> 3, 4, 5
+#7 Obtuse triangle (Angle > 90°): มุมป้าน -> 2, 3, 4
+#8 Acute triangle (All angles < 90°): มุมแหลม -> 5, 6, 7
+#9 Not a triangle - Boundary (A+B = C): ผลรวมเท่ากันพอดี -> 1, 2, 3
+#10 Large numbers (1,000,000+): เลขหลักล้าน -> 1000000, 1000000, 1000000
+#11 SQL injection (' OR 1=1): ทดสอบความปลอดภัย -> ' OR 1=1
+#12 XSS attack (<script>): ทดสอบความปลอดภัย -> <script>
 
---- 🐞 2. Bugs (ต้องหาให้เจอ 4 จุด) ---
-E1: Bug ช่อง C (ลืม Validate) -> 3, 3, 'A'
-E2: Bug เลขศูนย์ (0 ไม่ควรเป็นด้านเท่า) -> 0, 0, 0
-E3: Bug ทศนิยม (ระบบไม่รับ Float) -> 3.5, 3.5, 3.5
-E4: Bug ค่าติดลบ (รับค่าลบเป็นด้านเท่า) -> -3, -3, -3`;
+--- 🐞 2. Errors Handling (ต้องหาให้เจอ 4 จุด) ---
+E1: Field C not being validated (A,B=Num, C=Text) -> 3, 3, 'A'
+E2: All zeros - not an equilateral triangle (0,0,0) -> 0, 0, 0
+E3: Float numbers not handled (1.5, 1.5, 1.5) -> 3.5, 4.5, 5.5
+E4: Negative values accepted (-3, -3, -3) -> -3, -3, -3`;
 
         alert(cheatText);
     } else {

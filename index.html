@@ -290,7 +290,7 @@
     <div id="view-triangle" class="section-view">
         <div class="card">
             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #f0f0f0; padding-bottom:15px; margin-bottom:20px;">
-                <h2 style="border:none; margin:0; padding:0;">Pk Black Box: Triangle Tester</h2>
+                <h2 style="border:none; margin:0; padding:0;">Black Box: Triangle Tester</h2>
                 <div style="text-align:right;">
                     <span id="score-badge" style="background:#2c3e50; color:white; padding:5px 15px; border-radius:20px; font-weight:bold; font-size:0.9rem;">Cases: 0/12</span>
                     <span id="error-badge" style="background:#c0392b; color:white; padding:5px 15px; border-radius:20px; font-weight:bold; font-size:0.9rem; margin-left:5px;">Bugs: 0/4</span>
@@ -358,25 +358,25 @@
                                 </ul>
                                 <p><b>Test Cases (12):</b></p>
                                 <ul style="margin:5px 0; padding-left:20px; font-size:0.85rem;">
-                                    <li>3,3,3 → Equilateral</li>
-                                    <li>5,5,8 → Isosceles</li>
-                                    <li>3,4,5 → Right</li>
-                                    <li>2,3,4 → Obtuse</li>
-                                    <li>5,6,7 → Acute</li>
-                                    <li>2,3,5 → Invalid (sum equals)</li>
-                                    <li>1,2,5 → Invalid (sum less)</li>
-                                    <li>0,1,1 → Invalid (zero)</li>
-                                    <li>-1,2,2 → Invalid (negative)</li>
-                                    <li>1.5,1.5,1.5 → Equilateral (decimal)</li>
-                                    <li>10,10,10 → Equilateral (large)</li>
-                                    <li>1,1,1.9 → Isosceles</li>
+                                    <li>#1 All fields are empty (A=, B=, C=): [ว่าง], [ว่าง], [ว่าง]</li>
+                                    <li>#2 This is not a triangle (A+B &lt; C): 1, 2, 10</li>
+                                    <li>#3 Not all fields specified (Missing inputs): 3, 4, [ว่าง]</li>
+                                    <li>#4 Equilateral triangle (A=B=C): 3, 3, 3</li>
+                                    <li>#5 Isosceles triangle (A=B ≠ C): 5, 5, 8</li>
+                                    <li>#6 Right triangle (Pythagoras): 3, 4, 5</li>
+                                    <li>#7 Obtuse triangle (Angle &gt; 90°): 2, 3, 4</li>
+                                    <li>#8 Acute triangle (All angles &lt; 90°): 5, 6, 7</li>
+                                    <li>#9 Not a triangle - Boundary (A+B = C): 1, 2, 3</li>
+                                    <li>#10 Large numbers (1,000,000+): 1000000, 1000000, 1000000</li>
+                                    <li>#11 SQL injection (' OR 1=1): ' OR 1=1</li>
+                                    <li>#12 XSS attack (&lt;script&gt;): &lt;script&gt;</li>
                                 </ul>
-                                <p><b>Bug Cases (4):</b></p>
+                                <p><b>Errors Handling (4):</b></p>
                                 <ul style="margin:5px 0; padding-left:20px; font-size:0.85rem;">
-                                    <li>3,4,5 classified as Acute (should be Right)</li>
-                                    <li>5,5,8 classified as Scalene (should be Isosceles)</li>
-                                    <li>2,3,4 classified as Acute (should be Obtuse)</li>
-                                    <li>1,2,3 classified as Valid (should be Invalid)</li>
+                                    <li>E1: Field C not being validated (A,B=Num, C=Text) → 3, 3, 'A'</li>
+                                    <li>E2: All zeros - not an equilateral triangle (0,0,0) → 0, 0, 0</li>
+                                    <li>E3: Float numbers not handled (1.5, 1.5, 1.5) → 3.5, 4.5, 5.5</li>
+                                    <li>E4: Negative values accepted (-3, -3, -3) → -3, -3, -3</li>
                                 </ul>
                             </div>
                         </div>
