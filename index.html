@@ -18,6 +18,7 @@
     </div>
     <div class="nav-tabs">
         <button class="active" onclick="switchMainTab('app')">📱 Bug Hunting App</button>
+        <button onclick="switchMainTab('triangle')">📐 Triangle Challenge</button>
         <button onclick="authInterviewAccess()">🧩 Interview Questions</button>
     </div>
 </nav>
@@ -283,6 +284,106 @@
             </div>
         </div>
 
+    </div>
+
+    <!-- ==================== TAB: TRIANGLE CHALLENGE ==================== -->
+    <div id="view-triangle" class="section-view">
+        <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #f0f0f0; padding-bottom:15px; margin-bottom:20px;">
+                <h2 style="border:none; margin:0; padding:0;">Pk Black Box: Triangle Tester</h2>
+                <div style="text-align:right;">
+                    <span id="score-badge" style="background:#2c3e50; color:white; padding:5px 15px; border-radius:20px; font-weight:bold; font-size:0.9rem;">Cases: 0/12</span>
+                    <span id="error-badge" style="background:#c0392b; color:white; padding:5px 15px; border-radius:20px; font-weight:bold; font-size:0.9rem; margin-left:5px;">Bugs: 0/4</span>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px;">
+                
+                <!-- Left: Input Form -->
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #ddd;">
+                    <h4 style="margin-top:0;">📐 Input Parameters</h4>
+                    <p style="font-size:0.85rem; color:#666;">Enter lengths of sides A, B, and C.</p>
+                    
+                    <div class="form-group">
+                        <label>Side A</label>
+                        <input type="text" id="tri-a" class="tri-input" placeholder="e.g. 3">
+                    </div>
+                    <div class="form-group">
+                        <label>Side B</label>
+                        <input type="text" id="tri-b" class="tri-input" placeholder="e.g. 4">
+                    </div>
+                    <div class="form-group">
+                        <label>Side C</label>
+                        <input type="text" id="tri-c" class="tri-input" placeholder="e.g. 5">
+                    </div>
+
+                    <button class="btn btn-primary" style="width:100%" onclick="checkTriangle()">Check Triangle</button>
+                    <button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="resetTriangle()">Clear</button>
+
+                    <!-- Result Display -->
+                    <div id="tri-result" style="margin-top:20px; padding:15px; border-radius:6px; text-align:center; font-weight:bold; display:none;"></div>
+                    
+                    <!-- Triangle Visualization -->
+                    <div id="tri-visual" style="margin-top:20px; display:none; text-align:center;">
+                        <svg id="triangle-svg" width="200" height="180" style="border:1px solid #ddd; border-radius:4px; background:#fafafa;"></svg>
+                    </div>
+                </div>
+
+                <!-- Right: Achievements/Cases -->
+                <div>
+                    <h4 style="margin-top:0;">🎯 Test Case Coverage</h4>
+                    <div class="achieve-grid" id="case-grid">
+                        <!-- JavaScript will populate this -->
+                    </div>
+
+                    <h4 style="margin-top:20px;">🐞 Error Handling (Edge Cases)</h4>
+                    <div class="achieve-grid" id="error-grid">
+                        <!-- JavaScript will populate this -->
+                    </div>
+                    
+                    <div style="margin-top:20px;">
+                        <button class="btn" style="font-size:0.8rem; color:#aaa; text-decoration:underline; background:none; border:none;" onclick="toggleCheatSheet()">Show Instructor Cheat Sheet</button>
+                        <div id="cheat-sheet-error" style="display:none; margin-top:10px; padding:10px; background:#f8d7da; border:1px solid #f5c6cb; border-radius:4px; color:#721c24; font-weight:bold;"></div>
+                        <div id="cheat-sheet-section" style="display:none; margin-top:15px; padding:15px; background:#fff3cd; border:1px solid #ffeaa7; border-radius:6px;">
+                            <h4 style="margin-top:0; color:#2c3e50;">📋 Cheat Sheet - Triangle Classification</h4>
+                            <div style="font-size:0.9rem; line-height:1.6;">
+                                <p><b>Valid Triangle Check:</b> Sum of any two sides > third side</p>
+                                <ul style="margin:10px 0; padding-left:20px;">
+                                    <li><b>Equilateral:</b> a = b = c</li>
+                                    <li><b>Isosceles:</b> a = b OR b = c OR a = c (exactly 2 equal)</li>
+                                    <li><b>Right:</b> a² + b² = c² (Pythagorean theorem)</li>
+                                    <li><b>Obtuse:</b> a² + b² < c² (largest side squared > sum of other two squared)</li>
+                                    <li><b>Acute:</b> a² + b² > c² (all angles < 90°)</li>
+                                    <li><b>Scalene:</b> All sides different (and not right/obtuse/acute)</li>
+                                </ul>
+                                <p><b>Test Cases (12):</b></p>
+                                <ul style="margin:5px 0; padding-left:20px; font-size:0.85rem;">
+                                    <li>3,3,3 → Equilateral</li>
+                                    <li>5,5,8 → Isosceles</li>
+                                    <li>3,4,5 → Right</li>
+                                    <li>2,3,4 → Obtuse</li>
+                                    <li>5,6,7 → Acute</li>
+                                    <li>2,3,5 → Invalid (sum equals)</li>
+                                    <li>1,2,5 → Invalid (sum less)</li>
+                                    <li>0,1,1 → Invalid (zero)</li>
+                                    <li>-1,2,2 → Invalid (negative)</li>
+                                    <li>1.5,1.5,1.5 → Equilateral (decimal)</li>
+                                    <li>10,10,10 → Equilateral (large)</li>
+                                    <li>1,1,1.9 → Isosceles</li>
+                                </ul>
+                                <p><b>Bug Cases (4):</b></p>
+                                <ul style="margin:5px 0; padding-left:20px; font-size:0.85rem;">
+                                    <li>3,4,5 classified as Acute (should be Right)</li>
+                                    <li>5,5,8 classified as Scalene (should be Isosceles)</li>
+                                    <li>2,3,4 classified as Acute (should be Obtuse)</li>
+                                    <li>1,2,3 classified as Valid (should be Invalid)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="view-interview" class="section-view">
@@ -892,6 +993,7 @@
 </div>
 
 <script src="js/main.js"></script>
+<script src="js/triangle.js"></script>
 <script src="js/mock-app.js"></script>
 <script src="js/interview.js"></script>
 

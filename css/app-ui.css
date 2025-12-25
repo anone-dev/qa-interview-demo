@@ -256,3 +256,44 @@ input:focus, select:focus {
     background: #3498db; 
     color: white; 
 }
+
+
+/* --- Triangle Challenge Styles --- */
+.tri-input { font-family: 'Fira Code', monospace; }
+
+.achieve-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+}
+
+.case-card {
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    text-align: center;
+    color: #bbb;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.case-card.unlocked {
+    background: #d5f5e3;
+    border-color: #27ae60;
+    color: #145a32;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(39, 174, 96, 0.2);
+}
+
+.case-card.error-unlocked {
+    background: #fadbd8;
+    border-color: #c0392b;
+    color: #7b241c;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(192, 57, 43, 0.2);
+}
+
+.case-icon { font-size: 1.2rem; display: block; margin-bottom: 5px; }

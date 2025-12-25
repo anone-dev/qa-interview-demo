@@ -1,0 +1,51 @@
+                    <!-- Result Display -->
+                    <div id="tri-result" style="margin-top:20px; padding:15px; border-radius:6px; text-align:center; font-weight:bold; display:none;"></div>
+                    
+                    <!-- Triangle Visualization -->
+                    <div id="tri-visual" style="margin-top:20px; text-align:center; display:none;">
+                        <svg id="triangle-svg" width="150" height="150" style="border:1px solid #ddd; border-radius:6px; background:#fafafa;"></svg>
+                    </div>
+                </div>
+
+                <!-- Right: Achievements/Cases -->
+                <div>
+                    <h4 style="margin-top:0;">🎯 Test Case Coverage</h4>
+                    <div class="achieve-grid" id="case-grid">
+                        <!-- JavaScript will populate this -->
+                    </div>
+
+                    <h4 style="margin-top:20px;">🐞 Error Handling (Edge Cases)</h4>
+                    <div class="achieve-grid" id="error-grid">
+                        <!-- JavaScript will populate this -->
+                    </div>
+                    
+                    <div style="margin-top:20px; text-align:right;">
+                        <button class="btn" style="font-size:0.8rem; color:#aaa; text-decoration:underline; background:none; border:none;" onclick="toggleCheatSheetDialog()">Show Instructor Cheat Sheet</button>
+                    </div>
+                    
+                    <!-- Cheat Sheet Section -->
+                    <div id="cheat-sheet-section" style="margin-top:30px; display:none; background:#f0f7ff; padding:20px; border-radius:8px; border-left:5px solid #3498db;">
+                        <h4 style="margin-top:0; color:#2c3e50; cursor:pointer;" onclick="toggleCheatSheetContent()">Instructor Cheat Sheet <span id="cheat-toggle-icon">▼</span></h4>
+                        <div id="cheat-sheet-content" style="display:none; margin-top:15px; font-size:0.9rem; line-height:1.6; color:#333;">
+                            <pre style="background:#fff; padding:15px; border-radius:6px; overflow-x:auto; border:1px solid #ddd;">Test Cases (12):
+#1 Empty: no input
+#2 Not Triangle: 1,2,10
+#3 Missing: 3,4,[blank]
+#4 Equilateral: 3,3,3
+#5 Isosceles: 3,3,5
+#6 Right: 3,4,5
+#7 Obtuse: 2,3,4
+#8 Acute: 4,4,4
+#9 Boundary: 1,2,3
+#10 Large: 1000000,1000000,1000000
+#11 SQL: ' OR 1=1
+#12 XSS: &lt;script&gt;
+
+Bugs (4):
+E1: 3,3,'A'
+E2: 0,0,0
+E3: 3.5,3.5,3.5
+E4: -3,-3,-3</pre>
+                        </div>
+                    </div>
+                </div>
