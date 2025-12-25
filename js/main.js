@@ -349,6 +349,7 @@ switchMainTab = function(tab) {
     } else if(tab === 'triangle') {
         document.getElementById('view-triangle').classList.add('active');
         document.querySelectorAll('.nav-tabs button')[1].classList.add('active');
+        initTriangleGame(); // Initialize triangle game when switching to this tab
     } else if(tab === 'interview') {
         document.getElementById('view-interview').classList.add('active');
         document.querySelectorAll('.nav-tabs button')[2].classList.add('active');
