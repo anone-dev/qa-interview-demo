@@ -743,18 +743,21 @@
                                 
                                 <div class="coding-container">
                                     <div class="code-editor">
-                                        <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">*** Test Cases ***</span></span></div>
-                                        <div class="code-line"><span class="line-num">2</span><span class="code-content">Login Scenario</span></div>
-                                        <div class="code-line"><span class="line-num">3</span><span class="code-content indent1">Open Browser With Chrome</span></div>
-                                        <div class="code-line"><span class="line-num">4</span><span class="code-content indent1 comment"># Call Keyword with 2 arguments</span></div>
-                                        <div class="code-line"><span class="line-num">5</span><span class="code-content indent1">Login With User <span class="str">"Admin"</span> <span class="str">"Pass999"</span></span></div>
-                                        <div class="code-line"><span class="line-num">6</span><span class="code-content">&nbsp;</span></div>
-                                        <div class="code-line"><span class="line-num">7</span><span class="code-content"><span class="kwd">*** Keywords ***</span></span></div>
-                                        <div class="code-line"><span class="line-num">8</span><span class="code-content">Login With User</span></div>
-                                        <div class="code-line"><span class="line-num">9</span><span class="code-content indent1"><span class="kwd">[Arguments]</span> ${username} ${password}=<span class="str">1234</span></span></div>
-                                        <div class="code-line"><span class="line-num">10</span><span class="code-content indent1">Input Text id:user ${username}</span></div>
-                                        <div class="code-line"><span class="line-num">11</span><span class="code-content indent1">Input Text id:pass ${password}</span></div>
-                                        <div class="code-line"><span class="line-num">12</span><span class="code-content indent1">Click Button id:login</span></div>
+                                        <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">*** Variables ***</span></span></div>
+                                        <div class="code-line"><span class="line-num">2</span><span class="code-content">${password} <span class="str">Pass999</span></span></div>
+                                        <div class="code-line"><span class="line-num">3</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content"><span class="kwd">*** Test Cases ***</span></span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content">Login Scenario</span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content indent1">Open Browser With Chrome</span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content indent1 comment"># Call Keyword with 1 argument</span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content indent1">Login With User <span class="str">"Admin"</span></span></div>
+                                        <div class="code-line"><span class="line-num">9</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">10</span><span class="code-content"><span class="kwd">*** Keywords ***</span></span></div>
+                                        <div class="code-line"><span class="line-num">11</span><span class="code-content">Login With User</span></div>
+                                        <div class="code-line"><span class="line-num">12</span><span class="code-content indent1"><span class="kwd">[Arguments]</span> ${username} ${password}=<span class="str">1234</span></span></div>
+                                        <div class="code-line"><span class="line-num">13</span><span class="code-content indent1">Input Text id:user ${username}</span></div>
+                                        <div class="code-line"><span class="line-num">14</span><span class="code-content indent1">Input Text id:pass ${password}</span></div>
+                                        <div class="code-line"><span class="line-num">15</span><span class="code-content indent1">Click Button id:login</span></div>
                                     </div>
 
                                     <div class="code-qa-panel">

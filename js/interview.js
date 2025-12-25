@@ -439,16 +439,16 @@ function checkRfAnswer(level, answer) {
     let msg = "";
 
     if(isJunior) {
-        // Answer: Pass999 (2nd argument overrides default)
-        if(answer === 'pass999') {
+        // Answer: B (Default value "1234" is used)
+        if(answer === 'default') {
             isCorrect = true;
-            msg = "✅ ถูกต้อง! ('Pass999')<br><small>เมื่อส่ง Argument ตัวที่ 2 มา ค่าที่ส่งมาจะ <b>ทับค่า Default</b> ดังนั้น 'Pass999' จึงถูกใช้แทน '1234'</small>";
-        } else if (answer === 'default') {
-            msg = "❌ ผิด<br><small>ค่า Default (1234) จะถูกใช้ก็ต่อเมื่อ <b>ไม่มีการส่ง Argument ตัวที่ 2</b> แต่ในโค้ดนี้มีการส่ง 'Pass999' มาแล้ว</small>";
+            msg = "✅ ถูกต้อง! ('1234')<br><small>เมื่อเรียกใช้ Keyword โดย <b>ไม่ส่ง Argument ตัวที่ 2</b> (password) ระบบจะใช้ค่า Default ที่กำหนดไว้ใน [Arguments] คือ '1234' <br>หมายเหตุ: ตัวแปร ${password} ที่ประกาศไว้ไม่ได้ถูกส่งเข้าไปใน Keyword เพราะไม่ได้ระบุในการเรียกใช้</small>";
+        } else if (answer === 'pass999') {
+            msg = "❌ ผิด<br><small>ตัวแปร ${password} ถูกประกาศไว้ในส่วน Variables แต่ <b>ไม่ได้ถูกส่งเข้าไป</b>ในการเรียกใช้ Keyword (Line 8 ส่งแค่ 'Admin' เท่านั้น)</small>";
         } else if (answer === 'admin') {
             msg = "❌ ผิด<br><small>'Admin' คือ Argument ตัวที่ 1 (username) ไม่ใช่ password ลองสังเกตลำดับการส่ง Argument อีกครั้ง</small>";
         } else {
-            msg = "❌ ผิด<br><small>ลองนับจำนวน Argument ที่ส่งเข้าไป: Argument 1='Admin', Argument 2='Pass999'</small>";
+            msg = "❌ ผิด<br><small>ลองนับจำนวน Argument ที่ส่งเข้าไป: มีแค่ 1 Argument คือ 'Admin' (username) เท่านั้น</small>";
         }
     } else {
         // Answer: B (Cascading Failure - orphan browser)
