@@ -464,13 +464,14 @@
 
                     <!-- 2026 JUNIOR LOGIC EXAM (3 SCENARIOS) -->
                     <div id="logic-content-junior-2026" class="hidden">
-                        <div class="section-title">👶 Junior Logic Challenge (2-5 Years Exp.)</div>
+                        <div class="section-title">🌱 Junior Logic Challenge (เลือกข้อใดข้อหนึ่งจาก 1, 2, 3)</div>
                         
-                        <!-- Sub-tabs for 3 Scenarios -->
+                        <!-- Sub-tabs for 4 Scenarios -->
                         <div class="sub-topic-tabs" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; overflow-x: auto;">
                             <button class="sub-topic-btn active" onclick="switchJrLogic(1)" id="btn-jr-1" style="padding: 8px 15px; border: none; background: #2c3e50; color: white; border-radius: 5px; cursor: pointer;">1. 🚚 Delivery Fee</button>
                             <button class="sub-topic-btn" onclick="switchJrLogic(2)" id="btn-jr-2" style="padding: 8px 15px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer;">2. 🔐 Login Lockout</button>
                             <button class="sub-topic-btn" onclick="switchJrLogic(3)" id="btn-jr-3" style="padding: 8px 15px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer;">3. 📅 Leave Request</button>
+                            <button class="sub-topic-btn" onclick="switchJrLogic(4)" id="btn-jr-4" style="padding: 8px 15px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer;">4. 🖊️ Pen Testing</button>
                         </div>
 
                         <!-- Scenario 1: Delivery Fee -->
@@ -570,6 +571,61 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Scenario 4: Pen Testing -->
+                        <div id="jr-scen-4" class="jr-scenario-view hidden">
+                            <div class="rules-box" style="border-left: 5px solid #8e44ad; background: #f4f1f8;">
+                                <h4 style="margin-top:0; color:#8e44ad;">🖊️ โจทย์: ทดสอบปากกา (Pen Testing)</h4>
+                                <p style="margin-bottom:10px;"><strong>คำถามที่ 1:</strong> ถ้าต้องทดสอบปากกา จะทดสอบอะไรบ้าง? (ขอ 3 ข้อ)</p>
+                                <p style="margin-bottom:10px;"><strong>คำถามที่ 2:</strong> ถ้าทดสอบได้เพียง 1 ข้อ จะเลือกทดสอบข้อใด? เพราะอะไร?</p>
+                                <p style="margin-bottom:0;"><strong>คำถามที่ 3:</strong> หากปากกาด้ามนี้เขียนได้เป็นระยะทาง 5 กิโลเมตร แล้วหมึกหมดพอดี จะออกแบบการทดสอบอย่างไร?</p>
+                            </div>
+                            <center><button class="btn btn-primary" onclick="toggleJrAns('ans-pen')">💡 เฉลย & เกณฑ์การให้คะแนน</button></center>
+                            <div id="ans-pen" class="solution-section hidden" style="margin-top: 20px;">
+                                <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                                    <h4 style="margin-top:0;">✅ คำตอบที่คาดหวัง</h4>
+                                    
+                                    <strong>คำถามที่ 1: ทดสอบอะไรบ้าง? (3 ข้อ)</strong>
+                                    <ul style="margin-top:5px;">
+                                        <li><b>Functional:</b> เขียนได้หรือไม่ / หมึกออกสม่ำเสมอ / ฝาปิด-เปิดได้</li>
+                                        <li><b>Usability:</b> จับถนัดมือ / น้ำหนักเหมาะสม / ไม่ลื่นมือ</li>
+                                        <li><b>Durability:</b> ทนทาน / ไม่แตกง่าย / ตกพื้นแล้วใช้ได้</li>
+                                        <li><b>Performance:</b> เขียนได้นานแค่ไหน / หมึกแห้งเร็วหรือไม่</li>
+                                        <li><b>Compatibility:</b> เขียนบนกระดาษประเภทต่างๆ ได้</li>
+                                    </ul>
+                                    <div style="background:#e8f8f5; padding:8px; border-radius:4px; margin:10px 0; font-size:0.9rem;">
+                                        <b>💡 Junior Tip:</b> ตอบได้ 3 ข้อที่แตกต่างกัน (ไม่ซ้ำหมวด) = ผ่าน
+                                    </div>
+
+                                    <strong>คำถามที่ 2: ทดสอบได้ 1 ข้อ เลือกข้อใด?</strong>
+                                    <div style="background:#fff3cd; padding:10px; border-radius:5px; margin:10px 0;">
+                                        <b>คำตอบที่ดี:</b> "เขียนได้หรือไม่" (Functional - Core Feature)<br>
+                                        <b>เหตุผล:</b> เป็นฟังก์ชันหลักของปากกา ถ้าเขียนไม่ได้ = ของเสีย ไม่ต้องทดสอบอย่างอื่นต่อ (Critical Path)
+                                    </div>
+
+                                    <strong>คำถามที่ 3: ปากกาเขียนได้ 5 กม. จะทดสอบอย่างไร?</strong>
+                                    <div style="margin-top:10px;">
+                                        <b>แนวคิด Junior:</b>
+                                        <ul>
+                                            <li>ทดสอบที่ระยะ 0 กม. (เริ่มต้น) - หมึกออกปกติ</li>
+                                            <li>ทดสอบที่ระยะ 2.5 กม. (กึ่งกลาง) - หมึกยังออกสม่ำเสมอ</li>
+                                            <li>ทดสอบที่ระยะ 4.9 กม. (ใกล้หมด) - หมึกเริ่มจาง</li>
+                                            <li>ทดสอบที่ระยะ 5.0 กม. (Boundary) - หมึกหมดพอดี</li>
+                                            <li>ทดสอบที่ระยะ 5.1 กม. (เกินขอบเขต) - ไม่มีหมึก</li>
+                                        </ul>
+                                        <b>แนวคิด Senior:</b>
+                                        <ul>
+                                            <li>ใช้ Equivalence Partitioning: แบ่งเป็นช่วง 0-1, 1-3, 3-4.5, 4.5-5, >5 กม.</li>
+                                            <li>ใช้ Boundary Value Analysis: ทดสอบที่ 0, 4.99, 5.0, 5.01 กม.</li>
+                                            <li>พิจารณา Environmental Factors: อุณหภูมิ / ความชื้น / มุมการเขียน</li>
+                                        </ul>
+                                    </div>
+                                    <div style="background:#ffeaa7; padding:8px; border-radius:4px; margin-top:10px; font-size:0.9rem;">
+                                        <b>🎯 จุดให้คะแนน:</b> มีการคิด Boundary Testing และ Equivalence Partitioning
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div id="logic-content-senior" class="hidden">
@@ -610,12 +666,13 @@
 
                 <!-- 2026 SENIOR LOGIC EXAM (3 SCENARIOS) -->
                 <div id="logic-content-senior-2026" class="hidden">
-                    <div class="section-title">🦁 Senior Logic Challenge (3 Scenarios)</div>
+                    <div class="section-title">🎯 Senior Logic Challenge (เลือกข้อใดข้อหนึ่งจาก 1, 2, 3)</div>
                     
                     <div class="sub-topic-tabs" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; overflow-x: auto;">
                         <button class="sub-topic-btn active" onclick="switchLogicScenario(1)" id="btn-logic-1" style="padding: 8px 15px; border: none; background: #2c3e50; color: white; border-radius: 5px; cursor: pointer;">1. 🚗 Parking Fee</button>
                         <button class="sub-topic-btn" onclick="switchLogicScenario(2)" id="btn-logic-2" style="padding: 8px 15px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer;">2. 🛍️ Discount</button>
                         <button class="sub-topic-btn" onclick="switchLogicScenario(3)" id="btn-logic-3" style="padding: 8px 15px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer;">3. 🏧 ATM Limits</button>
+                        <button class="sub-topic-btn" onclick="switchLogicScenario(4)" id="btn-logic-4" style="padding: 8px 15px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer;">4. 🖊️ Pen Testing</button>
                     </div>
 
                     <div id="logic-scen-1" class="logic-scenario-view">
@@ -720,17 +777,161 @@
                             </div>
                         </div>
                     </div>
+
+                    <div id="logic-scen-4" class="logic-scenario-view hidden">
+                        <div class="rules-box" style="border-left: 5px solid #8e44ad; background: #f4f1f8;">
+                            <h4 style="margin-top:0; color:#8e44ad;">🖊️ โจทย์: ทดสอบปากกา (Pen Testing)</h4>
+                            <p style="margin-bottom:10px;"><strong>คำถามที่ 1:</strong> ถ้าต้องทดสอบปากกา จะทดสอบอะไรบ้าง? (ขอ 3 ข้อ)</p>
+                            <p style="margin-bottom:10px;"><strong>คำถามที่ 2:</strong> ถ้าทดสอบได้เพียง 1 ข้อ จะเลือกทดสอบข้อใด? เพราะอะไร?</p>
+                            <p style="margin-bottom:0;"><strong>คำถามที่ 3:</strong> หากปากกาด้ามนี้เขียนได้เป็นระยะทาง 5 กิโลเมตร แล้วหมึกหมดพอดี จะออกแบบการทดสอบอย่างไร?</p>
+                        </div>
+                        <center><button class="btn btn-primary" onclick="toggleLogicAns('ans-pen-sr')">💡 เฉลย & เกณฑ์การให้คะแนน</button></center>
+                        <div id="ans-pen-sr" class="solution-section hidden" style="margin-top: 20px;">
+                            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                                <p style="font-size:0.9rem; color:#666; margin-bottom:15px;"><i>หมายเหตุ: โจทย์เดียวกันกับ Junior แต่ Senior คาดหวังคำตอบที่ลึกซึ้งและมีเหตุผลที่ชัดเจน</i></p>
+                                <div style="background:#e8f8f5; padding:10px; border-radius:5px; margin-bottom:15px;">
+                                    <b>🎯 Senior ต้องเพิ่ม:</b> Risk-Based Testing Approach + Test Design Techniques
+                                </div>
+
+                                <h4 style="margin-top:0;">✅ คำตอบที่คาดหวัง</h4>
+                                    
+                                <strong>คำถามที่ 1: ทดสอบอะไรบ้าง? (3 ข้อ)</strong>
+
+                                <ul style="margin-top:5px;">
+                                    <li><b>Functional:</b> เขียนได้หรือไม่ / หมึกออกสม่ำเสมอ / ฝาปิด-เปิดได้</li>
+                                    <li><b>Usability:</b> จับถนัดมือ / น้ำหนักเหมาะสม / ไม่ลื่นมือ</li>
+                                    <li><b>Durability:</b> ทนทาน / ไม่แตกง่าย / ตกพื้นแล้วใช้ได้</li>
+                                    <li><b>Performance:</b> เขียนได้นานแค่ไหน / หมึกแห้งเร็วหรือไม่</li>
+                                    <li><b>Compatibility:</b> เขียนบนกระดาษประเภทต่างๆ ได้</li>
+                                </ul>
+                                <div style="background:#fff3cd; padding:8px; border-radius:4px; margin:10px 0; font-size:0.9rem;">
+                                    <b>💡 Senior Tip:</b> ต้องอธิบาย Risk Priority ของแต่ละข้อ (High/Medium/Low)
+                                </div>
+
+                                <strong>คำถามที่ 2: ทดสอบได้ 1 ข้อ เลือกข้อใด?</strong>
+                                <div style="background:#fff3cd; padding:10px; border-radius:5px; margin:10px 0;">
+                                    <b>คำตอบที่ดี:</b> "เขียนได้หรือไม่" (Functional - Core Feature)<br>
+                                    <b>เหตุผล:</b> เป็นฟังก์ชันหลักของปากกา ถ้าเขียนไม่ได้ = ของเสีย ไม่ต้องทดสอบอย่างอื่นต่อ (Critical Path)
+                                </div>
+
+                                <strong>คำถามที่ 3: ปากกาเขียนได้ 5 กม. จะทดสอบอย่างไร?</strong>
+                                <div style="margin-top:10px;">
+                                    <b>แนวคิด Junior:</b>
+                                    <ul>
+                                        <li>ทดสอบที่ระยะ 0 กม. (เริ่มต้น) - หมึกออกปกติ</li>
+                                        <li>ทดสอบที่ระยะ 2.5 กม. (กึ่งกลาง) - หมึกยังออกสม่ำเสมอ</li>
+                                        <li>ทดสอบที่ระยะ 4.9 กม. (ใกล้หมด) - หมึกเริ่มจาง</li>
+                                        <li>ทดสอบที่ระยะ 5.0 กม. (Boundary) - หมึกหมดพอดี</li>
+                                        <li>ทดสอบที่ระยะ 5.1 กม. (เกินขอบเขต) - ไม่มีหมึก</li>
+                                    </ul>
+                                    <b>แนวคิด Senior:</b>
+                                    <ul>
+                                        <li>ใช้ Equivalence Partitioning: แบ่งเป็นช่วง 0-1, 1-3, 3-4.5, 4.5-5, >5 กม.</li>
+                                        <li>ใช้ Boundary Value Analysis: ทดสอบที่ 0, 4.99, 5.0, 5.01 กม.</li>
+                                        <li>พิจารณา Environmental Factors: อุณหภูมิ / ความชื้น / มุมการเขียน</li>
+                                    </ul>
+                                </div>
+                                <div style="background:#ffeaa7; padding:8px; border-radius:4px; margin-top:10px; font-size:0.9rem;">
+                                    <b>🎯 จุดให้คะแนน:</b> มีการคิด Boundary Testing และ Equivalence Partitioning + Risk-Based Approach
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="topic-2" class="topic-content hidden">
                     <div class="section-title">🏗️ Backend Testing</div>
                     
                     <div class="sub-topic-tabs" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;">
-                        <button class="sub-topic-btn active" onclick="if(selectedYear==='2025') switchSubTopic2025(2, 1); else switchSubTopic2026(2, 1);" style="padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">1. Technical - JSON</button>
-                        <button class="sub-topic-btn" onclick="if(selectedYear==='2025') switchSubTopic2025(2, 2); else switchSubTopic2026(2, 2);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">2. Technical - SQL</button>
+                        <button class="sub-topic-btn active" onclick="if(selectedYear==='2025') switchSubTopic2025(2, 1); else switchSubTopic2026(2, 1);" style="padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">1. Technical - API Assertion</button>
+                        <button class="sub-topic-btn" onclick="if(selectedYear==='2025') switchSubTopic2025(2, 2); else switchSubTopic2026(2, 2);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">2. Technical - JSON</button>
+                        <button class="sub-topic-btn" onclick="if(selectedYear==='2025') switchSubTopic2025(2, 3); else switchSubTopic2026(2, 3);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">3. Technical - SQL</button>
                     </div>
                     
                     <div id="sub-topic-2-1" class="sub-topic-content">
+                    <div class="section-title">🔍 Technical - API Assertion Analysis</div>
+                    
+                    <div style="background: #e8f4fd; padding: 15px; border-radius: 8px; border-left: 5px solid #3498db; margin-bottom: 20px;">
+                        <strong>📌 Scenario:</strong> คุณได้รับ API Response กลับมา และต้องเขียน Assertion เพื่อตรวจสอบความถูกต้อง
+                    </div>
+
+                    <div id="api-assertion-junior" class="hidden">
+                        <h4>👶 Junior Level: Basic API Validation</h4>
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                            <strong>API Response:</strong>
+                            <pre style="background: #2c3e50; color: #ecf0f1; padding: 15px; border-radius: 5px; overflow-x: auto;">{
+  "status": "success",
+  "data": {
+    "userId": 12345,
+    "username": "john_doe",
+    "email": "john@example.com",
+    "isActive": true,
+    "balance": 1500.50
+  }
+}</pre>
+                        </div>
+                        <p><strong>คำถาม:</strong> จงเลือก Assertion ที่ <b>ถูกต้องและครบถ้วน</b> ที่สุดสำหรับการตรวจสอบ Response นี้</p>
+                        <div style="display: grid; gap: 10px; margin: 15px 0;">
+                            <button class="sql-btn" onclick="checkApiAssertion('jr', 'A')" style="text-align: left; padding: 15px;">
+                                <span class="opt-label">A</span>
+                                <code style="display: block; margin-top: 5px;">assert response.status == "success"</code>
+                            </button>
+                            <button class="sql-btn" onclick="checkApiAssertion('jr', 'B')" style="text-align: left; padding: 15px;">
+                                <span class="opt-label">B</span>
+                                <code style="display: block; margin-top: 5px;">assert response.status == "success"<br>assert response.data.userId == 12345</code>
+                            </button>
+                            <button class="sql-btn" onclick="checkApiAssertion('jr', 'C')" style="text-align: left; padding: 15px;">
+                                <span class="opt-label">C</span>
+                                <code style="display: block; margin-top: 5px;">assert response.status == "success"<br>assert response.data.userId > 0<br>assert response.data.email.includes("@")<br>assert typeof response.data.balance == "number"</code>
+                            </button>
+                            <button class="sql-btn" onclick="checkApiAssertion('jr', 'D')" style="text-align: left; padding: 15px;">
+                                <span class="opt-label">D</span>
+                                <code style="display: block; margin-top: 5px;">assert response != null</code>
+                            </button>
+                        </div>
+                        <div id="api-assertion-jr-feedback" class="feedback-box hidden"></div>
+                    </div>
+
+                    <div id="api-assertion-senior" class="hidden">
+                        <h4>🦁 Senior Level: Complex API Validation</h4>
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                            <strong>API Response (Array):</strong>
+                            <pre style="background: #2c3e50; color: #ecf0f1; padding: 15px; border-radius: 5px; overflow-x: auto;">{
+  "status": "success",
+  "data": [
+    { "id": 1, "name": "Product A", "price": 100, "stock": 5 },
+    { "id": 2, "name": "Product B", "price": 0, "stock": 0 },
+    { "id": 3, "name": "Product C", "price": 250, "stock": 10 }
+  ],
+  "total": 3
+}</pre>
+                        </div>
+                        <p><strong>Business Rule:</strong> สินค้าที่มี <code>price = 0</code> และ <code>stock = 0</code> ควรถูกกรองออก (ไม่ควรปรากฏใน Response)</p>
+                        <p><strong>คำถาม:</strong> Assertion ใดที่ <b>ตรวจจับ Bug</b> นี้ได้อย่างมีประสิทธิภาพ?</p>
+                        <div style="display: grid; gap: 10px; margin: 15px 0;">
+                            <button class="sql-btn" onclick="checkApiAssertion('sr', 'A')" style="text-align: left; padding: 15px;">
+                                <span class="opt-label">A</span>
+                                <code style="display: block; margin-top: 5px;">assert response.data.length == 3</code>
+                            </button>
+                            <button class="sql-btn" onclick="checkApiAssertion('sr', 'B')" style="text-align: left; padding: 15px;">
+                                <span class="opt-label">B</span>
+                                <code style="display: block; margin-top: 5px;">assert response.data.every(item => item.price > 0)</code>
+                            </button>
+                            <button class="sql-btn" onclick="checkApiAssertion('sr', 'C')" style="text-align: left; padding: 15px;">
+                                <span class="opt-label">C</span>
+                                <code style="display: block; margin-top: 5px;">assert response.data.every(item => <br>  item.price > 0 && item.stock > 0<br>)</code>
+                            </button>
+                            <button class="sql-btn" onclick="checkApiAssertion('sr', 'D')" style="text-align: left; padding: 15px;">
+                                <span class="opt-label">D</span>
+                                <code style="display: block; margin-top: 5px;">assert response.status == "success"<br>assert response.total == response.data.length</code>
+                            </button>
+                        </div>
+                        <div id="api-assertion-sr-feedback" class="feedback-box hidden"></div>
+                    </div>
+                    </div>
+                    
+                    <div id="sub-topic-2-2" class="sub-topic-content hidden">
                     <div class="section-title">🏗️ Technical - JSON Path Question</div>
                     
                     <div class="json-interactive-container">
@@ -778,7 +979,7 @@
                     </div>
                     </div>
                     
-                    <div id="sub-topic-2-2" class="sub-topic-content hidden">
+                    <div id="sub-topic-2-3" class="sub-topic-content hidden">
                     
                     <!-- ================= JUNIOR SQL ================= -->
                     <div id="sql-content-junior" class="hidden">

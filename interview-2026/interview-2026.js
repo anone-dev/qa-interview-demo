@@ -125,8 +125,37 @@ function switchSubTopic2026(topicId, subTopicId) {
         targetContent.classList.remove('hidden');
     }
     
-    // Logic พิเศษสำหรับ SQL (Topic 2, Sub-topic 2)
+    // Logic พิเศษสำหรับ API Assertion (Topic 2, Sub-topic 1)
+    if(topicId === 2 && subTopicId === 1) {
+        document.getElementById('api-assertion-junior').classList.add('hidden');
+        document.getElementById('api-assertion-senior').classList.add('hidden');
+        
+        if(currentLevel2026 === 'junior') {
+            document.getElementById('api-assertion-junior').classList.remove('hidden');
+        } else {
+            document.getElementById('api-assertion-senior').classList.remove('hidden');
+        }
+    }
+    
+    // Logic พิเศษสำหรับ API Assertion (Topic 2, Sub-topic 1)
+    if(topicId === 2 && subTopicId === 1) {
+        document.getElementById('api-assertion-junior').classList.add('hidden');
+        document.getElementById('api-assertion-senior').classList.add('hidden');
+        
+        if(currentLevel2026 === 'junior') {
+            document.getElementById('api-assertion-junior').classList.remove('hidden');
+        } else {
+            document.getElementById('api-assertion-senior').classList.remove('hidden');
+        }
+    }
+    
+    // Logic พิเศษสำหรับ JSON (Topic 2, Sub-topic 2)
     if(topicId === 2 && subTopicId === 2) {
+        // JSON content ไม่ต้องแยก Junior/Senior
+    }
+    
+    // Logic พิเศษสำหรับ SQL (Topic 2, Sub-topic 3)
+    if(topicId === 2 && subTopicId === 3) {
         document.getElementById('sql-content-junior').classList.add('hidden');
         document.getElementById('sql-content-senior').classList.add('hidden');
         
@@ -719,64 +748,49 @@ async function toggleJrAns(elementId) {
 // JUNIOR LOGIC TABS (2026 VERSION)
 // ==========================================
 
-// Track which solutions are unlocked
-let unlockedJrSolutions = {};
-
 function switchJrLogic(id) {
-    if (selectedYear !== '2026') return; // Only work for 2026
+    if (selectedYear !== '2026') return;
     
-    // Hide all scenario views
     document.querySelectorAll('.jr-scenario-view').forEach(el => {
         el.classList.add('hidden');
     });
     
-    // Hide all solutions and reset unlock status when switching scenarios
     document.querySelectorAll('.jr-scenario-view .solution-section').forEach(el => {
         el.classList.add('hidden');
         el.style.display = 'none';
-        // Reset unlock status for this solution
-        if (el.id) {
-            unlockedJrSolutions[el.id] = false;
-        }
     });
     
-    // Deactivate all buttons
     document.querySelectorAll('.sub-topic-btn').forEach(btn => {
         if (btn.id && btn.id.startsWith('btn-jr-')) {
-            btn.style.background = '#95a5a6'; // Gray
+            btn.style.background = '#95a5a6';
             btn.classList.remove('active');
         }
     });
 
-    // Show selected scenario
     const targetScenario = document.getElementById(`jr-scen-${id}`);
     if (targetScenario) {
         targetScenario.classList.remove('hidden');
     }
     
-    // Activate selected button
     const activeBtn = document.getElementById(`btn-jr-${id}`);
     if (activeBtn) {
-        activeBtn.style.background = '#2c3e50'; // Dark Blue
+        activeBtn.style.background = '#2c3e50';
         activeBtn.classList.add('active');
     }
 }
 
 async function toggleJrAns(elementId) {
-    if (selectedYear !== '2026') return; // Only work for 2026
+    if (selectedYear !== '2026') return;
     
     const el = document.getElementById(elementId);
     if (!el) return;
     
-    // If already visible, hide it and mark as locked
     if (!el.classList.contains('hidden') && el.style.display !== 'none') {
         el.classList.add('hidden');
         el.style.display = 'none';
-        unlockedJrSolutions[elementId] = false;
         return;
     }
     
-    // Always ask for password when hidden (don't check unlock status)
     while(true) {
         const password = await getPasswordInput('Enter Password to View Solution');
         if(password === null) return;
@@ -787,7 +801,6 @@ async function toggleJrAns(elementId) {
         const hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         
         if(hash === 'b9c0cddf116b3ba8fb8eea843f6627b6c5c1867adf130d51923ab2fdece2467e') {
-            unlockedJrSolutions[elementId] = true;
             el.classList.remove('hidden');
             el.style.display = 'block';
             setTimeout(() => el.scrollIntoView({behavior: 'smooth'}), 100);
@@ -801,64 +814,49 @@ async function toggleJrAns(elementId) {
 // LOGIC SCENARIO TABS (2026 VERSION)
 // ==========================================
 
-// Track which solutions are unlocked
-let unlockedLogicSolutions = {};
-
 function switchLogicScenario(id) {
-    if (selectedYear !== '2026') return; // Only work for 2026
+    if (selectedYear !== '2026') return;
     
-    // Hide all scenario views
     document.querySelectorAll('.logic-scenario-view').forEach(el => {
         el.classList.add('hidden');
     });
     
-    // Hide all solutions and reset unlock status when switching scenarios
-    document.querySelectorAll('[id$="-solution"]').forEach(el => {
+    document.querySelectorAll('.logic-scenario-view .solution-section').forEach(el => {
         el.classList.add('hidden');
         el.style.display = 'none';
-        // Reset unlock status for this solution
-        if (el.id) {
-            unlockedLogicSolutions[el.id] = false;
-        }
     });
     
-    // Deactivate all buttons
     document.querySelectorAll('.sub-topic-btn').forEach(btn => {
         if (btn.id && btn.id.startsWith('btn-logic-')) {
-            btn.style.background = '#95a5a6'; // Gray
+            btn.style.background = '#95a5a6';
             btn.classList.remove('active');
         }
     });
 
-    // Show selected scenario
     const targetScenario = document.getElementById(`logic-scen-${id}`);
     if (targetScenario) {
         targetScenario.classList.remove('hidden');
     }
     
-    // Activate selected button
     const activeBtn = document.getElementById(`btn-logic-${id}`);
     if (activeBtn) {
-        activeBtn.style.background = '#2c3e50'; // Dark Blue
+        activeBtn.style.background = '#2c3e50';
         activeBtn.classList.add('active');
     }
 }
 
 async function toggleLogicAns(elementId) {
-    if (selectedYear !== '2026') return; // Only work for 2026
+    if (selectedYear !== '2026') return;
     
     const el = document.getElementById(elementId);
     if (!el) return;
     
-    // If already visible, hide it and mark as locked
     if (!el.classList.contains('hidden') && el.style.display !== 'none') {
         el.classList.add('hidden');
         el.style.display = 'none';
-        unlockedLogicSolutions[elementId] = false;
         return;
     }
     
-    // Always ask for password when hidden (don't check unlock status)
     while(true) {
         const password = await getPasswordInput('Enter Password to View Solution');
         if(password === null) return;
@@ -869,7 +867,6 @@ async function toggleLogicAns(elementId) {
         const hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         
         if(hash === 'b9c0cddf116b3ba8fb8eea843f6627b6c5c1867adf130d51923ab2fdece2467e') {
-            unlockedLogicSolutions[elementId] = true;
             el.classList.remove('hidden');
             el.style.display = 'block';
             setTimeout(() => el.scrollIntoView({behavior: 'smooth'}), 100);
@@ -877,4 +874,73 @@ async function toggleLogicAns(elementId) {
         }
         alert('⛔ Access Denied: Incorrect Password');
     }
+}
+
+
+// === API Assertion Logic ===
+let lastApiJuniorAnswer2026 = null;
+let lastApiSeniorAnswer2026 = null;
+
+function checkApiAssertion(level, answer) {
+    if (selectedYear !== '2026') return;
+    
+    const isJunior = level === 'jr';
+    const feedbackId = isJunior ? 'api-assertion-jr-feedback' : 'api-assertion-sr-feedback';
+    const feedbackEl = document.getElementById(feedbackId);
+    const viewId = isJunior ? 'api-assertion-junior' : 'api-assertion-senior';
+    const buttons = document.getElementById(viewId).querySelectorAll('.sql-btn');
+    const targetBtn = event.currentTarget;
+    
+    const lastAnswer = isJunior ? lastApiJuniorAnswer2026 : lastApiSeniorAnswer2026;
+    if(lastAnswer === answer) {
+        buttons.forEach(btn => btn.className = 'sql-btn');
+        feedbackEl.classList.add('hidden');
+        if(isJunior) lastApiJuniorAnswer2026 = null;
+        else lastApiSeniorAnswer2026 = null;
+        return;
+    }
+    
+    feedbackEl.className = 'feedback-box hidden';
+    buttons.forEach(btn => btn.className = 'sql-btn');
+    
+    if(isJunior) lastApiJuniorAnswer2026 = answer;
+    else lastApiSeniorAnswer2026 = answer;
+
+    let isCorrect = false;
+    let msg = "";
+
+    if(isJunior) {
+        if(answer === 'C') {
+            isCorrect = true;
+            msg = "✅ ถูกต้อง!<br><small><b>คำอธิบาย:</b> Assertion ชุดนี้ครอบคลุมทั้ง Status Code, Data Type Validation และ Business Logic<br>- ตรวจสอบ userId > 0 (ไม่ใช่แค่เท่ากับค่าเฉพาะ)<br>- ตรวจสอบ email format (มี @)<br>- ตรวจสอบ balance เป็น number<br>นี่คือ Best Practice สำหรับ Junior QA</small>";
+        } else if(answer === 'A') {
+            msg = "❌ ไม่เพียงพอ<br><small>การเช็คแค่ status ไม่สามารถตรวจจับ Bug ใน data ได้ เช่น userId เป็น null หรือ email ไม่มี @</small>";
+        } else if(answer === 'B') {
+            msg = "⚠️ ไม่แนะนำ (Hardcoded Value)<br><small>การเช็ค userId == 12345 จะทำให้ Test Case ใช้ไม่ได้กับ User คนอื่น (Brittle Test) ควรเช็ค userId > 0 แทน</small>";
+        } else {
+            msg = "❌ ผิด<br><small>การเช็คแค่ response != null ไม่เพียงพอ เพราะ response อาจมีค่า แต่ข้อมูลข้างในผิดพลาดได้</small>";
+        }
+    } else {
+        if(answer === 'C') {
+            isCorrect = true;
+            msg = "✅ ถูกต้อง!<br><small><b>คำอธิบาย:</b> การใช้ <code>every()</code> ร่วมกับเงื่อนไข AND จะตรวจสอบว่า<b>ทุกรายการ</b>ใน Array ต้องมี price > 0 และ stock > 0<br>ถ้ามี Product B (price=0, stock=0) Assertion จะ Fail ทันที ซึ่งตรงตาม Business Rule<br><b>Senior Tip:</b> ใช้ <code>filter()</code> หา Item ที่ผิดเงื่อนไขเพื่อ Debug ได้ง่ายขึ้น</small>";
+        } else if(answer === 'A') {
+            msg = "❌ ไม่เพียงพอ<br><small>การเช็คแค่ length == 3 ไม่สามารถตรวจจับ Bug ที่สินค้ามี price=0 หรือ stock=0 ได้</small>";
+        } else if(answer === 'B') {
+            msg = "⚠️ ใกล้ถูกแล้ว แต่ไม่ครบ<br><small>เช็คแค่ price > 0 แต่ไม่ได้เช็ค stock > 0 ทำให้ Product B (stock=0) ยังผ่าน Assertion ได้</small>";
+        } else {
+            msg = "❌ ผิดโฟกัส<br><small>การเช็ค status และ total ไม่ได้ตรวจสอบ Business Rule ที่ว่า \"สินค้าต้องไม่มี price=0 และ stock=0\"</small>";
+        }
+    }
+
+    if(isCorrect) {
+        targetBtn.classList.add('correct');
+        feedbackEl.innerHTML = msg;
+        feedbackEl.classList.add('fb-success');
+    } else {
+        targetBtn.classList.add('wrong');
+        feedbackEl.innerHTML = msg;
+        feedbackEl.classList.add('fb-error');
+    }
+    feedbackEl.classList.remove('hidden');
 }
