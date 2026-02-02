@@ -845,96 +845,191 @@
                     
                     <!-- 2025: JSON and SQL only -->
                     <div id="backend-tabs-2025" class="sub-topic-tabs hidden" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;">
-                        <button id="backend-2025-btn-1" class="sub-topic-btn active" onclick="switchSubTopic2025(2, 2); showSubTopic('sub-topic-2-2-2025');" style="padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">1. Technical - JSON</button>
+                        <button id="backend-2025-btn-1" class="sub-topic-btn active" onclick="switchSubTopic2025(2, 2);" style="padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">1. Technical - JSON</button>
                         <button id="backend-2025-btn-2" class="sub-topic-btn" onclick="switchSubTopic2025(2, 3);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">2. Technical - SQL</button>
                     </div>
                     
                     <!-- 2026: API Assertion, JSON, and SQL -->
                     <div id="backend-tabs-2026" class="sub-topic-tabs hidden" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;">
                         <button id="backend-2026-btn-1" class="sub-topic-btn active" onclick="switchSubTopic2026(2, 1);" style="padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">1. Technical - API Assertion</button>
-                        <button id="backend-2026-btn-2" class="sub-topic-btn" onclick="switchSubTopic2026(2, 2); showSubTopic('sub-topic-2-2-2026');" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">2. Technical - JSON</button>
+                        <button id="backend-2026-btn-2" class="sub-topic-btn" onclick="switchSubTopic2026(2, 2);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">2. Technical - JSON</button>
                         <button id="backend-2026-btn-3" class="sub-topic-btn" onclick="switchSubTopic2026(2, 3);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">3. Technical - SQL</button>
                     </div>
                     
                     <div id="sub-topic-2-1" class="sub-topic-content hidden">
                     <div class="section-title">🔍 Technical - API Assertion Analysis</div>
-                    
-                    <div style="background: #e8f4fd; padding: 15px; border-radius: 8px; border-left: 5px solid #3498db; margin-bottom: 20px;">
-                        <strong>📌 Scenario:</strong> คุณได้รับ API Response กลับมา และต้องเขียน Assertion เพื่อตรวจสอบความถูกต้อง
-                    </div>
 
+                    <!-- ============================================ -->
+                    <!-- 2026 / JUNIOR VIEW: API ASSERTION (Delivery) -->
+                    <!-- ============================================ -->
                     <div id="api-assertion-junior" class="hidden">
-                        <h4>👶 Junior Level: Basic API Validation</h4>
-                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                            <strong>API Response:</strong>
-                            <pre style="background: #2c3e50; color: #ecf0f1; padding: 15px; border-radius: 5px; overflow-x: auto;">{
-  "status": "success",
-  "data": {
-    "userId": 12345,
-    "username": "john_doe",
-    "email": "john@example.com",
-    "isActive": true,
-    "balance": 1500.50
-  }
+                        <div style="background: #f0fff4; padding: 15px; border-radius: 8px; border-left: 5px solid #27ae60; margin-bottom: 20px;">
+                            <p style="margin: 0 0 10px 0;"><b>📌 Scenario:</b> API คำนวณค่าส่ง (Delivery Fee) จากโจทย์ Logic ก่อนหน้า</p>
+                            <p style="margin: 0; font-size: 0.9rem;"><b>Logic Recap:</b> 0-5km = 10฿ | 5.1-10km = 20฿ | <b>ยอดซื้อครบ 300฿ ลดค่าส่ง 10฿</b></p>
+                        </div>
+                        
+                        <div class="split-layout" style="display:flex; flex-wrap:wrap; gap:20px;">
+                            <!-- Left: API Spec & Response -->
+                            <div style="flex:1; min-width:300px; background:#f0f3f7; padding:15px; border-radius:8px; font-size:0.85rem; border:1px solid #dce1e6;">
+                                <div style="margin-bottom:10px;">
+                                    <span class="method-badge badge-post">POST</span> 
+                                    <span style="font-family:'Fira Code'; font-weight:bold;">/api/delivery/calculate</span>
+                                </div>
+
+                                <strong>📥 Request Body:</strong>
+                                <pre style="background:#2c3e50; color:#a29bfe; padding:10px; border-radius:4px; margin:5px 0;">{
+  "distance_km": 4.0,
+  "cart_total": 350,
+  "customer_id": "CUST-101"
 }</pre>
+                                <div style="color:#666; font-size:0.8rem; margin-bottom:10px;">(Condition: &lt; 5km AND Total &gt; 300฿)</div>
+
+                                <strong style="display:block; margin-top:10px;">📤 Response Body (200 OK):</strong>
+                                <pre style="background:#2c3e50; color:#55efc4; padding:10px; border-radius:4px; margin:5px 0;">{
+  "base_fee": 10,
+  "discount_applied": 0,
+  "final_fee": 10,
+  "status": "success"
+}</pre>
+                            </div>
+
+                            <!-- Right: Postman Code -->
+                            <div style="flex:1.4; min-width:300px;">
+                                <div style="background:#fff; border:1px solid #ddd; border-radius:8px; overflow:hidden;">
+                                    <div style="background:#efefef; padding:5px 10px; font-size:0.8rem; border-bottom:1px solid #ddd; font-weight:bold; color:#555;">
+                                        ⚡ Postman Tests Tab
+                                    </div>
+                                    <div class="code-editor" style="height:auto; border:none; border-radius:0;">
+                                        <div class="code-line"><span class="kwd">const</span> res = <span class="kwd">pm</span>.response.json();</div>
+                                        <div class="code-line">&nbsp;</div>
+                                        <div class="code-line"><span class="comment">// 1. Check HTTP Status</span></div>
+                                        <div class="code-line"><span class="kwd">pm</span>.test(<span class="str">"Status is 200 OK"</span>, () => {</div>
+                                        <div class="code-line indent1"><span class="kwd">pm</span>.response.to.have.status(<span class="num">200</span>);</div>
+                                        <div class="code-line">});</div>
+                                        <div class="code-line">&nbsp;</div>
+                                        <div class="code-line"><span class="comment">// 2. Check Data Types</span></div>
+                                        <div class="code-line"><span class="kwd">pm</span>.test(<span class="str">"Fee fields are numbers"</span>, () => {</div>
+                                        <div class="code-line indent1"><span class="kwd">pm</span>.expect(res.base_fee).to.be.a(<span class="str">"number"</span>);</div>
+                                        <div class="code-line indent1"><span class="kwd">pm</span>.expect(res.final_fee).to.be.a(<span class="str">"number"</span>);</div>
+                                        <div class="code-line">});</div>
+                                        <div class="code-line">&nbsp;</div>
+                                        <div class="code-line"><span class="comment">// 3. Check Not Negative</span></div>
+                                        <div class="code-line"><span class="kwd">pm</span>.test(<span class="str">"Fee is not negative"</span>, () => {</div>
+                                        <div class="code-line indent1"><span class="kwd">pm</span>.expect(res.final_fee).to.be.at.least(<span class="num">0</span>);</div>
+                                        <div class="code-line">});</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <p><strong>คำถาม:</strong> จงเลือก Assertion ที่ <b>ถูกต้องและครบถ้วน</b> ที่สุดสำหรับการตรวจสอบ Response นี้</p>
-                        <div style="display: grid; gap: 10px; margin: 15px 0;">
-                            <button class="sql-btn" onclick="checkApiAssertion('jr', 'A')" style="text-align: left; padding: 15px;">
-                                <span class="opt-label">A</span>
-                                <code style="display: block; margin-top: 5px;">assert response.status == "success"</code>
-                            </button>
-                            <button class="sql-btn" onclick="checkApiAssertion('jr', 'B')" style="text-align: left; padding: 15px;">
-                                <span class="opt-label">B</span>
-                                <code style="display: block; margin-top: 5px;">assert response.status == "success"<br>assert response.data.userId == 12345</code>
-                            </button>
-                            <button class="sql-btn" onclick="checkApiAssertion('jr', 'C')" style="text-align: left; padding: 15px;">
-                                <span class="opt-label">C</span>
-                                <code style="display: block; margin-top: 5px;">assert response.status == "success"<br>assert response.data.userId > 0<br>assert response.data.email.includes("@")<br>assert typeof response.data.balance == "number"</code>
-                            </button>
-                            <button class="sql-btn" onclick="checkApiAssertion('jr', 'D')" style="text-align: left; padding: 15px;">
-                                <span class="opt-label">D</span>
-                                <code style="display: block; margin-top: 5px;">assert response != null</code>
-                            </button>
+
+                        <div class="question-box" style="margin-top:20px; background:#fff3cd; padding:15px; border-radius:8px; border:1px solid #ffeaa7; text-align:center;">
+                            <p style="font-size:1.1rem; color:#d35400; margin-top:0;"><b>🗣️ Interview Question (3 Minutes):</b></p>
+                            <ol style="display:inline-block; text-align:left; color:#d35400;">
+                                <li>Script นี้ Run <b>ผ่าน (Pass)</b> หรือ <b>ไม่ผ่าน (Fail)</b>?</li>
+                                <li>ค่า <code>final_fee</code> ที่ถูกต้องควรเป็นเท่าไหร่? และคุณจะเพิ่ม Code อะไรเพื่อดักจับ Bug นี้?</li>
+                            </ol>
+                            <br>
+                            <button class="btn btn-secondary" onclick="toggleJrApiAns()" style="margin-top:10px;">🔑 Show Instructor Analysis</button>
+                            
+                            <div id="jr-api-ans-2026" class="solution-section hidden" style="text-align:left; margin-top:15px; background:white; padding:15px; border-radius:5px;">
+                               <h4 style="margin-top:0;">✅ Analysis Points (คำตอบที่คาดหวัง):</h4>
+                               <ul style="line-height:1.6; color:#2c3e50;">
+                                   <li><b>1. The Test PASSES:</b> สคริปต์เช็คแค่ Status 200 และเช็คว่าค่าเป็นตัวเลข (10 เป็นตัวเลข) ดังนั้น Test เป็นสีเขียว ✅</li>
+                                   <li><b>2. Logic Error Found:</b> ยอดซื้อ 350 บาท (&gt;300) ต้องได้ลด 10 บาท ดังนั้น 10 - 10 = <b>0 บาท</b> (Free) <br>แต่ API ตอบกลับมา <b>10 บาท</b> (ระบบลืมคำนวณส่วนลด)</li>
+                                   <li><b>3. Required Assertion:</b> ต้องเพิ่มการเช็คค่าที่คาดหวัง (Expected Result)<br><code>pm.expect(res.final_fee).to.eql(0);</code> หรือเช็คว่า <code>res.discount_applied</code> ต้องเท่ากับ 10</li>
+                               </ul>
+                            </div>
                         </div>
-                        <div id="api-assertion-jr-feedback" class="feedback-box hidden"></div>
                     </div>
 
+                    <!-- ============================================ -->
+                    <!-- 2026 / SENIOR VIEW: API ASSERTION (Parking)  -->
+                    <!-- ============================================ -->
                     <div id="api-assertion-senior" class="hidden">
-                        <h4>🦁 Senior Level: Complex API Validation</h4>
-                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                            <strong>API Response (Array):</strong>
-                            <pre style="background: #2c3e50; color: #ecf0f1; padding: 15px; border-radius: 5px; overflow-x: auto;">{
-  "status": "success",
-  "data": [
-    { "id": 1, "name": "Product A", "price": 100, "stock": 5 },
-    { "id": 2, "name": "Product B", "price": 0, "stock": 0 },
-    { "id": 3, "name": "Product C", "price": 250, "stock": 10 }
-  ],
-  "total": 3
+                        <div style="background: #f0f8ff; padding: 15px; border-radius: 8px; border-left: 5px solid #3498db; margin-bottom: 20px;">
+                            <p style="margin: 0 0 10px 0;"><b>📌 Scenario:</b> API คำนวณค่าจอดรถ (Parking Fee) จากโจทย์ Logic ก่อนหน้า</p>
+                            <p style="margin: 0; font-size: 0.9rem;"><b>Logic Recap:</b> ฟรี 30 นาทีแรก, ชั่วโมงละ 20 บาท (เศษชม. ปัดขึ้น), Max 150 บาท/วัน</p>
+                        </div>
+                        
+                        <div class="split-layout" style="display:flex; flex-wrap:wrap; gap:20px;">
+                            <!-- Left: API Spec & Response -->
+                            <div style="flex:1; min-width:300px; background:#f0f3f7; padding:15px; border-radius:8px; font-size:0.85rem; border:1px solid #dce1e6;">
+                                <div style="margin-bottom:10px;">
+                                    <span class="method-badge badge-post">POST</span> 
+                                    <span style="font-family:'Fira Code'; font-weight:bold;">/api/parking/calculate</span>
+                                </div>
+
+                                <strong>📥 Request Body:</strong>
+                                <pre style="background:#2c3e50; color:#a29bfe; padding:10px; border-radius:4px; margin:5px 0;">{
+  "entry_time": "2024-03-01T08:00:00Z",
+  "exit_time": "2024-03-01T09:01:00Z", 
+  "ticket_id": "TK-8877"
 }</pre>
+                                <div style="color:#666; font-size:0.8rem; margin-bottom:10px;">(Time Used: 1 Hr 01 Min)</div>
+
+                                <strong style="display:block; margin-top:10px;">📤 Response Body (200 OK):</strong>
+                                <pre style="background:#2c3e50; color:#55efc4; padding:10px; border-radius:4px; margin:5px 0;">{
+  "fee": 40,
+  "duration": {
+      "hours": 1,
+      "minutes": 1
+  },
+  "transaction_id": "TXN-999",
+  "status": "success"
+}</pre>
+                            </div>
+
+                            <!-- Right: Postman Code -->
+                            <div style="flex:1.4; min-width:300px;">
+                                <div style="background:#fff; border:1px solid #ddd; border-radius:8px; overflow:hidden;">
+                                    <div style="background:#efefef; padding:5px 10px; font-size:0.8rem; border-bottom:1px solid #ddd; font-weight:bold; color:#555;">
+                                        ⚡ Postman Tests Tab (Code Review)
+                                    </div>
+                                    <div class="code-editor" style="height:auto; border:none; border-radius:0;">
+                                        <div class="code-line"><span class="comment">// Parse JSON Response</span></div>
+                                        <div class="code-line"><span class="kwd">const</span> res = <span class="kwd">pm</span>.response.json();</div>
+                                        <div class="code-line">&nbsp;</div>
+                                        <div class="code-line"><span class="comment">// ✅ Practice 1: Status Code Check</span></div>
+                                        <div class="code-line"><span class="kwd">pm</span>.test(<span class="str">"Status code is 200"</span>, () => {</div>
+                                        <div class="code-line indent1"><span class="kwd">pm</span>.response.to.have.status(<span class="num">200</span>);</div>
+                                        <div class="code-line">});</div>
+                                        <div class="code-line">&nbsp;</div>
+                                        <div class="code-line"><span class="comment">// ✅ Practice 2: Schema & Type Validation</span></div>
+                                        <div class="code-line"><span class="kwd">pm</span>.test(<span class="str">"Response schema is valid"</span>, () => {</div>
+                                        <div class="code-line indent1"><span class="kwd">pm</span>.expect(res.fee).to.be.a(<span class="str">"number"</span>);</div>
+                                        <div class="code-line indent1"><span class="kwd">pm</span>.expect(res.duration.hours).to.be.a(<span class="str">"number"</span>);</div>
+                                        <div class="code-line indent1"><span class="kwd">pm</span>.expect(res.transaction_id).to.be.a(<span class="str">"string"</span>);</div>
+                                        <div class="code-line">});</div>
+                                        <div class="code-line">&nbsp;</div>
+                                        <div class="code-line"><span class="comment">// ✅ Practice 3: Sanity Check</span></div>
+                                        <div class="code-line"><span class="kwd">pm</span>.test(<span class="str">"Values are positive"</span>, () => {</div>
+                                        <div class="code-line indent1"><span class="kwd">pm</span>.expect(res.fee).to.be.at.least(<span class="num">0</span>);</div>
+                                        <div class="code-line indent1"><span class="kwd">pm</span>.expect(res.duration.hours).to.be.at.least(<span class="num">0</span>);</div>
+                                        <div class="code-line">});</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <p><strong>Business Rule:</strong> สินค้าที่มี <code>price = 0</code> และ <code>stock = 0</code> ควรถูกกรองออก (ไม่ควรปรากฏใน Response)</p>
-                        <p><strong>คำถาม:</strong> Assertion ใดที่ <b>ตรวจจับ Bug</b> นี้ได้อย่างมีประสิทธิภาพ?</p>
-                        <div style="display: grid; gap: 10px; margin: 15px 0;">
-                            <button class="sql-btn" onclick="checkApiAssertion('sr', 'A')" style="text-align: left; padding: 15px;">
-                                <span class="opt-label">A</span>
-                                <code style="display: block; margin-top: 5px;">assert response.data.length == 3</code>
-                            </button>
-                            <button class="sql-btn" onclick="checkApiAssertion('sr', 'B')" style="text-align: left; padding: 15px;">
-                                <span class="opt-label">B</span>
-                                <code style="display: block; margin-top: 5px;">assert response.data.every(item => item.price > 0)</code>
-                            </button>
-                            <button class="sql-btn" onclick="checkApiAssertion('sr', 'C')" style="text-align: left; padding: 15px;">
-                                <span class="opt-label">C</span>
-                                <code style="display: block; margin-top: 5px;">assert response.data.every(item => <br>  item.price > 0 && item.stock > 0<br>)</code>
-                            </button>
-                            <button class="sql-btn" onclick="checkApiAssertion('sr', 'D')" style="text-align: left; padding: 15px;">
-                                <span class="opt-label">D</span>
-                                <code style="display: block; margin-top: 5px;">assert response.status == "success"<br>assert response.total == response.data.length</code>
-                            </button>
+
+                        <div class="question-box" style="margin-top:20px; background:#fff3cd; padding:15px; border-radius:8px; border:1px solid #ffeaa7; text-align:center;">
+                            <p style="font-size:1.1rem; color:#d35400; margin-top:0;"><b>🗣️ Interview Questions (3 Minutes):</b></p>
+                            <ol style="display:inline-block; text-align:left; color:#d35400;">
+                                <li>Script นี้ Run ผ่านหรือไม่? และมี Bug ซ่อนอยู่ไหม?</li>
+                                <li><b>คุณจะเขียน Assert เพิ่มเติมอะไรบ้าง?</b> เพื่อให้การทดสอบครอบคลุมที่สุด</li>
+                            </ol>
+                            <br>
+                            <button class="btn btn-secondary" onclick="toggleApiAns()" style="margin-top:10px;">🔑 Show Instructor Analysis</button>
+                            
+                            <div id="api-ans-2026" class="solution-section hidden" style="text-align:left; margin-top:15px; background:white; padding:15px; border-radius:5px;">
+                               <h4 style="margin-top:0;">✅ Analysis Points (คำตอบที่คาดหวัง):</h4>
+                               <ul style="line-height:1.6; color:#2c3e50;">
+                                   <li><b>1. False Positive:</b> Test <b>ผ่าน</b> แต่มี Bug ร้ายแรง (Overcharge) เพราะจอด 1 ชม. 1 นาที ต้องคิดเงินแค่ 31 นาที (20 บาท) แต่ API คืนมา 40 บาท</li>
+                                   <li><b>2. Essential Assertion (Business Logic):</b> ต้องเพิ่มการเช็คค่าที่ถูกต้อง (Verification) <br><code>pm.expect(res.fee).to.eql(20);</code> <span style="color:#d35400;">*สำคัญที่สุด*</span></li>
+                                   <li><b>3. Dynamic Value Assertion:</b> สำหรับ <code>transaction_id</code> ห้ามเช็คค่าตรงๆ แต่ให้เช็ค Pattern (Regex) หรือ Length แทนการเช็คแค่ String <br><code>pm.expect(res.transaction_id).to.match(/^TXN-\d+$/);</code></li>
+                                   <li><b>4. Data Consistency:</b> เช็คว่า Duration สอดคล้องกับ Input เช่น <code>res.duration.minutes</code> ต้องเป็น 1 ไม่ใช่ค่าอื่น</li>
+                               </ul>
+                            </div>
                         </div>
-                        <div id="api-assertion-sr-feedback" class="feedback-box hidden"></div>
                     </div>
                     </div>
                     

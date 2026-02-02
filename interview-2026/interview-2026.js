@@ -173,17 +173,17 @@ function switchSubTopic2026(topicId, subTopicId) {
         document.getElementById('api-assertion-junior').classList.add('hidden');
         document.getElementById('api-assertion-senior').classList.add('hidden');
         
-        if(currentLevel2026 === 'junior') {
-            document.getElementById('api-assertion-junior').classList.remove('hidden');
-        } else {
-            document.getElementById('api-assertion-senior').classList.remove('hidden');
+        // Hide solutions when switching back to API Assertion
+        const jrAns = document.getElementById('jr-api-ans-2026');
+        const srAns = document.getElementById('api-ans-2026');
+        if(jrAns) {
+            jrAns.classList.add('hidden');
+            jrAns.style.display = 'none';
         }
-    }
-    
-    // Logic พิเศษสำหรับ API Assertion (Topic 2, Sub-topic 1)
-    if(topicId === 2 && subTopicId === 1) {
-        document.getElementById('api-assertion-junior').classList.add('hidden');
-        document.getElementById('api-assertion-senior').classList.add('hidden');
+        if(srAns) {
+            srAns.classList.add('hidden');
+            srAns.style.display = 'none';
+        }
         
         if(currentLevel2026 === 'junior') {
             document.getElementById('api-assertion-junior').classList.remove('hidden');
@@ -938,4 +938,68 @@ function checkApiAssertion(level, answer) {
         feedbackEl.classList.add('fb-error');
     }
     feedbackEl.classList.remove('hidden');
+}
+
+// Toggle Junior API Answer (2026 Delivery Fee Scenario)
+async function toggleJrApiAns() {
+    if (selectedYear !== '2026') return;
+    
+    const el = document.getElementById('jr-api-ans-2026');
+    if (!el) return;
+    
+    if (!el.classList.contains('hidden') && el.style.display !== 'none') {
+        el.classList.add('hidden');
+        el.style.display = 'none';
+        return;
+    }
+    
+    while(true) {
+        const password = await getPasswordInput('Enter Password to View Solution');
+        if(password === null) return;
+        const encoder = new TextEncoder();
+        const data = encoder.encode(password);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        
+        if(hash === 'b9c0cddf116b3ba8fb8eea843f6627b6c5c1867adf130d51923ab2fdece2467e') {
+            el.classList.remove('hidden');
+            el.style.display = 'block';
+            setTimeout(() => el.scrollIntoView({behavior: 'smooth'}), 100);
+            return;
+        }
+        alert('⛔ Access Denied: Incorrect Password');
+    }
+}
+
+// Toggle Senior API Answer (2026 Parking Fee Scenario)
+async function toggleApiAns() {
+    if (selectedYear !== '2026') return;
+    
+    const el = document.getElementById('api-ans-2026');
+    if (!el) return;
+    
+    if (!el.classList.contains('hidden') && el.style.display !== 'none') {
+        el.classList.add('hidden');
+        el.style.display = 'none';
+        return;
+    }
+    
+    while(true) {
+        const password = await getPasswordInput('Enter Password to View Solution');
+        if(password === null) return;
+        const encoder = new TextEncoder();
+        const data = encoder.encode(password);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        
+        if(hash === 'b9c0cddf116b3ba8fb8eea843f6627b6c5c1867adf130d51923ab2fdece2467e') {
+            el.classList.remove('hidden');
+            el.style.display = 'block';
+            setTimeout(() => el.scrollIntoView({behavior: 'smooth'}), 100);
+            return;
+        }
+        alert('⛔ Access Denied: Incorrect Password');
+    }
 }

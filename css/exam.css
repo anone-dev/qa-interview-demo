@@ -412,3 +412,119 @@ th {
 .num { color: #b5cea8; }
 .str { color: #ce9178; }
 .comment { color: #6a9955; font-style: italic; }
+
+/* API Assertion Styles (2026) */
+.method-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: white;
+    margin-right: 8px;
+}
+
+.badge-post { background: #27ae60; }
+.badge-get { background: #3498db; }
+.badge-put { background: #f39c12; }
+.badge-delete { background: #e74c3c; }
+
+.split-layout { display: flex; flex-wrap: wrap; gap: 20px; }
+
+.instruction-text { 
+    font-size: 0.95rem; 
+    line-height: 1.6; 
+    color: #555; 
+}
+
+.question-box {
+    margin-top: 20px;
+    background: #fff3cd;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ffeaa7;
+    text-align: center;
+}
+
+/* Sub-topic tabs */
+.sub-topic-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+    overflow-x: auto;
+}
+
+.sub-topic-btn {
+    padding: 10px 20px;
+    border: none;
+    background: #95a5a6;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.sub-topic-btn:hover {
+    background: #7f8c8d;
+}
+
+.sub-topic-btn.active {
+    background: #3498db;
+}
+
+.sub-topic-content {
+    display: block;
+}
+
+.sub-topic-content.hidden {
+    display: none;
+}
+
+/* Junior Scenario Views (2026) */
+.jr-scenario-view,
+.logic-scenario-view {
+    display: block;
+}
+
+.jr-scenario-view.hidden,
+.logic-scenario-view.hidden {
+    display: none;
+}
+
+/* Data Table Styles */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+.data-table thead {
+    background: #ecf0f1;
+}
+
+.data-table th,
+.data-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.data-table tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+/* Year Card Styles (2026) */
+.year-card {
+    background: rgba(102, 126, 234, 0.1);
+    border: 2px solid rgba(102, 126, 234, 0.3);
+}
+
+.year-card:hover {
+    background: rgba(102, 126, 234, 0.2);
+    border-color: rgba(102, 126, 234, 0.5);
+}
