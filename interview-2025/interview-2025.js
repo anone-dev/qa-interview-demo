@@ -112,8 +112,14 @@ function switchSubTopic2025(topicId, subTopicId) {
         targetContent.classList.remove('hidden');
     }
     
-    // Logic พิเศษสำหรับ SQL (Topic 2, Sub-topic 2)
+    // Logic พิเศษสำหรับ JSON (Topic 2, Sub-topic 2) - Reset state
     if(topicId === 2 && subTopicId === 2) {
+        if(typeof selectedYear !== 'undefined' && selectedYear !== '2025') return;
+        resetJsonState2025();
+    }
+    
+    // Logic พิเศษสำหรับ SQL (Topic 2, Sub-topic 3)
+    if(topicId === 2 && subTopicId === 3) {
         // Only handle if year 2025 is selected
         if(typeof selectedYear !== 'undefined' && selectedYear !== '2025') return;
         
@@ -194,62 +200,15 @@ async function toggleSolution(level) {
     }
 }
 
-// JSON Interactive Logic
-let lastSelectedQuestion2025 = null;
+// JSON Interactive Logic - Delegated to json-handler-2025.js
 
-function checkJsonAnswer(qId) {
-    // Toggle if clicking the same button
-    if(lastSelectedQuestion2025 === qId) {
-        document.querySelectorAll('.json-val, .json-obj, span').forEach(el => {
-            el.classList.remove('highlight-answer');
-            el.classList.remove('highlight-block');
-        });
-        document.querySelectorAll('.json-btn').forEach(btn => btn.classList.remove('active-q'));
-        document.getElementById('json-result-display').classList.add('hidden');
-        lastSelectedQuestion = null;
-        return;
-    }
-    
+function resetJsonState2025() {
     document.querySelectorAll('.json-val, .json-obj, span').forEach(el => {
-        el.classList.remove('highlight-answer');
-        el.classList.remove('highlight-block');
+        el.classList.remove('highlight-answer', 'highlight-block');
     });
     document.querySelectorAll('.json-btn').forEach(btn => btn.classList.remove('active-q'));
-    
-    const buttons = document.querySelectorAll('.json-btn');
-    buttons[qId-1].classList.add('active-q');
-    lastSelectedQuestion2025 = qId;
-    
     const resultBox = document.getElementById('json-result-display');
-    const outputText = document.getElementById('json-output-text');
-    resultBox.classList.remove('hidden');
-
-    switch(qId) {
-        case 1: // $.members[0].skills[0]
-            document.getElementById('ans-1').classList.add('highlight-answer');
-            outputText.innerText = '"Java"';
-            break;
-        case 2: // $.members[?(@.is_active == false)].name
-            document.getElementById('ans-bob').classList.add('highlight-answer');
-            outputText.innerText = '["Bob"]';
-            break;
-        case 3: // $.members[?(@.salary > 50000)].name
-            document.getElementById('ans-alice').classList.add('highlight-answer');
-            document.getElementById('ans-charlie').classList.add('highlight-answer');
-            outputText.innerText = '["Alice", "Charlie"]';
-            break;
-        case 4: // $.members[?(@.name == 'Bob')].skills
-            document.getElementById('ans-4').classList.add('highlight-answer');
-            document.getElementById('ans-4-val').classList.add('highlight-answer');
-            outputText.innerText = '[["Python"]]';
-            break;
-        case 5: // $.members[*].salary
-            document.getElementById('ans-sal-alice').classList.add('highlight-answer');
-            document.getElementById('ans-sal-bob').classList.add('highlight-answer');
-            document.getElementById('ans-sal-charlie').classList.add('highlight-answer');
-            outputText.innerText = '[60000, 45000, 80000]';
-            break;
-    }
+    if(resultBox) resultBox.classList.add('hidden');
 }
 
 // === SQL Interactive Logic ===

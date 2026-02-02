@@ -973,11 +973,11 @@
                             <h3>หากใช้ JSONPath ต่อไปนี้จะได้ค่าอะไร?</h3>
                             <p style="color:#666; font-size:0.85rem; margin-bottom:15px;">(คลิกเพื่อดูคำตอบ)</p>
                             
-                            <button class="json-btn" onclick="checkJsonAnswer(1)">1) $.members[0].skills[0]</button>
-                            <button class="json-btn" onclick="checkJsonAnswer(2)">2) $.members[?(@.is_active == false)].name</button>
-                            <button class="json-btn" onclick="checkJsonAnswer(3)">3) $.members[?(@.salary > 50000)].name</button>
-                            <button class="json-btn" onclick="checkJsonAnswer(4)">4) $.members[?(@.name == 'Bob')].skills</button>
-                            <button class="json-btn" onclick="checkJsonAnswer(5)">5) $.members[*].salary</button>
+                            <button class="json-btn" onclick="if(selectedYear==='2025') checkJsonAnswer2025(1); else checkJsonAnswer2026(1);">1) $.members[0].skills[0]</button>
+                            <button class="json-btn" onclick="if(selectedYear==='2025') checkJsonAnswer2025(2); else checkJsonAnswer2026(2);">2) $.members[?(@.is_active == false)].name</button>
+                            <button class="json-btn" onclick="if(selectedYear==='2025') checkJsonAnswer2025(3); else checkJsonAnswer2026(3);">3) $.members[?(@.salary > 50000)].name</button>
+                            <button class="json-btn" onclick="if(selectedYear==='2025') checkJsonAnswer2025(4); else checkJsonAnswer2026(4);">4) $.members[?(@.name == 'Bob')].skills</button>
+                            <button class="json-btn" onclick="if(selectedYear==='2025') checkJsonAnswer2025(5); else checkJsonAnswer2026(5);">5) $.members[*].salary</button>
 
                             <div id="json-result-display" class="result-box hidden">
                                 <strong>Result:</strong> <span id="json-output-text" style="font-family: 'Fira Code'; color: #e83e8c;"></span>
@@ -1441,7 +1441,9 @@
 <script src="js/mock-app.js"></script>
 <script src="js/interview.js"></script>
 <script src="interview-2025/interview-2025.js"></script>
+<script src="interview-2025/json-handler-2025.js"></script>
 <script src="interview-2026/interview-2026.js"></script>
+<script src="interview-2026/json-handler-2026.js"></script>
 
 </body>
 </html>
