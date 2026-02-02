@@ -107,7 +107,13 @@ function switchSubTopic2025(topicId, subTopicId) {
     const parentTopic = document.getElementById('topic-' + topicId);
     const subContents = parentTopic.querySelectorAll('.sub-topic-content');
     subContents.forEach(content => content.classList.add('hidden'));
-    const targetContent = document.getElementById('sub-topic-' + topicId + '-' + subTopicId);
+    
+    let targetContent;
+    if(topicId === 2 && subTopicId === 2) {
+        targetContent = document.getElementById('sub-topic-2-2-2025');
+    } else {
+        targetContent = document.getElementById('sub-topic-' + topicId + '-' + subTopicId);
+    }
     if(targetContent) {
         targetContent.classList.remove('hidden');
     }

@@ -157,7 +157,13 @@ function switchSubTopic2026(topicId, subTopicId) {
     const parentTopic = document.getElementById('topic-' + topicId);
     const subContents = parentTopic.querySelectorAll('.sub-topic-content');
     subContents.forEach(content => content.classList.add('hidden'));
-    const targetContent = document.getElementById('sub-topic-' + topicId + '-' + subTopicId);
+    
+    let targetContent;
+    if(topicId === 2 && subTopicId === 2) {
+        targetContent = document.getElementById('sub-topic-2-2-2026');
+    } else {
+        targetContent = document.getElementById('sub-topic-' + topicId + '-' + subTopicId);
+    }
     if(targetContent) {
         targetContent.classList.remove('hidden');
     }
@@ -264,11 +270,11 @@ async function toggleSolution(level) {
 // JSON Interactive Logic - Delegated to json-handler-2026.js
 
 function resetJsonState2026() {
-    document.querySelectorAll('.json-val, .json-obj, span').forEach(el => {
+    document.querySelectorAll('#sub-topic-2-2-2026 .json-val, #sub-topic-2-2-2026 .json-obj, #sub-topic-2-2-2026 span').forEach(el => {
         el.classList.remove('highlight-answer', 'highlight-block');
     });
-    document.querySelectorAll('.json-btn').forEach(btn => btn.classList.remove('active-q'));
-    const resultBox = document.getElementById('json-result-display');
+    document.querySelectorAll('#sub-topic-2-2-2026 .json-btn').forEach(btn => btn.classList.remove('active-q'));
+    const resultBox = document.getElementById('json-result-display-2026');
     if(resultBox) resultBox.classList.add('hidden');
 }
 

@@ -845,14 +845,14 @@
                     
                     <!-- 2025: JSON and SQL only -->
                     <div id="backend-tabs-2025" class="sub-topic-tabs hidden" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;">
-                        <button id="backend-2025-btn-1" class="sub-topic-btn active" onclick="switchSubTopic2025(2, 2);" style="padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">1. Technical - JSON</button>
+                        <button id="backend-2025-btn-1" class="sub-topic-btn active" onclick="switchSubTopic2025(2, 2); showSubTopic('sub-topic-2-2-2025');" style="padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">1. Technical - JSON</button>
                         <button id="backend-2025-btn-2" class="sub-topic-btn" onclick="switchSubTopic2025(2, 3);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">2. Technical - SQL</button>
                     </div>
                     
                     <!-- 2026: API Assertion, JSON, and SQL -->
                     <div id="backend-tabs-2026" class="sub-topic-tabs hidden" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;">
                         <button id="backend-2026-btn-1" class="sub-topic-btn active" onclick="switchSubTopic2026(2, 1);" style="padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">1. Technical - API Assertion</button>
-                        <button id="backend-2026-btn-2" class="sub-topic-btn" onclick="switchSubTopic2026(2, 2);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">2. Technical - JSON</button>
+                        <button id="backend-2026-btn-2" class="sub-topic-btn" onclick="switchSubTopic2026(2, 2); showSubTopic('sub-topic-2-2-2026');" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">2. Technical - JSON</button>
                         <button id="backend-2026-btn-3" class="sub-topic-btn" onclick="switchSubTopic2026(2, 3);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">3. Technical - SQL</button>
                     </div>
                     
@@ -938,7 +938,8 @@
                     </div>
                     </div>
                     
-                    <div id="sub-topic-2-2" class="sub-topic-content hidden">
+                    <!-- 2025: JSON Path (5 questions) -->
+                    <div id="sub-topic-2-2-2025" class="sub-topic-content hidden">
                     <div class="section-title">🏗️ Technical - JSON Path Question</div>
                     
                     <div class="json-interactive-container">
@@ -973,14 +974,61 @@
                             <h3>หากใช้ JSONPath ต่อไปนี้จะได้ค่าอะไร?</h3>
                             <p style="color:#666; font-size:0.85rem; margin-bottom:15px;">(คลิกเพื่อดูคำตอบ)</p>
                             
-                            <button class="json-btn" onclick="if(selectedYear==='2025') checkJsonAnswer2025(1); else checkJsonAnswer2026(1);">1) $.members[0].skills[0]</button>
-                            <button class="json-btn" onclick="if(selectedYear==='2025') checkJsonAnswer2025(2); else checkJsonAnswer2026(2);">2) $.members[?(@.is_active == false)].name</button>
-                            <button class="json-btn" onclick="if(selectedYear==='2025') checkJsonAnswer2025(3); else checkJsonAnswer2026(3);">3) $.members[?(@.salary > 50000)].name</button>
-                            <button class="json-btn" onclick="if(selectedYear==='2025') checkJsonAnswer2025(4); else checkJsonAnswer2026(4);">4) $.members[?(@.name == 'Bob')].skills</button>
-                            <button class="json-btn" onclick="if(selectedYear==='2025') checkJsonAnswer2025(5); else checkJsonAnswer2026(5);">5) $.members[*].salary</button>
+                            <button class="json-btn" onclick="checkJsonAnswer2025(1);">1) $.members[0].skills[0]</button>
+                            <button class="json-btn" onclick="checkJsonAnswer2025(2);">2) $.members[?(@.is_active == false)].name</button>
+                            <button class="json-btn" onclick="checkJsonAnswer2025(3);">3) $.members[?(@.salary > 50000)].name</button>
+                            <button class="json-btn" onclick="checkJsonAnswer2025(4);">4) $.members[?(@.name == 'Bob')].skills</button>
+                            <button class="json-btn" onclick="checkJsonAnswer2025(5);">5) $.members[*].salary</button>
 
                             <div id="json-result-display" class="result-box hidden">
                                 <strong>Result:</strong> <span id="json-output-text" style="font-family: 'Fira Code'; color: #e83e8c;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <!-- 2026: JSON Path (3 questions) -->
+                    <div id="sub-topic-2-2-2026" class="sub-topic-content hidden">
+                    <div class="section-title">🏗️ Technical - JSON Path Question</div>
+                    
+                    <div class="json-interactive-container">
+                        <div class="json-code-view">
+                            <div class="code-line"><span class="line-num">1</span><span class="code-content">{</span></div>
+                            <div class="code-line"><span class="line-num">2</span><span class="code-content indent1">"department": <span id="ans-dept-2026" class="json-val">"Engineering"</span>,</span></div>
+                            <div class="code-line"><span class="line-num">3</span><span class="code-content indent1">"budget": 500000,</span></div>
+                            <div class="code-line"><span class="line-num">4</span><span class="code-content indent1">"members": [</span></div>
+                            <div class="code-line"><span class="line-num">5</span><span class="code-content indent2">{</span></div>
+                            <div class="code-line"><span class="line-num">6</span><span class="code-content indent3">"name": <span id="ans-alice-2026" class="json-val">"Alice"</span>,</span></div>
+                            <div class="code-line"><span class="line-num">7</span><span class="code-content indent3">"salary": <span id="ans-sal-alice-2026" class="json-val">60000</span>,</span></div>
+                            <div class="code-line"><span class="line-num">8</span><span class="code-content indent3">"is_active": <span id="ans-active-alice-2026" class="json-val">true</span>,</span></div>
+                            <div class="code-line"><span class="line-num">9</span><span class="code-content indent3">"skills": [<span id="ans-1-2026" class="json-val">"Java"</span>, "SQL"]</span></div>
+                            <div class="code-line"><span class="line-num">10</span><span class="code-content indent2">},</span></div>
+                            <div class="code-line"><span class="line-num">11</span><span class="code-content indent2">{</span></div>
+                            <div class="code-line"><span class="line-num">12</span><span class="code-content indent3">"name": <span id="ans-bob-2026" class="json-val">"Bob"</span>,</span></div>
+                            <div class="code-line"><span class="line-num">13</span><span class="code-content indent3">"salary": <span id="ans-sal-bob-2026" class="json-val">45000</span>,</span></div>
+                            <div class="code-line"><span class="line-num">14</span><span class="code-content indent3">"is_active": <span id="ans-active-bob-2026" class="json-val">false</span>,</span></div>
+                            <div class="code-line"><span class="line-num">15</span><span class="code-content indent3">"skills": [<span id="ans-3-2026" class="json-val">"Python"</span>]</span></div>
+                            <div class="code-line"><span class="line-num">16</span><span class="code-content indent2">},</span></div>
+                            <div class="code-line"><span class="line-num">17</span><span class="code-content indent2">{</span></div>
+                            <div class="code-line"><span class="line-num">18</span><span class="code-content indent3">"name": <span id="ans-charlie-2026" class="json-val">"Charlie"</span>,</span></div>
+                            <div class="code-line"><span class="line-num">19</span><span class="code-content indent3">"salary": <span id="ans-sal-charlie-2026" class="json-val">80000</span>,</span></div>
+                            <div class="code-line"><span class="line-num">20</span><span class="code-content indent3">"is_active": <span id="ans-active-charlie-2026" class="json-val">true</span>,</span></div>
+                            <div class="code-line"><span class="line-num">21</span><span class="code-content indent3">"skills": ["Go", "Docker", "K8s"]</span></div>
+                            <div class="code-line"><span class="line-num">22</span><span class="code-content indent2">}</span></div>
+                            <div class="code-line"><span class="line-num">23</span><span class="code-content indent1">]</span></div>
+                            <div class="code-line"><span class="line-num">24</span><span class="code-content">}</span></div>
+                        </div>
+
+                        <div class="json-qa-panel">
+                            <h3>หากใช้ JSONPath ต่อไปนี้จะได้ค่าอะไร?</h3>
+                            <p style="color:#666; font-size:0.85rem; margin-bottom:15px;">(คลิกเพื่อดูคำตอบ)</p>
+                            
+                            <button class="json-btn" onclick="checkJsonAnswer2026(1);">1) $.members[1].skills[1]</button>
+                            <button class="json-btn" onclick="checkJsonAnswer2026(2);">2) $.members[?(@.salary > 50000)].name</button>
+                            <button class="json-btn" onclick="checkJsonAnswer2026(3);">3) $.members[*].salary</button>
+
+                            <div id="json-result-display-2026" class="result-box hidden">
+                                <strong>Result:</strong> <span id="json-output-text-2026" style="font-family: 'Fira Code'; color: #e83e8c;"></span>
                             </div>
                         </div>
                     </div>
