@@ -40,9 +40,19 @@ function switchTopic2025(topicId) {
     
     document.querySelectorAll('.solution-section').forEach(sol => sol.style.display = 'none');
     
-    // Logic สำหรับ Topic 2 (Backend Testing) - แสดง sub-topic แรก
+    // Show/hide Backend Testing tabs based on year
     if(topicId === 2) {
-        switchSubTopic2025(2, 1);
+        const tabs2025 = document.getElementById('backend-tabs-2025');
+        const tabs2026 = document.getElementById('backend-tabs-2026');
+        if(tabs2025) {
+            tabs2025.classList.remove('hidden');
+            tabs2025.style.display = 'flex';
+        }
+        if(tabs2026) {
+            tabs2026.classList.add('hidden');
+            tabs2026.style.display = 'none';
+        }
+        switchSubTopic2025(2, 2); // Start with JSON (no API Assertion in 2025)
     }
     
     // Logic สำหรับ Topic 3 (Automated Testing) - แสดง sub-topic แรก
@@ -63,17 +73,38 @@ function switchTopic2025(topicId) {
 }
 
 function switchSubTopic2025(topicId, subTopicId) {
-    // อัพเดทปุ่ม sub-topic
-    const parentTopic = document.getElementById('topic-' + topicId);
-    const subButtons = parentTopic.querySelectorAll('.sub-topic-btn');
-    subButtons.forEach(btn => {
-        btn.classList.remove('active');
-        btn.style.background = '#95a5a6';
-    });
-    subButtons[subTopicId - 1].classList.add('active');
-    subButtons[subTopicId - 1].style.background = '#3498db';
+    // อัพเดทปุ่ม sub-topic สำหรับ Backend Testing (Topic 2)
+    if(topicId === 2) {
+        const btn1 = document.getElementById('backend-2025-btn-1');
+        const btn2 = document.getElementById('backend-2025-btn-2');
+        if(btn1 && btn2) {
+            btn1.classList.remove('active');
+            btn1.style.background = '#95a5a6';
+            btn2.classList.remove('active');
+            btn2.style.background = '#95a5a6';
+            
+            if(subTopicId === 2) {
+                btn1.classList.add('active');
+                btn1.style.background = '#3498db';
+            } else if(subTopicId === 3) {
+                btn2.classList.add('active');
+                btn2.style.background = '#3498db';
+            }
+        }
+    } else {
+        // อัพเดทปุ่ม sub-topic สำหรับ topics อื่นๆ
+        const parentTopic = document.getElementById('topic-' + topicId);
+        const subButtons = parentTopic.querySelectorAll('.sub-topic-btn');
+        subButtons.forEach(btn => {
+            btn.classList.remove('active');
+            btn.style.background = '#95a5a6';
+        });
+        subButtons[subTopicId - 1].classList.add('active');
+        subButtons[subTopicId - 1].style.background = '#3498db';
+    }
     
     // แสดง/ซ่อน sub-topic content
+    const parentTopic = document.getElementById('topic-' + topicId);
     const subContents = parentTopic.querySelectorAll('.sub-topic-content');
     subContents.forEach(content => content.classList.add('hidden'));
     const targetContent = document.getElementById('sub-topic-' + topicId + '-' + subTopicId);

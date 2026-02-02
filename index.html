@@ -843,13 +843,20 @@
                 <div id="topic-2" class="topic-content hidden">
                     <div class="section-title">🏗️ Backend Testing</div>
                     
-                    <div class="sub-topic-tabs" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;">
-                        <button class="sub-topic-btn active" onclick="if(selectedYear==='2025') switchSubTopic2025(2, 1); else switchSubTopic2026(2, 1);" style="padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">1. Technical - API Assertion</button>
-                        <button class="sub-topic-btn" onclick="if(selectedYear==='2025') switchSubTopic2025(2, 2); else switchSubTopic2026(2, 2);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">2. Technical - JSON</button>
-                        <button class="sub-topic-btn" onclick="if(selectedYear==='2025') switchSubTopic2025(2, 3); else switchSubTopic2026(2, 3);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">3. Technical - SQL</button>
+                    <!-- 2025: JSON and SQL only -->
+                    <div id="backend-tabs-2025" class="sub-topic-tabs hidden" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;">
+                        <button id="backend-2025-btn-1" class="sub-topic-btn active" onclick="switchSubTopic2025(2, 2);" style="padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">1. Technical - JSON</button>
+                        <button id="backend-2025-btn-2" class="sub-topic-btn" onclick="switchSubTopic2025(2, 3);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">2. Technical - SQL</button>
                     </div>
                     
-                    <div id="sub-topic-2-1" class="sub-topic-content">
+                    <!-- 2026: API Assertion, JSON, and SQL -->
+                    <div id="backend-tabs-2026" class="sub-topic-tabs hidden" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;">
+                        <button id="backend-2026-btn-1" class="sub-topic-btn active" onclick="switchSubTopic2026(2, 1);" style="padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">1. Technical - API Assertion</button>
+                        <button id="backend-2026-btn-2" class="sub-topic-btn" onclick="switchSubTopic2026(2, 2);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">2. Technical - JSON</button>
+                        <button id="backend-2026-btn-3" class="sub-topic-btn" onclick="switchSubTopic2026(2, 3);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">3. Technical - SQL</button>
+                    </div>
+                    
+                    <div id="sub-topic-2-1" class="sub-topic-content hidden">
                     <div class="section-title">🔍 Technical - API Assertion Analysis</div>
                     
                     <div style="background: #e8f4fd; padding: 15px; border-radius: 8px; border-left: 5px solid #3498db; margin-bottom: 20px;">
