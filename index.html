@@ -388,30 +388,42 @@
 
     <div id="view-interview" class="section-view">
         
-        <div id="interview-level-select" class="level-selector-container">
-            <div class="level-card junior" onclick="selectInterviewLevel('junior')">
-                <span class="level-icon">👶</span>
-                <span class="level-title">Junior Level</span>
-                <span class="level-desc">Logic Exam, JSON/SQL Basics, JS/Python/Robot/Cypress Fundamentals</span>
+        <div id="interview-year-select" class="level-selector-container">
+            <div class="level-card year-card" data-year="2025" style="background: rgba(102, 126, 234, 0.3);" onclick="selectInterviewYear('2025')">
+                <span class="level-icon">📅</span>
+                <span class="level-title">Interview 2025</span>
             </div>
             
-            <div class="level-card senior" onclick="selectInterviewLevel('senior')">
-                <span class="level-icon">🦁</span>
+            <div class="level-card year-card" data-year="2026" style="background: rgba(240, 147, 251, 0.3);" onclick="selectInterviewYear('2026')">
+                <span class="level-icon">🚀</span>
+                <span class="level-title">Interview 2026</span>
+            </div>
+        </div>
+
+        <div id="interview-level-select" class="level-selector-container hidden">
+            <div class="level-card junior" onclick="if(selectedYear==='2025') selectInterviewLevel2025('junior'); else selectInterviewLevel2026('junior');">
+                <span class="level-icon">🌱</span>
+                <span class="level-title">Junior Level</span>
+                <span class="level-desc" id="junior-desc">Logic Exam, JSON/SQL Basics, JS/Python/Robot/Cypress Fundamentals</span>
+            </div>
+            
+            <div class="level-card senior" onclick="if(selectedYear==='2025') selectInterviewLevel2025('senior'); else selectInterviewLevel2026('senior');">
+                <span class="level-icon">🎯</span>
                 <span class="level-title">Senior Level</span>
-                <span class="level-desc">Advanced Logic, Complex Queries, Error Handling & Anti-Patterns</span>
+                <span class="level-desc" id="senior-desc">Advanced Logic, Complex Queries, Error Handling & Anti-Patterns</span>
             </div>
         </div>
 
         <div id="interview-content-area" class="hidden">
             <div class="card">
                 <div class="header" id="interview-header" style="background:#2c3e50; color:white; padding:15px 25px; border-radius:10px 10px 0 0; margin:-30px -30px 20px -30px; display:flex; justify-content:space-between; align-items:center;">
-                    <h2 style="margin:0; color:white; border:none; padding:0;">Selected: <span id="selected-level-text">...</span></h2>
+                    <h2 style="margin:0; color:white; border:none; padding:0;">Selected: <span id="selected-year-text" style="cursor:pointer; text-decoration:underline;" onclick="goBackToYearSelect()">...</span> - <span id="selected-level-text">...</span></h2>
                 </div>
 
                 <div class="topic-tabs">
-                    <button class="topic-btn active" onclick="switchTopic(1)">1. Logic Exam</button>
-                    <button class="topic-btn" onclick="switchTopic(2)">2. Backend Testing</button>
-                    <button class="topic-btn" onclick="switchTopic(3)">3. Automation Testing</button>
+                    <button class="topic-btn active" onclick="if(selectedYear==='2025') switchTopic2025(1); else switchTopic2026(1);">1. Logic Exam</button>
+                    <button class="topic-btn" onclick="if(selectedYear==='2025') switchTopic2025(2); else switchTopic2026(2);">2. Backend Testing</button>
+                    <button class="topic-btn" onclick="if(selectedYear==='2025') switchTopic2025(3); else switchTopic2026(3);">3. Automation Testing</button>
                 </div>
 
                 <div id="topic-1" class="topic-content">
@@ -443,15 +455,125 @@
                                     <li><b>Case 4 (Focus C3 Fail):</b> ถ้าเงินเดือนผ่าน (True) และอายุงานผ่าน (True) แต่ติดแบล็กลิสต์ (False) ผลคือ Reject</li>
                                 </ul>
                                 <div style="margin-top:10px; background:#fff3cd; padding:10px; border-radius:5px;">
-                                    <b>⚡ Priority &amp; Ordering (ลำดับความสำคัญ):</b> เสนอให้เช็ก Blacklist (C3) ก่อน<br>
+                                    <b>⚡ Priority & Ordering (ลำดับความสำคัญ):</b> เสนอให้เช็ก Blacklist (C3) ก่อน<br>
                                     <b>เหตุผล:</b> เป็นเงื่อนไข "Kill Switch" หรือ "Knock-out criteria" ที่ร้ายแรงที่สุด ถ้าติด Blacklist ไม่จำเป็นต้องเสียเวลาไปคำนวณเงินเดือนหรือเช็กอายุงานให้เปลือง Resource ของระบบ (Fail Fast Concept)
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- 2026 JUNIOR LOGIC EXAM (3 SCENARIOS) -->
+                    <div id="logic-content-junior-2026" class="hidden">
+                        <div class="section-title">👶 Junior Logic Challenge (2-5 Years Exp.)</div>
+                        
+                        <!-- Sub-tabs for 3 Scenarios -->
+                        <div class="sub-topic-tabs" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; overflow-x: auto;">
+                            <button class="sub-topic-btn active" onclick="switchJrLogic(1)" id="btn-jr-1" style="padding: 8px 15px; border: none; background: #2c3e50; color: white; border-radius: 5px; cursor: pointer;">1. 🚚 Delivery Fee</button>
+                            <button class="sub-topic-btn" onclick="switchJrLogic(2)" id="btn-jr-2" style="padding: 8px 15px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer;">2. 🔐 Login Lockout</button>
+                            <button class="sub-topic-btn" onclick="switchJrLogic(3)" id="btn-jr-3" style="padding: 8px 15px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer;">3. 📅 Leave Request</button>
+                        </div>
+
+                        <!-- Scenario 1: Delivery Fee -->
+                        <div id="jr-scen-1" class="jr-scenario-view">
+                            <div class="rules-box" style="border-left: 5px solid #27ae60; background: #f0fff4;">
+                                <h4 style="margin-top:0; color:#27ae60;">🚚 โจทย์: คำนวณค่าส่ง Delivery</h4>
+                                <p style="margin-bottom:5px;">จงเขียน Test Case เพื่อทดสอบการคำนวณค่าส่ง ตามระยะทางและยอดซื้อ:</p>
+                                <ul style="margin-bottom:0;">
+                                    <li><b>Rule 1 (Distance):</b> 0 - 5 km = ค่าส่ง 10 บาท</li>
+                                    <li><b>Rule 2 (Distance):</b> 5.1 - 10 km = ค่าส่ง 20 บาท (เกิน 10 km ไม่ส่ง)</li>
+                                    <li><b>Rule 3 (Discount):</b> หากยอดซื้อรวม (Subtotal) <b>ครบ 300 บาท</b> ลดค่าส่งทันที 10 บาท</li>
+                                </ul>
+                            </div>
+                            <p class="instruction-text">⏳ <b>Time Limit: 3 mins</b> | เน้น Boundary Value Analysis (BVA) และการผสมเงื่อนไข</p>
+                            <center><button class="btn btn-primary" onclick="toggleJrAns('ans-delivery')">💡 เฉลย & เกณฑ์การให้คะแนน</button></center>
+                            <div id="ans-delivery" class="solution-section hidden" style="margin-top: 20px;">
+                                <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                                    <h4 style="margin-top:0;">✅ ตารางคำตอบที่คาดหวัง (Expected Test Cases)</h4>
+                                    <table class="data-table" style="width:100%; border-collapse: collapse; font-size: 0.9rem;">
+                                        <thead style="background:#ecf0f1;"><tr><th>Case</th><th>Distance (km)</th><th>Cart Total</th><th>Expected Fee</th><th>Technique</th></tr></thead>
+                                        <tbody>
+                                            <tr><td>Base Case</td><td>3 km</td><td>100 ฿</td><td>10 ฿</td><td>Happy Path</td></tr>
+                                            <tr style="background:#e8f8f5;"><td>Boundary 1</td><td>5.0 km</td><td>100 ฿</td><td>10 ฿</td><td>BVA (Upper Bound)</td></tr>
+                                            <tr style="background:#fff3cd;"><td>Boundary 2</td><td>5.1 km</td><td>100 ฿</td><td>20 ฿</td><td>BVA (Lower Bound of Tier 2)</td></tr>
+                                            <tr><td>Discount Logic</td><td>3 km</td><td>300 ฿</td><td>0 ฿ (10-10)</td><td>Condition Check (Boundary)</td></tr>
+                                            <tr><td>Discount + Tier 2</td><td>8 km</td><td>350 ฿</td><td>10 ฿ (20-10)</td><td>Combination</td></tr>
+                                            <tr style="background:#f8d7da;"><td>Negative</td><td>10.1 km</td><td>500 ฿</td><td>Error / ไม่ส่ง</td><td>Out of Scope</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <p style="font-size:0.85rem; color:#666; margin-top:10px;">*Junior ที่ดีต้องถามเรื่อง: "ระยะทางติดลบ" หรือ "ยอดซื้อ 299 บาท" เพื่อเช็คความรอบคอบ</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scenario 2: Login Lockout -->
+                        <div id="jr-scen-2" class="jr-scenario-view hidden">
+                            <div class="rules-box" style="border-left: 5px solid #e67e22; background: #fff5e6;">
+                                <h4 style="margin-top:0; color:#d35400;">🔐 โจทย์: ระบบ Login Lockout</h4>
+                                <p style="margin-bottom:5px;">ทดสอบความปลอดภัยของระบบล็อกอิน:</p>
+                                <ul style="margin-bottom:0;">
+                                    <li><b>Rule 1:</b> ใส่รหัสผิด 1-2 ครั้ง -> แจ้งเตือน "Wrong Password"</li>
+                                    <li><b>Rule 2:</b> ใส่รหัสผิด <b>ครบ 3 ครั้ง</b> -> ล็อกบัญชี (Locked) เป็นเวลา 15 นาที</li>
+                                    <li><b>Rule 3:</b> หากล็อกอินสำเร็จ (Success) ให้ Reset จำนวนครั้งที่ผิดเป็น 0</li>
+                                    <li><b>Rule 4:</b> ระหว่างที่ Locked แม้จะใส่รหัสถูก ก็ห้ามเข้าใช้งาน</li>
+                                </ul>
+                            </div>
+                            <p class="instruction-text">⏳ <b>Time Limit: 3 mins</b> | เน้น State Transition Testing (ลำดับเหตุการณ์)</p>
+                            <center><button class="btn btn-primary" onclick="toggleJrAns('ans-lockout')">💡 เฉลย & เกณฑ์การให้คะแนน</button></center>
+                            <div id="ans-lockout" class="solution-section hidden" style="margin-top: 20px;">
+                                <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                                    <h4 style="margin-top:0;">✅ ลำดับการทดสอบ (Test Scenario Flow)</h4>
+                                    <ul>
+                                        <li><b>Case 1 (Counter Count):</b> ผิดครั้งที่ 1, ผิดครั้งที่ 2 -> ยังไม่ล็อก (แค่เตือน)</li>
+                                        <li style="color:#d35400;"><b>Case 2 (Locking):</b> ผิดครั้งที่ 3 -> ระบบต้องเปลี่ยนสถานะเป็น <b>Locked</b> ทันที</li>
+                                        <li><b>Case 3 (Enforce Lock):</b> สถานะ Locked -> ลองใส่รหัสที่ "ถูกต้อง" -> <b>ต้องเข้าไม่ได้</b> (Error: Account Locked)</li>
+                                        <li style="color:#27ae60;"><b>Case 4 (Counter Reset):</b> ผิด 2 ครั้ง -> ครั้งที่ 3 ใส่ "ถูก" -> Login ได้ -> Logout -> ใส่ผิดอีก 1 ครั้ง -> <b>ต้องไม่ล็อก</b> (เพราะ Counter ถูกรีเซ็ตแล้ว)</li>
+                                        <li><b>Case 5 (Unlock Time):</b> รอครบ 15 นาที -> ลอง Login ใหม่ -> เข้าใช้งานได้</li>
+                                    </ul>
+                                    <div style="background:#ffeaa7; padding:8px; border-radius:4px; font-size:0.9rem;">
+                                        <b>จุดตัดคะแนน:</b> Junior หลายคนมักลืม Case 4 (Reset Counter) ทำให้เกิดบั๊ก User ถูกล็อกทั้งที่เพิ่งผิดครั้งแรกของการล็อกอินรอบใหม่
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scenario 3: Leave Request -->
+                        <div id="jr-scen-3" class="jr-scenario-view hidden">
+                            <div class="rules-box" style="border-left: 5px solid #2980b9; background: #eaf2f8;">
+                                <h4 style="margin-top:0; color:#2980b9;">📅 โจทย์: ระบบลางาน (Leave Request)</h4>
+                                <p style="margin-bottom:5px;">ทดสอบฟอร์มการลางาน โดยมี Input คือ "Start Date" และ "End Date":</p>
+                                <ul style="margin-bottom:0;">
+                                    <li><b>Rule 1:</b> Start Date ต้องไม่เป็น "อดีต" (Backdate not allowed)</li>
+                                    <li><b>Rule 2:</b> End Date ต้อง >= Start Date (ห้ามวันจบมาก่อนวันเริ่ม)</li>
+                                    <li><b>Rule 3:</b> ลาป่วย (Sick Leave) ได้ไม่เกิน 3 วันติดต่อกัน หากเกินต้องแนบใบรับรองแพทย์</li>
+                                </ul>
+                            </div>
+                            <p class="instruction-text">⏳ <b>Time Limit: 3 mins</b> | เน้น Logic วันที่ และ Cross-field Validation</p>
+                            <center><button class="btn btn-primary" onclick="toggleJrAns('ans-leave')">💡 เฉลย & เกณฑ์การให้คะแนน</button></center>
+                            <div id="ans-leave" class="solution-section hidden" style="margin-top: 20px;">
+                                <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                                    <h4 style="margin-top:0;">✅ สิ่งที่ต้องทดสอบ (Checklist)</h4>
+                                    <strong>1. Date Logic Validation:</strong>
+                                    <ul style="margin-top:5px;">
+                                        <li>Start Date = วันนี้ (Valid)</li>
+                                        <li>Start Date = เมื่อวาน (Invalid - Error Message)</li>
+                                        <li style="background:#e8f8f5;">Start Date = End Date (ลา 1 วัน - Valid)</li>
+                                        <li style="color:red;">Start Date > End Date (เช่น เริ่ม 15 ม.ค. จบ 10 ม.ค. - Invalid)</li>
+                                    </ul>
+                                    <strong>2. Business Rule (Sick Leave):</strong>
+                                    <ul style="margin-top:5px;">
+                                        <li>ลา 3 วัน (เช่น 1-3 ม.ค.) -> ไม่ต้องแนบไฟล์ (Valid)</li>
+                                        <li style="background:#fff3cd;">ลา 4 วัน (เช่น 1-4 ม.ค.) -> <b>System must require file upload</b></li>
+                                    </ul>
+                                    <div style="margin-top:10px; border-top:1px solid #eee; padding-top:10px; font-size:0.9rem;">
+                                        <b>Edge Case for Junior:</b> "ถ้าลาวันศุกร์ ถึง จันทร์ (รวม 4 วัน แต่เป็นวันทำงาน 2 วัน) ระบบนับแบบไหน?" <br><i>(คำถามนี้แสดงถึงไหวพริบในการแยกแยะ Calendar Days vs Working Days)</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="logic-content-senior" class="hidden">
-                        <div class="section-title">📌 โจทย์: สินเชื่อส่วนบุคคล (Advanced)</div>
+                        <div class="section-title">📋 โจทย์: สินเชื่อส่วนบุคคล (Advanced)</div>
                         <div class="condition-list senior-list">
                             <ul>
                                 <li><span>C1: รายได้ (Income)</span> <b>>= 50,000 THB</b></li>
@@ -486,12 +608,126 @@
                     </div>
                 </div>
 
+                <!-- 2026 SENIOR LOGIC EXAM (3 SCENARIOS) -->
+                <div id="logic-content-senior-2026" class="hidden">
+                    <div class="section-title">🦁 Senior Logic Challenge (3 Scenarios)</div>
+                    
+                    <div class="sub-topic-tabs" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; overflow-x: auto;">
+                        <button class="sub-topic-btn active" onclick="switchLogicScenario(1)" id="btn-logic-1" style="padding: 8px 15px; border: none; background: #2c3e50; color: white; border-radius: 5px; cursor: pointer;">1. 🚗 Parking Fee</button>
+                        <button class="sub-topic-btn" onclick="switchLogicScenario(2)" id="btn-logic-2" style="padding: 8px 15px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer;">2. 🛍️ Discount</button>
+                        <button class="sub-topic-btn" onclick="switchLogicScenario(3)" id="btn-logic-3" style="padding: 8px 15px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer;">3. 🏧 ATM Limits</button>
+                    </div>
+
+                    <div id="logic-scen-1" class="logic-scenario-view">
+                        <div class="rules-box" style="border-left: 5px solid #3498db; background: #f0f8ff;">
+                            <h4 style="margin-top:0; color:#2980b9;">🏢 Business Rules: Parking System</h4>
+                            <ul style="margin-bottom:0;">
+                                <li><b>Rule 1:</b> จอดฟรี 30 นาทีแรก (0-30 นาที)</li>
+                                <li><b>Rule 2:</b> เริ่มคิดเงินนาทีที่ 31 เป็นต้นไป ชั่วโมงละ 20 บาท (เศษของชม. ปัดเป็น 1 ชม.)</li>
+                                <li><b>Rule 3:</b> ค่าจอดสูงสุด (Max Cap) 150 บาท/วัน (24 ชม.)</li>
+                                <li><b>Rule 4:</b> บัตรหาย ปรับทันที 300 บาท (Override ทุกเงื่อนไข)</li>
+                            </ul>
+                        </div>
+                        <p class="instruction-text">⏳ <b>Time Limit: 3 mins</b> | จงออกแบบ Test Cases ที่ครอบคลุม Logic และ Boundary ทั้งหมด</p>
+                        <center><button class="btn btn-primary" onclick="toggleLogicAns('ans-parking')">💡 เฉลย & วิเคราะห์ (Analysis)</button></center>
+                        <div id="ans-parking" class="solution-section hidden" style="margin-top: 20px;">
+                            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                                <h4 style="margin-top:0;">✅ Essential Test Scenarios (ตารางวิเคราะห์)</h4>
+                                <table class="data-table" style="width:100%; border-collapse: collapse; font-size: 0.9rem;">
+                                    <thead style="background:#ecf0f1;"><tr><th>Scenario Type</th><th>Input (Time/Condition)</th><th>Expected Output</th><th>Why check? (Senior Mindset)</th></tr></thead>
+                                    <tbody>
+                                        <tr><td>Boundary (Free)</td><td>30 mins 00 sec</td><td>0 THB</td><td>จุดตัดสูงสุดของของฟรี</td></tr>
+                                        <tr style="background:#fff3cd;"><td>Boundary (Charge)</td><td>30 mins 01 sec</td><td>20 THB</td><td><b>Critical:</b> เช็คว่านาทีที่ 31 คิดเงินจริงหรือไม่</td></tr>
+                                        <tr><td>Rounding Logic</td><td>1 hr 01 min</td><td>40 THB</td><td>เช็คการปัดเศษ (เข้าสู่ชม. ที่ 2)</td></tr>
+                                        <tr><td>Max Cap (Before)</td><td>7 hrs (20x7)</td><td>140 THB</td><td>จุดก่อนชนเพดาน</td></tr>
+                                        <tr style="background:#d4edda;"><td>Max Cap (Hit)</td><td>8 hrs (20x8=160)</td><td>150 THB</td><td><b>Logic:</b> ระบบต้องตัดที่ 150 ไม่ใช่ 160</td></tr>
+                                        <tr><td>Over 24h</td><td>25 hrs</td><td>Ask Requirement</td><td>Senior ต้องถาม: คิด 150+20 หรือ เริ่ม Cycle ใหม่?</td></tr>
+                                        <tr style="background:#f8d7da;"><td>Priority Rule</td><td>5 mins + Lost Ticket</td><td>300 THB</td><td><b>Priority:</b> กฎบัตรหายสำคัญกว่ากฎจอดฟรี</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="logic-scen-2" class="logic-scenario-view hidden">
+                        <div class="rules-box" style="border-left: 5px solid #e67e22; background: #fff5e6;">
+                            <h4 style="margin-top:0; color:#d35400;">🏷️ Business Rules: Discount Logic</h4>
+                            <ul style="margin-bottom:0;">
+                                <li><b>R1:</b> ยอดซื้อขั้นต่ำ 500 บาท ถึงจะ Checkout ได้</li>
+                                <li><b>R2 (Tier):</b> 1,000-4,999 ลด 5% | 5,000+ ลด 10%</li>
+                                <li><b>R3 (Exception):</b> สินค้าหมวด "Electronics" <b>ไม่นำมาคิด % ส่วนลด</b></li>
+                                <li><b>R4 (Coupon):</b> โค้ด "LUCKY" ลดเพิ่ม 100 บาท (ใช้ได้เฉพาะเมื่อยอดสุทธิหลังหัก % ยังคง > 1,000 บาท)</li>
+                            </ul>
+                        </div>
+                        <p class="instruction-text">⏳ <b>Time Limit: 3 mins</b> | จงเขียน Test Case เพื่อทดสอบการลำดับความสำคัญ (Order of Operations)</p>
+                        <center><button class="btn btn-primary" onclick="toggleLogicAns('ans-discount')">💡 เฉลย & วิเคราะห์ (Analysis)</button></center>
+                        <div id="ans-discount" class="solution-section hidden" style="margin-top: 20px;">
+                            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                                <h4 style="margin-top:0;">✅ Test Case: The "Trap" Scenario</h4>
+                                <p><b>Input:</b> เสื้อ (500 บ.) + ทีวี (5,000 บ.) + คูปอง LUCKY</p>
+                                <div style="background:#f8f9fa; padding:10px; border-radius:5px; margin:10px 0;">
+                                    <strong>Step-by-Step Logic Validation:</strong><br>
+                                    1. <b>Total Cart:</b> 5,500 บาท (Pass Min 500) <span style="color:green">✅ Passed</span><br>
+                                    2. <b>Calculate % Base:</b> ตัด TV ออก เหลือฐานคำนวณ 500 บาท<br>
+                                    3. <b>Apply Tier:</b> ยอด 5,500 เข้าเกณฑ์ Tier 10% หรือไม่? <br>
+                                       &nbsp;&nbsp;&nbsp;👉 <i>Senior Question:</i> Tier ดูจากยอดรวม (5,500) หรือยอดยกเว้น (500)?<br>
+                                       &nbsp;&nbsp;&nbsp;👉 <i>Assume (Total):</i> ได้ลด 10% ของ 500 = <b>ลด 50 บาท</b><br>
+                                    4. <b>Net before Coupon:</b> 5,500 - 50 = 5,450 บาท<br>
+                                    5. <b>Apply Coupon:</b> ยอด 5,450 > 1,000 -> ใช้คูปองได้ -> <b>ลดอีก 100</b><br>
+                                    <strong>Final Price: 5,350 บาท</strong>
+                                </div>
+                                <div style="background:#ffeaa7; padding:10px; border-radius:5px; font-size:0.9rem; color:#d35400;">
+                                    <b>🎯 จุดวัดกึ๋น (Evaluation Point):</b>
+                                    ถ้า Candidate เอา 5,500 ไปลด 10% (ลด 550) = <b>ตกม้าตายเรื่อง Exclusion Rule</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="logic-scen-3" class="logic-scenario-view hidden">
+                        <div class="rules-box" style="border-left: 5px solid #9b59b6; background: #fdf5ff;">
+                            <h4 style="margin-top:0; color:#8e44ad;">🏧 Business Rules: ATM Withdraw</h4>
+                            <ul style="margin-bottom:0;">
+                                <li><b>R1:</b> ถอน 100 - 20,000 ต่อครั้ง | สูงสุด 50,000 ต่อวัน</li>
+                                <li><b>R2 (Fee):</b> ต่างธนาคาร ฟรี 3 ครั้งแรก | ครั้งที่ 4 ขึ้นไป คิด 10 บาท</li>
+                                <li><b>R3 (Balance):</b> เงินต้องพอให้หัก (ยอดถอน + ค่าธรรมเนียม)</li>
+                            </ul>
+                        </div>
+                        <p class="instruction-text">⏳ <b>Time Limit: 3 mins</b> | จงออกแบบ State Transition Testing และ Negative Cases</p>
+                        <center><button class="btn btn-primary" onclick="toggleLogicAns('ans-atm')">💡 เฉลย & วิเคราะห์ (Analysis)</button></center>
+                        <div id="ans-atm" class="solution-section hidden" style="margin-top: 20px;">
+                            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                                <h4 style="margin-top:0;">✅ Critical Test Scenarios</h4>
+                                <strong style="color:#2c3e50;">1. State Transition (Daily Limit):</strong>
+                                <table class="data-table" style="width:100%; margin-top:5px; margin-bottom:15px; font-size:0.9rem;">
+                                    <tr><td>Tx 1</td><td>20,000</td><td>Pass (Sum 20k)</td></tr>
+                                    <tr><td>Tx 2</td><td>20,000</td><td>Pass (Sum 40k)</td></tr>
+                                    <tr style="background:#ffd6d6;"><td>Tx 3</td><td>20,000</td><td><b>Fail</b> (Sum 60k > Limit)</td></tr>
+                                    <tr style="background:#d4edda;"><td>Tx 3 (Retry)</td><td>10,000</td><td><b>Pass</b> (Sum 50k Max)</td></tr>
+                                </table>
+                                <strong style="color:#2c3e50;">2. Fee Logic (Frequency Count):</strong>
+                                <ul>
+                                    <li>กดต่างตู้ครั้งที่ 3: ถอน 100 -> หักบัญชี 100 (Fee 0)</li>
+                                    <li>กดต่างตู้ครั้งที่ 4: ถอน 100 -> หักบัญชี 110 (Fee 10)</li>
+                                </ul>
+                                <div style="background:#ffe0e0; padding:10px; border-radius:5px; border-left: 4px solid #c0392b;">
+                                    <b>☠️ Killer Scenario (Negative Test):</b><br>
+                                    มีเงินในบัญชี <b>1,000 บาท</b> | กดต่างตู้ <b>ครั้งที่ 4</b> | ยอดกด <b>1,000 บาท</b><br>
+                                    👉 <b>Expected Result:</b> Transaction Failed<br>
+                                    👉 <b>Reason:</b> ยอดรวมคือ 1,000 (ถอน) + 10 (Fee) = 1,010 บาท (เงินไม่พอ)<br>
+                                    <i>(Senior QA ต้องมองเห็นเคสนี้ทันที)</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="topic-2" class="topic-content hidden">
                     <div class="section-title">🏗️ Backend Testing</div>
                     
                     <div class="sub-topic-tabs" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;">
-                        <button class="sub-topic-btn active" onclick="switchSubTopic(2, 1)" style="padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">1. Technical - JSON</button>
-                        <button class="sub-topic-btn" onclick="switchSubTopic(2, 2)" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">2. Technical - SQL</button>
+                        <button class="sub-topic-btn active" onclick="if(selectedYear==='2025') switchSubTopic2025(2, 1); else switchSubTopic2026(2, 1);" style="padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">1. Technical - JSON</button>
+                        <button class="sub-topic-btn" onclick="if(selectedYear==='2025') switchSubTopic2025(2, 2); else switchSubTopic2026(2, 2);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">2. Technical - SQL</button>
                     </div>
                     
                     <div id="sub-topic-2-1" class="sub-topic-content">
@@ -675,10 +911,10 @@
                     <div class="section-title">🤖 Automation Testing</div>
                     
                     <div class="sub-topic-tabs" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; flex-wrap: wrap;">
-                        <button class="sub-topic-btn active" onclick="switchSubTopic(3, 1)" style="padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">1. Code - JavaScript</button>
-                        <button class="sub-topic-btn" onclick="switchSubTopic(3, 2)" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">2. Code - Python</button>
-                        <button class="sub-topic-btn" onclick="switchSubTopic(3, 3)" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">3. Robot Framework</button>
-                        <button class="sub-topic-btn" onclick="switchSubTopic(3, 4)" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">4. Cypress</button>
+                        <button class="sub-topic-btn active" onclick="if(selectedYear==='2025') switchSubTopic2025(3, 1); else switchSubTopic2026(3, 1);" style="padding: 10px 20px; border: none; background: #3498db; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">1. Code - JavaScript</button>
+                        <button class="sub-topic-btn" onclick="if(selectedYear==='2025') switchSubTopic2025(3, 2); else switchSubTopic2026(3, 2);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">2. Code - Python</button>
+                        <button class="sub-topic-btn" onclick="if(selectedYear==='2025') switchSubTopic2025(3, 3); else switchSubTopic2026(3, 3);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">3. Robot Framework</button>
+                        <button class="sub-topic-btn" onclick="if(selectedYear==='2025') switchSubTopic2025(3, 4); else switchSubTopic2026(3, 4);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">4. Cypress</button>
                     </div>
                     
                     <div id="sub-topic-3-1" class="sub-topic-content">
@@ -996,6 +1232,8 @@
 <script src="js/triangle.js"></script>
 <script src="js/mock-app.js"></script>
 <script src="js/interview.js"></script>
+<script src="interview-2025/interview-2025.js"></script>
+<script src="interview-2026/interview-2026.js"></script>
 
 </body>
 </html>

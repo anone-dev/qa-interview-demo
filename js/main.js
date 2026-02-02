@@ -1,5 +1,8 @@
 // Main Navigation & Password Logic
 
+// Global variables for interview year selection
+let selectedYear = null;
+
 async function hashPassword(password) {
     const encoder = new TextEncoder();
     const data = encoder.encode(password);
@@ -50,6 +53,111 @@ async function authInterviewAccess() {
             continue;
         }
     }
+}
+
+// Interview Year Selection Functions
+function selectInterviewYear(year) {
+    // Toggle functionality - if clicking the same year, unselect it
+    if (selectedYear === year) {
+        selectedYear = null;
+        
+        // Reset descriptions to default
+        resetLevelDescriptions();
+        
+        // Reset all year cards to light colors
+        document.querySelectorAll('.year-card').forEach(card => {
+            const cardYear = card.getAttribute('data-year');
+            if (cardYear === '2025') {
+                card.style.background = 'rgba(102, 126, 234, 0.3)';
+            } else {
+                card.style.background = 'rgba(240, 147, 251, 0.3)';
+            }
+        });
+        
+        // Hide level cards and content
+        document.getElementById('interview-level-select').classList.add('hidden');
+        document.getElementById('interview-content-area').classList.add('hidden');
+        return;
+    }
+    
+    selectedYear = year;
+    
+    // Update descriptions based on selected year
+    if (year === '2026') {
+        updateLevelDescriptions2026();
+    } else {
+        resetLevelDescriptions();
+    }
+    
+    // Reset level selection when switching years
+    document.querySelectorAll('.level-card.junior, .level-card.senior').forEach(card => {
+        card.classList.remove('selected-junior', 'selected-senior');
+    });
+    
+    // Update year card styles
+    document.querySelectorAll('.year-card').forEach(card => {
+        const cardYear = card.getAttribute('data-year');
+        if (cardYear === year) {
+            // Selected year - dark color
+            if (year === '2025') {
+                card.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            } else {
+                card.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+            }
+        } else {
+            // Unselected year - light color
+            if (cardYear === '2025') {
+                card.style.background = 'rgba(102, 126, 234, 0.3)';
+            } else {
+                card.style.background = 'rgba(240, 147, 251, 0.3)';
+            }
+        }
+    });
+    
+    // Hide content area when switching years
+    document.getElementById('interview-content-area').classList.add('hidden');
+    // Keep year cards visible and show level cards
+    document.getElementById('interview-level-select').classList.remove('hidden');
+    document.getElementById('selected-year-text').textContent = `Interview ${year}`;
+}
+
+function resetLevelDescriptions() {
+    const juniorDesc = document.getElementById('junior-desc');
+    const seniorDesc = document.getElementById('senior-desc');
+    
+    if (juniorDesc) {
+        juniorDesc.textContent = 'Logic Exam, JSON/SQL Basics, JS/Python/Robot/Cypress Fundamentals';
+    }
+    
+    if (seniorDesc) {
+        seniorDesc.textContent = 'Advanced Logic, Complex Queries, Error Handling & Anti-Patterns';
+    }
+}
+
+function goBackToYearSelect() {
+    selectedYear = null;
+    
+    // Reset descriptions to default
+    resetLevelDescriptions();
+    
+    // Reset all year cards to light colors
+    document.querySelectorAll('.year-card').forEach(card => {
+        const cardYear = card.getAttribute('data-year');
+        if (cardYear === '2025') {
+            card.style.background = 'rgba(102, 126, 234, 0.3)';
+        } else {
+            card.style.background = 'rgba(240, 147, 251, 0.3)';
+        }
+    });
+    
+    // Reset level selection
+    document.querySelectorAll('.level-card.junior, .level-card.senior').forEach(card => {
+        card.classList.remove('selected-junior', 'selected-senior');
+    });
+    
+    document.getElementById('interview-content-area').classList.add('hidden');
+    document.getElementById('interview-level-select').classList.add('hidden');
+    document.getElementById('interview-year-select').classList.remove('hidden');
 }
 
 function getPasswordInput(message) {
@@ -369,5 +477,30 @@ switchMainTab = function(tab) {
     } else if(tab === 'interview') {
         document.getElementById('view-interview').classList.add('active');
         document.querySelectorAll('.nav-tabs button')[2].classList.add('active');
+        
+        // Reset to year selection only
+        selectedYear = null;
+        
+        // Reset descriptions to default
+        resetLevelDescriptions();
+        
+        document.getElementById('interview-year-select').classList.remove('hidden');
+        document.getElementById('interview-level-select').classList.add('hidden');
+        document.getElementById('interview-content-area').classList.add('hidden');
+        
+        // Reset year card styles
+        document.querySelectorAll('.year-card').forEach(card => {
+            const cardYear = card.getAttribute('data-year');
+            if (cardYear === '2025') {
+                card.style.background = 'rgba(102, 126, 234, 0.3)';
+            } else {
+                card.style.background = 'rgba(240, 147, 251, 0.3)';
+            }
+        });
+        
+        // Reset level selection
+        document.querySelectorAll('.level-card.junior, .level-card.senior').forEach(card => {
+            card.classList.remove('selected-junior', 'selected-senior');
+        });
     }
 };

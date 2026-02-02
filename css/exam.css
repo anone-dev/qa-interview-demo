@@ -10,9 +10,14 @@
 .level-card {
     background: white;
     border-radius: 12px;
-    padding: 30px;
+    padding: 15px 30px;
     text-align: center;
     width: 300px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     cursor: pointer;
     transition: all 0.3s;
@@ -45,21 +50,21 @@
 }
 
 .level-icon { 
-    font-size: 3rem; 
-    margin-bottom: 15px; 
+    font-size: 2rem; 
+    margin: 0;
     display: block; 
 }
 
 .level-title { 
-    font-size: 1.5rem; 
+    font-size: 1.2rem; 
     font-weight: bold; 
-    margin-bottom: 10px; 
+    margin: 0;
     display: block; 
 }
 
 .level-desc { 
     color: #666; 
-    font-size: 0.9rem; 
+    font-size: 0.8rem; 
 }
 
 /* Topic Tabs */
