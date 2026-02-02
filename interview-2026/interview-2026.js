@@ -61,6 +61,12 @@ function switchTopic2026(topicId) {
     
     document.querySelectorAll('.solution-section').forEach(sol => sol.style.display = 'none');
     
+    // Hide all 2026 logic content when switching topics
+    const junior2026 = document.getElementById('logic-content-junior-2026');
+    const senior2026 = document.getElementById('logic-content-senior-2026');
+    if(junior2026) junior2026.classList.add('hidden');
+    if(senior2026) senior2026.classList.add('hidden');
+    
     // Logic สำหรับ Topic 2 (Backend Testing) - แสดง sub-topic แรก
     if(topicId === 2) {
         switchSubTopic2026(2, 1);
@@ -71,16 +77,10 @@ function switchTopic2026(topicId) {
         switchSubTopic2026(3, 1);
     }
     
-    // Logic เดิมของ Topic 1
+    // Logic เดิมของ Topic 1 (Logic Exam)
     if(topicId === 1) {
         document.getElementById('logic-content-junior').classList.add('hidden');
         document.getElementById('logic-content-senior').classList.add('hidden');
-        // Hide 2026 junior content if exists
-        const junior2026 = document.getElementById('logic-content-junior-2026');
-        if(junior2026) junior2026.classList.add('hidden');
-        // Hide 2026 senior content if exists
-        const senior2026 = document.getElementById('logic-content-senior-2026');
-        if(senior2026) senior2026.classList.add('hidden');
         
         if(currentLevel2026 === 'junior') {
             // Use 2026 version for junior if available
@@ -91,7 +91,7 @@ function switchTopic2026(topicId) {
             } else {
                 document.getElementById('logic-content-junior').classList.remove('hidden');
             }
-        } else {
+        } else if(currentLevel2026 === 'senior') {
             // Use 2026 version for senior if available
             if(senior2026) {
                 senior2026.classList.remove('hidden');
