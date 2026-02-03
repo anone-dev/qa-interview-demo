@@ -57,6 +57,14 @@ function switchTopic2025(topicId) {
     
     // Logic สำหรับ Topic 3 (Automated Testing) - แสดง sub-topic แรก
     if(topicId === 3) {
+        // Show JavaScript and Python buttons for 2025, hide Playwright
+        const jsBtn = document.querySelector('.sub-topic-btn[onclick*="switchSubTopic2025(3, 1)"]');
+        const pyBtn = document.querySelector('.sub-topic-btn[onclick*="switchSubTopic2025(3, 2)"]');
+        const pwBtn = document.getElementById('playwright-btn');
+        if(jsBtn) jsBtn.style.display = 'inline-block';
+        if(pyBtn) pyBtn.style.display = 'inline-block';
+        if(pwBtn) pwBtn.style.display = 'none'; // Hide Playwright for 2025
+        
         switchSubTopic2025(3, 1);
     }
     
@@ -129,13 +137,30 @@ function switchSubTopic2025(topicId, subTopicId) {
         // Only handle if year 2025 is selected
         if(typeof selectedYear !== 'undefined' && selectedYear !== '2025') return;
         
-        document.getElementById('sql-content-junior').classList.add('hidden');
-        document.getElementById('sql-content-senior').classList.add('hidden');
+        console.log('SQL Content Switch - Current Level:', currentLevel2025);
         
+        // Hide ALL SQL content first (both 2025 and 2026)
+        const sqlJunior2025 = document.getElementById('sql-content-junior-2025');
+        const sqlSenior2025 = document.getElementById('sql-content-senior-2025');
+        const sqlJunior2026 = document.getElementById('sql-content-junior-2026');
+        const sqlSenior2026 = document.getElementById('sql-content-senior-2026');
+        
+        if(sqlJunior2025) sqlJunior2025.classList.add('hidden');
+        if(sqlSenior2025) sqlSenior2025.classList.add('hidden');
+        if(sqlJunior2026) sqlJunior2026.classList.add('hidden');
+        if(sqlSenior2026) sqlSenior2026.classList.add('hidden');
+        
+        // Show appropriate 2025 content based on level
         if(currentLevel2025 === 'junior') {
-            document.getElementById('sql-content-junior').classList.remove('hidden');
+            if(sqlJunior2025) {
+                sqlJunior2025.classList.remove('hidden');
+                console.log('Showing Junior SQL 2025 content');
+            }
         } else {
-            document.getElementById('sql-content-senior').classList.remove('hidden');
+            if(sqlSenior2025) {
+                sqlSenior2025.classList.remove('hidden');
+                console.log('Showing Senior SQL 2025 content');
+            }
         }
     }
     
@@ -182,6 +207,8 @@ function switchSubTopic2025(topicId, subTopicId) {
         if(typeof selectedYear !== 'undefined' && selectedYear !== '2025') return;
         updateCyView2025();
     }
+    
+
 }
 
 async function toggleSolution(level) {
@@ -222,8 +249,8 @@ let lastSqlJuniorAnswer2025 = null;
 let lastSqlSeniorAnswer2025 = null;
 
 function checkSqlJunior(answer) {
-    const feedback = document.getElementById('sql-junior-feedback');
-    const buttons = document.querySelectorAll('#sql-content-junior .sql-btn');
+    const feedback = document.getElementById('sql-junior-feedback-2025');
+    const buttons = document.querySelectorAll('#sql-content-junior-2025 .sql-btn');
     const index = (answer === 'A') ? 0 : (answer === 'B') ? 1 : (answer === 'C') ? 2 : 3;
     const clickedBtn = buttons[index];
     
@@ -253,8 +280,8 @@ function checkSqlJunior(answer) {
 }
 
 function checkSqlSenior(answer) {
-    const feedback = document.getElementById('sql-senior-feedback');
-    const buttons = document.querySelectorAll('#sql-content-senior .sql-btn');
+    const feedback = document.getElementById('sql-senior-feedback-2025');
+    const buttons = document.querySelectorAll('#sql-content-senior-2025 .sql-btn');
     const index = (answer === 'A') ? 0 : (answer === 'B') ? 1 : (answer === 'C') ? 2 : 3;
     const clickedBtn = buttons[index];
     
@@ -557,6 +584,91 @@ function checkCyAnswer(level, answer) {
             msg = "❌ ผิด <br><small>ตัวแปร Global สามารถเข้าถึงได้ตามปกติครับ (Scope ถูกต้อง) แต่ปัญหาอยู่ที่ 'Timing' (เวลาในการโหลดข้อมูลที่ไม่พร้อมกัน)</small>";
         } else {
             msg = "❌ ผิด <br><small>นี่คือ Anti-Pattern (ข้อห้าม) ที่พบบ่อยที่สุดที่ทำให้ Test เดี๋ยวผ่านเดี๋ยวพัง (Flaky) ใน Cypress ครับ</small>";
+        }
+    }
+
+    if(isCorrect) {
+        targetBtn.classList.add('correct');
+        feedbackEl.innerHTML = msg;
+        feedbackEl.classList.add('fb-success');
+    } else {
+        targetBtn.classList.add('wrong');
+        feedbackEl.innerHTML = msg;
+        feedbackEl.classList.add('fb-error');
+    }
+    feedbackEl.classList.remove('hidden');
+}
+
+// === Playwright Logic ===
+
+let lastPwJuniorAnswer2025 = null;
+let lastPwSeniorAnswer2025 = null;
+
+function updatePwView2025() {
+    // Only handle if year 2025 is selected
+    if(typeof selectedYear !== 'undefined' && selectedYear !== '2025') return;
+    
+    document.getElementById('pw-junior-view').classList.add('hidden');
+    document.getElementById('pw-senior-view').classList.add('hidden');
+    
+    if(currentLevel2025 === 'junior') {
+        document.getElementById('pw-junior-view').classList.remove('hidden');
+    } else {
+        document.getElementById('pw-senior-view').classList.remove('hidden');
+    }
+}
+
+function checkPwAnswer(level, answer) {
+    const isJunior = level === 'jr';
+    const feedbackId = isJunior ? 'pw-jr-feedback' : 'pw-sr-feedback';
+    const feedbackEl = document.getElementById(feedbackId);
+    
+    // Clear previous
+    feedbackEl.className = 'feedback-box hidden';
+    const viewId = isJunior ? 'pw-junior-view' : 'pw-senior-view';
+    const buttons = document.getElementById(viewId).querySelectorAll('.code-opt-btn');
+    buttons.forEach(btn => btn.className = 'code-opt-btn');
+
+    const targetBtn = event.currentTarget;
+    
+    // Toggle if clicking the same button
+    const lastAnswer = isJunior ? lastPwJuniorAnswer2025 : lastPwSeniorAnswer2025;
+    if(lastAnswer === answer) {
+        feedbackEl.classList.add('hidden');
+        if(isJunior) lastPwJuniorAnswer2025 = null;
+        else lastPwSeniorAnswer2025 = null;
+        return;
+    }
+    
+    if(isJunior) lastPwJuniorAnswer2025 = answer;
+    else lastPwSeniorAnswer2025 = answer;
+
+    let isCorrect = false;
+    let msg = "";
+
+    if(isJunior) {
+        // Answer: B (Wait 2 seconds then click successfully)
+        if(answer === 'wait') {
+            isCorrect = true;
+            msg = "✅ ถูกต้อง! (รอ 2 วินาที แล้วคลิกได้)<br><small><b>คำอธิบาย:</b> Playwright มี <b>Auto-waiting</b> ในตัว จะรอจนกว่า Element จะ <b>Visible</b> และ <b>Enabled</b> ก่อนที่จะคลิก แม้ว่าปุ่มจะเป็น display:none ในตอนแรก แต่หลัง 2 วินาที มันจะแสดงและคลิกได้ตามปกติ</small>";
+        } else if (answer === 'error') {
+            msg = "❌ ผิด <br><small>Playwright ไม่เกิด Error ทันที เพราะมันมี Auto-waiting จะรอจนกว่า Element จะพร้อมใช้งาน</small>";
+        } else if (answer === 'timeout') {
+            msg = "❌ ผิด <br><small>ถ้า Element ไม่แสดงภายใน 30 วินาที ถึงจะ Timeout แต่ในกรณีนี้ Element จะแสดงภายใน 2 วินาที</small>";
+        } else {
+            msg = "❌ ผิด <br><small>Playwright ไม่มี Force click จะรอจนกว่า Element จะพร้อมใช้งานก่อน</small>";
+        }
+    } else {
+        // Answer: B (Race Condition)
+        if(answer === 'race') {
+            isCorrect = true;
+            msg = "✅ ถูกต้อง! (Race Condition)<br><small><b>คำอธิบาย:</b> เมื่อรัน Parallel ตัวแปร <code>sharedCounter</code> จะถูกแชร์ระหว่าง 2 Workers ทำให้ Test A อาจได้ counter=2 และ Test B ได้ counter=1 หรือกลับกัน ทำให้ Assertion ผิดพลาด<br><b>Senior Tip:</b> ใช้ <code>test.describe.serial()</code> หรือ Fixtures แทน</small>";
+        } else if (answer === 'pass') {
+            msg = "❌ ผิด <br><small>Playwright ไม่ได้แยก Context อัตโนมัติ Global Variable ยังคงถูกแชร์ระหว่าง Workers</small>";
+        } else if (answer === 'sequential') {
+            msg = "❌ ผิด <br><small>Playwright จะรัน Parallel ตามการตั้งค่า --workers=2 ไม่ได้เปลี่ยนเป็น Sequential อัตโนมัติ</small>";
+        } else {
+            msg = "❌ ผิด <br><small>Playwright อนุญาตให้ใช้ Global Variable ได้ แต่ไม่แนะนำใน Parallel Testing</small>";
         }
     }
 

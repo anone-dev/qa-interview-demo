@@ -84,7 +84,15 @@ function switchTopic2026(topicId) {
     
     // Logic สำหรับ Topic 3 (Automated Testing) - แสดง sub-topic แรก
     if(topicId === 3) {
-        switchSubTopic2026(3, 1);
+        // Hide JavaScript and Python buttons for 2026, show Playwright
+        const jsBtn = document.querySelector('.sub-topic-btn[onclick*="switchSubTopic2026(3, 1)"]');
+        const pyBtn = document.querySelector('.sub-topic-btn[onclick*="switchSubTopic2026(3, 2)"]');
+        const pwBtn = document.getElementById('playwright-btn');
+        if(jsBtn) jsBtn.style.display = 'none';
+        if(pyBtn) pyBtn.style.display = 'none';
+        if(pwBtn) pwBtn.style.display = 'inline-block'; // Show Playwright for 2026
+        
+        switchSubTopic2026(3, 3); // Start with Robot Framework for 2026
     }
     
     // Logic เดิมของ Topic 1 (Logic Exam)
@@ -170,10 +178,11 @@ function switchSubTopic2026(topicId, subTopicId) {
     
     // Logic พิเศษสำหรับ API Assertion (Topic 2, Sub-topic 1)
     if(topicId === 2 && subTopicId === 1) {
-        document.getElementById('api-assertion-junior').classList.add('hidden');
-        document.getElementById('api-assertion-senior').classList.add('hidden');
+        const apiJr = document.getElementById('api-assertion-junior');
+        const apiSr = document.getElementById('api-assertion-senior');
+        if(apiJr) apiJr.classList.add('hidden');
+        if(apiSr) apiSr.classList.add('hidden');
         
-        // Hide solutions when switching back to API Assertion
         const jrAns = document.getElementById('jr-api-ans-2026');
         const srAns = document.getElementById('api-ans-2026');
         if(jrAns) {
@@ -186,9 +195,9 @@ function switchSubTopic2026(topicId, subTopicId) {
         }
         
         if(currentLevel2026 === 'junior') {
-            document.getElementById('api-assertion-junior').classList.remove('hidden');
+            if(apiJr) apiJr.classList.remove('hidden');
         } else {
-            document.getElementById('api-assertion-senior').classList.remove('hidden');
+            if(apiSr) apiSr.classList.remove('hidden');
         }
     }
     
@@ -200,37 +209,62 @@ function switchSubTopic2026(topicId, subTopicId) {
     
     // Logic พิเศษสำหรับ SQL (Topic 2, Sub-topic 3)
     if(topicId === 2 && subTopicId === 3) {
-        document.getElementById('sql-content-junior').classList.add('hidden');
-        document.getElementById('sql-content-senior').classList.add('hidden');
+        const sqlJr2025 = document.getElementById('sql-content-junior-2025');
+        const sqlSr2025 = document.getElementById('sql-content-senior-2025');
+        const sqlJr2026 = document.getElementById('sql-content-junior-2026');
+        const sqlSr2026 = document.getElementById('sql-content-senior-2026');
         
+        // Hide all SQL content first
+        if(sqlJr2025) sqlJr2025.classList.add('hidden');
+        if(sqlSr2025) sqlSr2025.classList.add('hidden');
+        if(sqlJr2026) sqlJr2026.classList.add('hidden');
+        if(sqlSr2026) sqlSr2026.classList.add('hidden');
+        
+        // Show 2026 SQL content based on level
         if(currentLevel2026 === 'junior') {
-            document.getElementById('sql-content-junior').classList.remove('hidden');
+            if(sqlJr2026) sqlJr2026.classList.remove('hidden');
         } else {
-            document.getElementById('sql-content-senior').classList.remove('hidden');
+            if(sqlSr2026) sqlSr2026.classList.remove('hidden');
         }
     }
     
     // Logic พิเศษสำหรับ JavaScript (Topic 3, Sub-topic 1)
     if(topicId === 3 && subTopicId === 1) {
-        document.getElementById('js-junior-view').classList.add('hidden');
-        document.getElementById('js-senior-view').classList.add('hidden');
+        const jsJr = document.getElementById('js-junior-view');
+        const jsSr = document.getElementById('js-senior-view');
+        const jsJr26 = document.getElementById('js-junior-view-2026');
+        const jsSr26 = document.getElementById('js-senior-view-2026');
+        if(jsJr) jsJr.classList.add('hidden');
+        if(jsSr) jsSr.classList.add('hidden');
+        if(jsJr26) jsJr26.classList.add('hidden');
+        if(jsSr26) jsSr26.classList.add('hidden');
         
         if(currentLevel2026 === 'junior') {
-            document.getElementById('js-junior-view').classList.remove('hidden');
+            // For 2026 Junior Level - JavaScript content is removed
+            // Show empty message or redirect to other sections
         } else {
-            document.getElementById('js-senior-view').classList.remove('hidden');
+            // For 2026 Senior Level - JavaScript content is removed
+            // Show empty message or redirect to other sections
         }
     }
     
     // Logic พิเศษสำหรับ Python (Topic 3, Sub-topic 2)
     if(topicId === 3 && subTopicId === 2) {
-        document.getElementById('py-junior-view').classList.add('hidden');
-        document.getElementById('py-senior-view').classList.add('hidden');
+        const pyJr = document.getElementById('py-junior-view');
+        const pySr = document.getElementById('py-senior-view');
+        const pyJr26 = document.getElementById('py-junior-view-2026');
+        const pySr26 = document.getElementById('py-senior-view-2026');
+        if(pyJr) pyJr.classList.add('hidden');
+        if(pySr) pySr.classList.add('hidden');
+        if(pyJr26) pyJr26.classList.add('hidden');
+        if(pySr26) pySr26.classList.add('hidden');
         
         if(currentLevel2026 === 'junior') {
-            document.getElementById('py-junior-view').classList.remove('hidden');
+            // For 2026 Junior Level - Python content is removed
+            // Show empty message or redirect to other sections
         } else {
-            document.getElementById('py-senior-view').classList.remove('hidden');
+            // For 2026 Senior Level - Python content is removed
+            // Show empty message or redirect to other sections
         }
     }
     
@@ -242,6 +276,11 @@ function switchSubTopic2026(topicId, subTopicId) {
     // Logic พิเศษสำหรับ Cypress (Topic 3, Sub-topic 4)
     if(topicId === 3 && subTopicId === 4) {
         updateCyView2026();
+    }
+    
+    // Logic พิเศษสำหรับ Playwright (Topic 3, Sub-topic 5)
+    if(topicId === 3 && subTopicId === 5) {
+        updatePwView2026();
     }
 }
 
@@ -282,9 +321,12 @@ function resetJsonState2026() {
 let lastSqlJuniorAnswer2026 = null;
 let lastSqlSeniorAnswer2026 = null;
 
-function checkSqlJunior(answer) {
-    const feedback = document.getElementById('sql-junior-feedback');
-    const buttons = document.querySelectorAll('#sql-content-junior .sql-btn');
+function checkSqlJunior2026(answer) {
+    const feedback = document.getElementById('sql-junior-feedback-2026');
+    const sqlContent = document.getElementById('sql-content-junior-2026');
+    if (!sqlContent || !feedback) return;
+    const buttons = sqlContent.querySelectorAll('.sql-btn');
+    if (buttons.length === 0) return;
     const index = (answer === 'A') ? 0 : (answer === 'B') ? 1 : (answer === 'C') ? 2 : 3;
     const clickedBtn = buttons[index];
     
@@ -313,9 +355,12 @@ function checkSqlJunior(answer) {
     }
 }
 
-function checkSqlSenior(answer) {
-    const feedback = document.getElementById('sql-senior-feedback');
-    const buttons = document.querySelectorAll('#sql-content-senior .sql-btn');
+function checkSqlSenior2026(answer) {
+    const feedback = document.getElementById('sql-senior-feedback-2026');
+    const sqlContent = document.getElementById('sql-content-senior-2026');
+    if (!sqlContent || !feedback) return;
+    const buttons = sqlContent.querySelectorAll('.sql-btn');
+    if (buttons.length === 0) return;
     const index = (answer === 'A') ? 0 : (answer === 'B') ? 1 : (answer === 'C') ? 2 : 3;
     const clickedBtn = buttons[index];
     
@@ -331,16 +376,19 @@ function checkSqlSenior(answer) {
     buttons.forEach(btn => btn.className = 'sql-btn');
     lastSqlSeniorAnswer2026 = answer;
 
-    if(answer === 'B') {
+    if(answer === 'A' || answer === 'B') {
         clickedBtn.classList.add('correct');
-        feedback.innerHTML = "✅ ถูกต้อง!<br><small>การใช้ Subquery ร่วมกับ NOT IN (ไม่อยู่ใน...) เป็นวิธีที่สะอาดและเข้าใจง่ายที่สุดในการหาข้อมูลที่ขาดหายไป โดยไม่ต้องกังวลเรื่อง Join Type</small>";
+        if(answer === 'A') {
+            feedback.innerHTML = "✅ ถูกต้อง! (LEFT JOIN + IS NULL)<br><small><b>วิธีที่ดีที่สุด:</b> LEFT JOIN จะคืนข้อมูลทั้งหมดจาก ParkingEntry และใช้ IS NULL เพื่อหารายการที่ไม่มีคู่ใน ParkingExit<br><b>Performance:</b> เร็วกว่า NOT IN เมื่อมี NULL values</small>";
+        } else {
+            feedback.innerHTML = "✅ ถูกต้อง! (NOT IN Subquery)<br><small><b>วิธีคลาสสิก:</b> ใช้ NOT IN กับ Subquery เพื่อหา ticket_id ที่ไม่มีใน ParkingExit<br><b>ข้อระวัง:</b> อาจมีปัญหาถ้ามี NULL ใน Subquery</small>";
+        }
         feedback.classList.add('fb-success');
     } else {
         clickedBtn.classList.add('wrong');
         feedback.classList.add('fb-error');
-        if(answer === 'A') feedback.innerHTML = "❌ ผิด<br><small>Inner Join จะตัดแถวที่ไม่เข้าคู่ออกไปก่อน<br>ทำให้ลูกค้าที่ไม่มีออเดอร์ (Bob) ถูกตัดทิ้งไปตั้งแต่บรรทัด Join แล้ว ดังนั้นเงื่อนไข WHERE ... IS NULL จึงหาใครไม่เจอเลย (ถ้าจะใช้ท่านี้ต้องเป็น LEFT JOIN)</small>";
-        if(answer === 'C') feedback.innerHTML = "❌ ผิดตรรกะ (Logic Error)<br><small>คำสั่ง IN จะค้นหาลูกค้าที่ มี ออเดอร์อยู่ในระบบ ซึ่งเป็นสิ่งตรงกันข้ามกับที่โจทย์ต้องการ</small>";
-        if(answer === 'D') feedback.innerHTML = "❌ ผิดไวยากรณ์ (Syntax Error)<br><small>ใน SQL เราไม่สามารถใช้เครื่องหมาย != (ไม่เท่ากับ) เปรียบเทียบค่าเดียว กับ List ของข้อมูลจำนวนมากจาก Subquery ได้ (ต้องใช้ NOT IN เท่านั้น)</small>";
+        if(answer === 'C') feedback.innerHTML = "❌ ผิด - ตรงข้าม<br><small>ใช้ IN แทน NOT IN จะได้รายการที่<b>มี</b>ใน ParkingExit (TK-001, TK-003)<br>แต่เราต้องการรายการที่<b>ไม่มี</b> (TK-002, TK-004)</small>";
+        if(answer === 'D') feedback.innerHTML = "❌ ผิด - JOIN Logic<br><small>INNER JOIN จะคืนเฉพาะรายการที่มีในทั้งสองตารางเท่านั้น<br>และ WHERE px.exit_time IS NULL จะไม่เกิดขึ้นเพราะ JOIN แล้วกรองเฉพาะที่ Match</small>";
     }
 }
 
@@ -351,11 +399,14 @@ let lastJsSeniorAnswer2026 = null;
 
 function checkJsAnswer(level, answer) {
     const isJunior = level === 'jr';
-    const feedbackId = isJunior ? 'js-jr-feedback' : 'js-sr-feedback';
+    const feedbackId = isJunior ? (selectedYear === '2026' ? 'js-jr-feedback-2026' : 'js-jr-feedback') : (selectedYear === '2026' ? 'js-sr-feedback-2026' : 'js-sr-feedback');
     const feedbackEl = document.getElementById(feedbackId);
-    const viewId = isJunior ? 'js-junior-view' : 'js-senior-view';
-    const buttons = document.getElementById(viewId).querySelectorAll('.code-opt-btn');
-    const targetBtn = event.currentTarget;
+    const viewId = isJunior ? (selectedYear === '2026' ? 'js-junior-view-2026' : 'js-junior-view') : (selectedYear === '2026' ? 'js-senior-view-2026' : 'js-senior-view');
+    const viewEl = document.getElementById(viewId);
+    if (!viewEl || !feedbackEl) return;
+    const buttons = viewEl.querySelectorAll('.code-opt-btn');
+    const targetBtn = event?.currentTarget;
+    if (!targetBtn) return;
     
     // Toggle if clicking the same button
     const lastAnswer = isJunior ? lastJsJuniorAnswer2026 : lastJsSeniorAnswer2026;
@@ -411,11 +462,14 @@ let lastPySeniorAnswer2026 = null;
 
 function checkPyAnswer(level, answer) {
     const isJunior = level === 'jr';
-    const feedbackId = isJunior ? 'py-jr-feedback' : 'py-sr-feedback';
+    const feedbackId = isJunior ? (selectedYear === '2026' ? 'py-jr-feedback-2026' : 'py-jr-feedback') : (selectedYear === '2026' ? 'py-sr-feedback-2026' : 'py-sr-feedback');
     const feedbackEl = document.getElementById(feedbackId);
-    const viewId = isJunior ? 'py-junior-view' : 'py-senior-view';
-    const buttons = document.getElementById(viewId).querySelectorAll('.code-opt-btn');
-    const targetBtn = event.currentTarget;
+    const viewId = isJunior ? (selectedYear === '2026' ? 'py-junior-view-2026' : 'py-junior-view') : (selectedYear === '2026' ? 'py-senior-view-2026' : 'py-senior-view');
+    const viewEl = document.getElementById(viewId);
+    if (!viewEl || !feedbackEl) return;
+    const buttons = viewEl.querySelectorAll('.code-opt-btn');
+    const targetBtn = event?.currentTarget;
+    if (!targetBtn) return;
     
     // Toggle if clicking the same button
     const lastAnswer = isJunior ? lastPyJuniorAnswer2026 : lastPySeniorAnswer2026;
@@ -484,16 +538,17 @@ function updateRfView() {
 
 function checkRfAnswer(level, answer) {
     const isJunior = level === 'jr';
-    const feedbackId = isJunior ? 'rf-jr-feedback' : 'rf-sr-feedback';
+    const feedbackId = isJunior ? (selectedYear === '2026' ? 'rf-jr-feedback-2026' : 'rf-jr-feedback') : (selectedYear === '2026' ? 'rf-sr-feedback-2026' : 'rf-sr-feedback');
     const feedbackEl = document.getElementById(feedbackId);
-    
-    // Clear previous
+    if (!feedbackEl) return;
     feedbackEl.className = 'feedback-box hidden';
-    const viewId = isJunior ? 'rf-junior-view' : 'rf-senior-view';
-    const buttons = document.getElementById(viewId).querySelectorAll('.code-opt-btn');
+    const viewId = isJunior ? (selectedYear === '2026' ? 'rf-junior-view-2026' : 'rf-junior-view') : (selectedYear === '2026' ? 'rf-senior-view-2026' : 'rf-senior-view');
+    const viewEl = document.getElementById(viewId);
+    if (!viewEl) return;
+    const buttons = viewEl.querySelectorAll('.code-opt-btn');
     buttons.forEach(btn => btn.className = 'code-opt-btn');
-
-    const targetBtn = event.currentTarget;
+    const targetBtn = event?.currentTarget;
+    if (!targetBtn) return;
     
     // Toggle if clicking the same button
     const lastAnswer = isJunior ? lastRfJuniorAnswer2026 : lastRfSeniorAnswer2026;
@@ -567,16 +622,17 @@ function updateCyView() {
 
 function checkCyAnswer(level, answer) {
     const isJunior = level === 'jr';
-    const feedbackId = isJunior ? 'cy-jr-feedback' : 'cy-sr-feedback';
+    const feedbackId = isJunior ? (selectedYear === '2026' ? 'cy-jr-feedback-2026' : 'cy-jr-feedback') : (selectedYear === '2026' ? 'cy-sr-feedback-2026' : 'cy-sr-feedback');
     const feedbackEl = document.getElementById(feedbackId);
-    
-    // Clear previous
+    if (!feedbackEl) return;
     feedbackEl.className = 'feedback-box hidden';
-    const viewId = isJunior ? 'cy-junior-view' : 'cy-senior-view';
-    const buttons = document.getElementById(viewId).querySelectorAll('.code-opt-btn');
+    const viewId = isJunior ? (selectedYear === '2026' ? 'cy-junior-view-2026' : 'cy-junior-view') : (selectedYear === '2026' ? 'cy-senior-view-2026' : 'cy-senior-view');
+    const viewEl = document.getElementById(viewId);
+    if (!viewEl) return;
+    const buttons = viewEl.querySelectorAll('.code-opt-btn');
     buttons.forEach(btn => btn.className = 'code-opt-btn');
-
-    const targetBtn = event.currentTarget;
+    const targetBtn = event?.currentTarget;
+    if (!targetBtn) return;
     
     // Toggle if clicking the same button
     const lastAnswer = isJunior ? lastCyJuniorAnswer2026 : lastCySeniorAnswer2026;
@@ -631,27 +687,124 @@ function checkCyAnswer(level, answer) {
 function updateRfView2026() {
     if (selectedYear !== '2026') return;
     
+    // Hide 2025 versions
     document.getElementById('rf-junior-view').classList.add('hidden');
     document.getElementById('rf-senior-view').classList.add('hidden');
+    // Hide 2026 versions
+    document.getElementById('rf-junior-view-2026').classList.add('hidden');
+    document.getElementById('rf-senior-view-2026').classList.add('hidden');
     
     if(currentLevel2026 === 'junior') {
-        document.getElementById('rf-junior-view').classList.remove('hidden');
+        document.getElementById('rf-junior-view-2026').classList.remove('hidden');
     } else {
-        document.getElementById('rf-senior-view').classList.remove('hidden');
+        document.getElementById('rf-senior-view-2026').classList.remove('hidden');
     }
 }
 
 function updateCyView2026() {
     if (selectedYear !== '2026') return;
     
+    // Hide 2025 versions
     document.getElementById('cy-junior-view').classList.add('hidden');
     document.getElementById('cy-senior-view').classList.add('hidden');
+    // Hide 2026 versions
+    document.getElementById('cy-junior-view-2026').classList.add('hidden');
+    document.getElementById('cy-senior-view-2026').classList.add('hidden');
     
     if(currentLevel2026 === 'junior') {
-        document.getElementById('cy-junior-view').classList.remove('hidden');
+        document.getElementById('cy-junior-view-2026').classList.remove('hidden');
     } else {
-        document.getElementById('cy-senior-view').classList.remove('hidden');
+        document.getElementById('cy-senior-view-2026').classList.remove('hidden');
     }
+}
+
+// === Playwright Logic ===
+
+let lastPwJuniorAnswer2026 = null;
+let lastPwSeniorAnswer2026 = null;
+
+function updatePwView2026() {
+    if (selectedYear !== '2026') return;
+    
+    // Hide 2025 versions
+    document.getElementById('pw-junior-view').classList.add('hidden');
+    document.getElementById('pw-senior-view').classList.add('hidden');
+    // Hide 2026 versions
+    document.getElementById('pw-junior-view-2026').classList.add('hidden');
+    document.getElementById('pw-senior-view-2026').classList.add('hidden');
+    
+    if(currentLevel2026 === 'junior') {
+        document.getElementById('pw-junior-view-2026').classList.remove('hidden');
+    } else {
+        document.getElementById('pw-senior-view-2026').classList.remove('hidden');
+    }
+}
+
+function checkPwAnswer(level, answer) {
+    const isJunior = level === 'jr';
+    const feedbackId = isJunior ? (selectedYear === '2026' ? 'pw-jr-feedback-2026' : 'pw-jr-feedback') : (selectedYear === '2026' ? 'pw-sr-feedback-2026' : 'pw-sr-feedback');
+    const feedbackEl = document.getElementById(feedbackId);
+    if (!feedbackEl) return;
+    feedbackEl.className = 'feedback-box hidden';
+    const viewId = isJunior ? (selectedYear === '2026' ? 'pw-junior-view-2026' : 'pw-junior-view') : (selectedYear === '2026' ? 'pw-senior-view-2026' : 'pw-senior-view');
+    const viewEl = document.getElementById(viewId);
+    if (!viewEl) return;
+    const buttons = viewEl.querySelectorAll('.code-opt-btn');
+    buttons.forEach(btn => btn.className = 'code-opt-btn');
+    const targetBtn = event?.currentTarget;
+    if (!targetBtn) return;
+    
+    // Toggle if clicking the same button
+    const lastAnswer = isJunior ? lastPwJuniorAnswer2026 : lastPwSeniorAnswer2026;
+    if(lastAnswer === answer) {
+        feedbackEl.classList.add('hidden');
+        if(isJunior) lastPwJuniorAnswer2026 = null;
+        else lastPwSeniorAnswer2026 = null;
+        return;
+    }
+    
+    if(isJunior) lastPwJuniorAnswer2026 = answer;
+    else lastPwSeniorAnswer2026 = answer;
+
+    let isCorrect = false;
+    let msg = "";
+
+    if(isJunior) {
+        // Answer: B (Wait 2 seconds then click successfully)
+        if(answer === 'wait') {
+            isCorrect = true;
+            msg = "✅ ถูกต้อง! (รอ 2 วินาที แล้วคลิกได้)<br><small><b>คำอธิบาย:</b> Playwright มี <b>Auto-waiting</b> ในตัว จะรอจนกว่า Element จะ <b>Visible</b> และ <b>Enabled</b> ก่อนที่จะคลิก แม้ว่าปุ่มจะเป็น display:none ในตอนแรก แต่หลัง 2 วินาที มันจะแสดงและคลิกได้ตามปกติ</small>";
+        } else if (answer === 'error') {
+            msg = "❌ ผิด <br><small>Playwright ไม่เกิด Error ทันที เพราะมันมี Auto-waiting จะรอจนกว่า Element จะพร้อมใช้งาน</small>";
+        } else if (answer === 'timeout') {
+            msg = "❌ ผิด <br><small>ถ้า Element ไม่แสดงภายใน 30 วินาที ถึงจะ Timeout แต่ในกรณีนี้ Element จะแสดงภายใน 2 วินาที</small>";
+        } else {
+            msg = "❌ ผิด <br><small>Playwright ไม่มี Force click จะรอจนกว่า Element จะพร้อมใช้งานก่อน</small>";
+        }
+    } else {
+        // Answer: B (Race Condition)
+        if(answer === 'race') {
+            isCorrect = true;
+            msg = "✅ ถูกต้อง! (Race Condition)<br><small><b>คำอธิบาย:</b> เมื่อรัน Parallel ตัวแปร <code>sharedCounter</code> จะถูกแชร์ระหว่าง 2 Workers ทำให้ Test A อาจได้ counter=2 และ Test B ได้ counter=1 หรือกลับกัน ทำให้ Assertion ผิดพลาด<br><b>Senior Tip:</b> ใช้ <code>test.describe.serial()</code> หรือ Fixtures แทน</small>";
+        } else if (answer === 'pass') {
+            msg = "❌ ผิด <br><small>Playwright ไม่ได้แยก Context อัตโนมัติ Global Variable ยังคงถูกแชร์ระหว่าง Workers</small>";
+        } else if (answer === 'sequential') {
+            msg = "❌ ผิด <br><small>Playwright จะรัน Parallel ตามการตั้งค่า --workers=2 ไม่ได้เปลี่ยนเป็น Sequential อัตโนมัติ</small>";
+        } else {
+            msg = "❌ ผิด <br><small>Playwright อนุญาตให้ใช้ Global Variable ได้ แต่ไม่แนะนำใน Parallel Testing</small>";
+        }
+    }
+
+    if(isCorrect) {
+        targetBtn.classList.add('correct');
+        feedbackEl.innerHTML = msg;
+        feedbackEl.classList.add('fb-success');
+    } else {
+        targetBtn.classList.add('wrong');
+        feedbackEl.innerHTML = msg;
+        feedbackEl.classList.add('fb-error');
+    }
+    feedbackEl.classList.remove('hidden');
 }
 
 // Override functions for 2026 to use different variable names
@@ -883,8 +1036,11 @@ function checkApiAssertion(level, answer) {
     const feedbackId = isJunior ? 'api-assertion-jr-feedback' : 'api-assertion-sr-feedback';
     const feedbackEl = document.getElementById(feedbackId);
     const viewId = isJunior ? 'api-assertion-junior' : 'api-assertion-senior';
-    const buttons = document.getElementById(viewId).querySelectorAll('.sql-btn');
-    const targetBtn = event.currentTarget;
+    const viewEl = document.getElementById(viewId);
+    if (!viewEl || !feedbackEl) return;
+    const buttons = viewEl.querySelectorAll('.sql-btn');
+    const targetBtn = event?.currentTarget;
+    if (!targetBtn) return;
     
     const lastAnswer = isJunior ? lastApiJuniorAnswer2026 : lastApiSeniorAnswer2026;
     if(lastAnswer === answer) {

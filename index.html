@@ -1131,9 +1131,9 @@
                     
                     <div id="sub-topic-2-3" class="sub-topic-content hidden">
                     
-                    <!-- ================= JUNIOR SQL ================= -->
-                    <div id="sql-content-junior" class="hidden">
-                        <div class="section-title">🗄️ SQL: Join & Filtering (Junior)</div>
+                    <!-- ================= JUNIOR SQL 2025 ================= -->
+                    <div id="sql-content-junior-2025" class="hidden">
+                        <div class="section-title">🗄️ SQL: Join & Filtering (Junior 2025)</div>
                         <p class="sql-instruction">Scenario: ต้องการรายชื่อลูกค้าและสินค้า ที่มี <b>ยอดซื้อมากกว่า 1,000</b> (Amount > 1000)</p>
                         
                         <div class="sql-container">
@@ -1173,31 +1173,95 @@
 
                             <!-- Options -->
                             <div class="sql-options-grid">
-                                <button class="sql-btn" onclick="checkSqlJunior('A')">
+                                <button class="sql-btn" onclick="checkSqlJunior2025('A');">
                                     <span class="opt-label">A</span>
                                     <code class="sql-code">SELECT c.name, o.product<br>FROM Customers c, Orders o<br>WHERE o.amount > 1000;</code>
                                 </button>
-                                <button class="sql-btn" onclick="checkSqlJunior('B')">
+                                <button class="sql-btn" onclick="checkSqlJunior2025('B');">
                                     <span class="opt-label">B</span>
                                     <code class="sql-code">SELECT c.name, o.product<br>FROM Customers c<br>JOIN Orders o ON c.id = o.order_id<br>WHERE o.amount > 1000;</code>
                                 </button>
-                                <button class="sql-btn" onclick="checkSqlJunior('C')">
+                                <button class="sql-btn" onclick="checkSqlJunior2025('C');">
                                     <span class="opt-label">C</span>
                                     <code class="sql-code">SELECT c.name, o.product<br>FROM Customers c<br>JOIN Orders o ON c.id = o.customer_id<br>WHERE o.amount > 1000;</code>
                                 </button>
-                                <button class="sql-btn" onclick="checkSqlJunior('D')">
+                                <button class="sql-btn" onclick="checkSqlJunior2025('D');">
                                     <span class="opt-label">D</span>
                                     <code class="sql-code">SELECT c.name, o.product<br>FROM Customers c<br>JOIN Orders o ON c.id = o.customer_id<br>WHERE o.amount < 1000;</code>
                                 </button>
                             </div>
                             
-                            <div id="sql-junior-feedback" class="feedback-box hidden"></div>
+                            <div id="sql-junior-feedback-2025" class="feedback-box hidden"></div>
                         </div>
                     </div>
 
-                    <!-- ================= SENIOR SQL ================= -->
-                    <div id="sql-content-senior" class="hidden">
-                        <div class="section-title">🕵️♀️ SQL: Find Missing Data (Senior)</div>
+                    <!-- ================= JUNIOR SQL 2026 ================= -->
+                    <div id="sql-content-junior-2026" class="hidden">
+                        <div class="section-title">🗄️ SQL: Join & Filtering (Junior 2026)</div>
+                        <p class="sql-instruction">Scenario: ต้องการรายชื่อลูกค้าและสินค้า ที่มี <b>ยอดซื้อมากกว่า 1,000</b> (Amount > 1000)</p>
+                        
+                        <div class="sql-container">
+                            <!-- Tables Visualization -->
+                            <div class="sql-tables-row">
+                                <div class="sql-table-wrapper">
+                                    <div class="table-name">Table: Customers</div>
+                                    <table class="sql-mini-table">
+                                        <tr><th>id</th><th>name</th></tr>
+                                        <tr><td>1</td><td>Ann</td></tr>
+                                        <tr><td>2</td><td>Ben</td></tr>
+                                        <tr><td>3</td><td>Cat</td></tr>
+                                    </table>
+                                </div>
+                                <div class="sql-connector">➕</div>
+                                <div class="sql-table-wrapper">
+                                    <div class="table-name">Table: Orders</div>
+                                    <table class="sql-mini-table">
+                                        <tr><th>order_id</th><th>customer_id</th><th>product</th><th>amount</th></tr>
+                                        <tr><td>101</td><td>1</td><td>Mouse</td><td>500</td></tr>
+                                        <tr class="row-highlight-success"><td>102</td><td>1</td><td>Keyboard</td><td>1,200</td></tr>
+                                        <tr class="row-highlight-success"><td>103</td><td>2</td><td>Monitor</td><td>4,500</td></tr>
+                                        <tr><td>104</td><td>3</td><td>Cable</td><td>200</td></tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Expected Result -->
+                            <div class="sql-expected">
+                                <strong>🎯 Expected Result:</strong>
+                                <table class="sql-result-table">
+                                    <tr><th>name</th><th>product</th></tr>
+                                    <tr><td>Ann</td><td>Keyboard</td></tr>
+                                    <tr><td>Ben</td><td>Monitor</td></tr>
+                                </table>
+                            </div>
+
+                            <!-- Options -->
+                            <div class="sql-options-grid">
+                                <button class="sql-btn" onclick="checkSqlJunior2026('A');">
+                                    <span class="opt-label">A</span>
+                                    <code class="sql-code">SELECT c.name, o.product<br>FROM Customers c, Orders o<br>WHERE o.amount > 1000;</code>
+                                </button>
+                                <button class="sql-btn" onclick="checkSqlJunior2026('B');">
+                                    <span class="opt-label">B</span>
+                                    <code class="sql-code">SELECT c.name, o.product<br>FROM Customers c<br>JOIN Orders o ON c.id = o.order_id<br>WHERE o.amount > 1000;</code>
+                                </button>
+                                <button class="sql-btn" onclick="checkSqlJunior2026('C');">
+                                    <span class="opt-label">C</span>
+                                    <code class="sql-code">SELECT c.name, o.product<br>FROM Customers c<br>JOIN Orders o ON c.id = o.customer_id<br>WHERE o.amount > 1000;</code>
+                                </button>
+                                <button class="sql-btn" onclick="checkSqlJunior2026('D');">
+                                    <span class="opt-label">D</span>
+                                    <code class="sql-code">SELECT c.name, o.product<br>FROM Customers c<br>JOIN Orders o ON c.id = o.customer_id<br>WHERE o.amount < 1000;</code>
+                                </button>
+                            </div>
+                            
+                            <div id="sql-junior-feedback-2026" class="feedback-box hidden"></div>
+                        </div>
+                    </div>
+
+                    <!-- ================= SENIOR SQL 2025 ================= -->
+                    <div id="sql-content-senior-2025" class="hidden">
+                        <div class="section-title">🕵️♀️ SQL: Find Missing Data (Senior 2025)</div>
                         <p class="sql-instruction">Scenario: ต้องการหาลูกค้าที่สมัครสมาชิกแล้ว แต่ <b>ไม่เคยสั่งซื้อสินค้าเลย</b> (Customers WITHOUT Orders)</p>
                         
                         <div class="sql-container">
@@ -1234,25 +1298,89 @@
 
                             <!-- Options -->
                             <div class="sql-options-grid">
-                                <button class="sql-btn" onclick="checkSqlSenior('A')">
+                                <button class="sql-btn" onclick="checkSqlSenior2025('A');">
                                     <span class="opt-label">A</span>
                                     <code class="sql-code">SELECT c.name FROM Customers c<br>JOIN Orders o ON c.id = o.customer_id<br>WHERE o.order_id IS NULL;</code>
                                 </button>
-                                <button class="sql-btn" onclick="checkSqlSenior('B')">
+                                <button class="sql-btn" onclick="checkSqlSenior2025('B');">
                                     <span class="opt-label">B</span>
                                     <code class="sql-code">SELECT name FROM Customers<br>WHERE id NOT IN<br>(SELECT customer_id FROM Orders);</code>
                                 </button>
-                                <button class="sql-btn" onclick="checkSqlSenior('C')">
+                                <button class="sql-btn" onclick="checkSqlSenior2025('C');">
                                     <span class="opt-label">C</span>
                                     <code class="sql-code">SELECT name FROM Customers<br>WHERE id IN<br>(SELECT customer_id FROM Orders);</code>
                                 </button>
-                                <button class="sql-btn" onclick="checkSqlSenior('D')">
+                                <button class="sql-btn" onclick="checkSqlSenior2025('D');">
                                     <span class="opt-label">D</span>
                                     <code class="sql-code">SELECT name FROM Customers<br>WHERE id !=<br>(SELECT customer_id FROM Orders);</code>
                                 </button>
                             </div>
 
-                            <div id="sql-senior-feedback" class="feedback-box hidden"></div>
+                            <div id="sql-senior-feedback-2025" class="feedback-box hidden"></div>
+                        </div>
+                    </div>
+
+                    <!-- ================= SENIOR SQL (2026 ONLY) ================= -->
+                    <div id="sql-content-senior-2026" class="hidden">
+                        <div class="section-title">🅿️ SQL: Find Missing Parking Records (Senior 2026)</div>
+                        <p class="sql-instruction">Scenario: หาบัตรจอดรถที่ <b>เข้าแล้วแต่ยังไม่ออก</b> (Entry WITHOUT Exit) เพื่อตรวจสอบรถค้างในลานจอด</p>
+                        
+                        <div class="sql-container">
+                            <!-- Tables Visualization -->
+                            <div class="sql-tables-row">
+                                <div class="sql-table-wrapper">
+                                    <div class="table-name">Table: ParkingEntry</div>
+                                    <table class="sql-mini-table">
+                                        <tr><th>ticket_id</th><th>license_plate</th><th>entry_time</th></tr>
+                                        <tr><td>TK-001</td><td>ABC-123</td><td>08:00</td></tr>
+                                        <tr class="row-target"><td>TK-002</td><td>DEF-456</td><td>09:30</td></tr>
+                                        <tr><td>TK-003</td><td>GHI-789</td><td>10:15</td></tr>
+                                        <tr class="row-target"><td>TK-004</td><td>JKL-012</td><td>11:00</td></tr>
+                                    </table>
+                                </div>
+                                <div class="sql-connector">❓</div>
+                                <div class="sql-table-wrapper">
+                                    <div class="table-name">Table: ParkingExit</div>
+                                    <table class="sql-mini-table">
+                                        <tr><th>ticket_id</th><th>exit_time</th><th>fee_paid</th></tr>
+                                        <tr><td>TK-001</td><td>12:30</td><td>20</td></tr>
+                                        <tr><td>TK-003</td><td>14:45</td><td>40</td></tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Expected Result -->
+                            <div class="sql-expected">
+                                <strong>🎯 Expected Result:</strong>
+                                <table class="sql-result-table">
+                                    <tr><th>ticket_id</th><th>license_plate</th><th>entry_time</th></tr>
+                                    <tr><td>TK-002</td><td>DEF-456</td><td>09:30</td></tr>
+                                    <tr><td>TK-004</td><td>JKL-012</td><td>11:00</td></tr>
+                                </table>
+                                <p style="font-size:0.85rem; color:#666; margin-top:5px;">รถที่เข้ามาแล้วแต่ยังไม่ออก (Missing Exit Records)</p>
+                            </div>
+
+                            <!-- Options -->
+                            <div class="sql-options-grid">
+                                <button class="sql-btn" onclick="checkSqlSenior2026('A');">
+                                    <span class="opt-label">A</span>
+                                    <code class="sql-code">SELECT pe.ticket_id, pe.license_plate, pe.entry_time<br>FROM ParkingEntry pe<br>LEFT JOIN ParkingExit px ON pe.ticket_id = px.ticket_id<br>WHERE px.ticket_id IS NULL;</code>
+                                </button>
+                                <button class="sql-btn" onclick="checkSqlSenior2026('B');">
+                                    <span class="opt-label">B</span>
+                                    <code class="sql-code">SELECT ticket_id, license_plate, entry_time<br>FROM ParkingEntry<br>WHERE ticket_id NOT IN<br>(SELECT ticket_id FROM ParkingExit);</code>
+                                </button>
+                                <button class="sql-btn" onclick="checkSqlSenior2026('C');">
+                                    <span class="opt-label">C</span>
+                                    <code class="sql-code">SELECT ticket_id, license_plate, entry_time<br>FROM ParkingEntry<br>WHERE ticket_id IN<br>(SELECT ticket_id FROM ParkingExit);</code>
+                                </button>
+                                <button class="sql-btn" onclick="checkSqlSenior2026('D');">
+                                    <span class="opt-label">D</span>
+                                    <code class="sql-code">SELECT pe.ticket_id, pe.license_plate, pe.entry_time<br>FROM ParkingEntry pe<br>JOIN ParkingExit px ON pe.ticket_id = px.ticket_id<br>WHERE px.exit_time IS NULL;</code>
+                                </button>
+                            </div>
+
+                            <div id="sql-senior-feedback-2026" class="feedback-box hidden"></div>
                         </div>
                     </div>
                     </div>
@@ -1266,6 +1394,7 @@
                         <button class="sub-topic-btn" onclick="if(selectedYear==='2025') switchSubTopic2025(3, 2); else switchSubTopic2026(3, 2);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">2. Code - Python</button>
                         <button class="sub-topic-btn" onclick="if(selectedYear==='2025') switchSubTopic2025(3, 3); else switchSubTopic2026(3, 3);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">3. Robot Framework</button>
                         <button class="sub-topic-btn" onclick="if(selectedYear==='2025') switchSubTopic2025(3, 4); else switchSubTopic2026(3, 4);" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600;">4. Cypress</button>
+                        <button class="sub-topic-btn" onclick="if(selectedYear==='2025') { return false; } else { switchSubTopic2026(3, 5); }" style="padding: 10px 20px; border: none; background: #95a5a6; color: white; border-radius: 5px; cursor: pointer; font-weight: 600; display: none;" id="playwright-btn">5. Playwright</button>
                     </div>
                     
                     <div id="sub-topic-3-1" class="sub-topic-content">
@@ -1342,6 +1471,20 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- JS 2026: JUNIOR LEVEL - REMOVED -->
+                        <!-- Content removed for Interview 2026 Junior Level -->
+                        <div id="js-junior-view-2026" class="hidden">
+                            <div class="section-title">🚫 Content Not Available</div>
+                            <p style="text-align: center; color: #666; font-style: italic; margin: 40px 0;">JavaScript content has been removed for Interview 2026 Junior Level.</p>
+                        </div>
+
+                        <!-- JS 2026: SENIOR LEVEL - REMOVED -->
+                        <!-- Content removed for Interview 2026 Senior Level -->
+                        <div id="js-senior-view-2026" class="hidden">
+                            <div class="section-title">🚫 Content Not Available</div>
+                            <p style="text-align: center; color: #666; font-style: italic; margin: 40px 0;">JavaScript content has been removed for Interview 2026 Senior Level.</p>
+                        </div>
                         
                     </div>
                     
@@ -1415,6 +1558,20 @@
                                     <div id="py-sr-feedback" class="feedback-box hidden"></div>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- PY 2026: JUNIOR LEVEL - REMOVED -->
+                        <!-- Content removed for Interview 2026 Junior Level -->
+                        <div id="py-junior-view-2026" class="hidden">
+                            <div class="section-title">🚫 Content Not Available</div>
+                            <p style="text-align: center; color: #666; font-style: italic; margin: 40px 0;">Python content has been removed for Interview 2026 Junior Level.</p>
+                        </div>
+
+                        <!-- PY 2026: SENIOR LEVEL - REMOVED -->
+                        <!-- Content removed for Interview 2026 Senior Level -->
+                        <div id="py-senior-view-2026" class="hidden">
+                            <div class="section-title">🚫 Content Not Available</div>
+                            <p style="text-align: center; color: #666; font-style: italic; margin: 40px 0;">Python content has been removed for Interview 2026 Senior Level.</p>
                         </div>
                         
                     </div>
@@ -1496,6 +1653,78 @@
                                 </div>
                             </div>
 
+                            <!-- ROBOT 2026: JUNIOR LEVEL -->
+                            <div id="rf-junior-view-2026" class="hidden">
+                                <div class="section-title">🤖 Robot Jr: Keyword Arguments & Syntax</div>
+                                <p class="code-instruction">วิเคราะห์การส่งค่าตัวแปร (Variables) และ Default Arguments</p>
+                                
+                                <div class="coding-container">
+                                    <div class="code-editor">
+                                        <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">*** Variables ***</span></span></div>
+                                        <div class="code-line"><span class="line-num">2</span><span class="code-content">${password} <span class="str">Pass999</span></span></div>
+                                        <div class="code-line"><span class="line-num">3</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content"><span class="kwd">*** Test Cases ***</span></span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content">Login Scenario</span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content indent1">Open Browser With Chrome</span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content indent1 comment"># Call Keyword with 1 argument</span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content indent1">Login With User <span class="str">"Admin"</span></span></div>
+                                        <div class="code-line"><span class="line-num">9</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">10</span><span class="code-content"><span class="kwd">*** Keywords ***</span></span></div>
+                                        <div class="code-line"><span class="line-num">11</span><span class="code-content">Login With User</span></div>
+                                        <div class="code-line"><span class="line-num">12</span><span class="code-content indent1"><span class="kwd">[Arguments]</span> ${username} ${password}=<span class="str">1234</span></span></div>
+                                        <div class="code-line"><span class="line-num">13</span><span class="code-content indent1">Input Text id:user ${username}</span></div>
+                                        <div class="code-line"><span class="line-num">14</span><span class="code-content indent1">Input Text id:pass ${password}</span></div>
+                                        <div class="code-line"><span class="line-num">15</span><span class="code-content indent1">Click Button id:login</span></div>
+                                    </div>
+
+                                    <div class="code-qa-panel">
+                                        <h3>รหัสผ่านที่ถูกใช้จะเป็นค่าใด?</h3>
+                                        <div class="code-options">
+                                            <button class="code-opt-btn" onclick="checkRfAnswer('jr', 'error')">A) Error (เกิน Argument)</button>
+                                            <button class="code-opt-btn" onclick="checkRfAnswer('jr', 'default')">B) "1234" (ค่า Default)</button>
+                                            <button class="code-opt-btn" onclick="checkRfAnswer('jr', 'admin')">C) "Admin"</button>
+                                            <button class="code-opt-btn" onclick="checkRfAnswer('jr', 'pass999')">D) "Pass999"</button>
+                                        </div>
+                                        <div id="rf-jr-feedback-2026" class="feedback-box hidden"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ROBOT 2026: SENIOR LEVEL -->
+                            <div id="rf-senior-view-2026" class="hidden">
+                                <div class="section-title">🤖 Robot Sr: Test Lifecycle & Error Handling</div>
+                                <p class="code-instruction">วิเคราะห์โครงสร้าง Test Case นี้: <b>"จะเกิดผลกระทบอย่างไร หากบรรทัดที่ 9 (Validation) เกิด Error ขึ้น?"</b></p>
+                                
+                                <div class="coding-container">
+                                    <div class="code-editor">
+                                        <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">*** Test Cases ***</span></span></div>
+                                        <div class="code-line"><span class="line-num">2</span><span class="code-content">Purchase Item Flow</span></div>
+                                        <div class="code-line"><span class="line-num">3</span><span class="code-content indent1"><span class="kwd">Open Browser</span> ${URL} chrome</span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content indent1">Login ${USER} ${PASS}</span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content indent1">Add Item To Cart <span class="str">"iPhone 15"</span></span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content indent1">Click Element id:checkout_btn</span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content indent1">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content indent1 comment"># ⚠️ จุดตรวจสอบความถูกต้อง (Validation)</span></div>
+                                        <div class="code-line"><span class="line-num">9</span><span class="code-content indent1"><span class="kwd">Element Should Be Visible</span> id:payment_success</span></div>
+                                        <div class="code-line"><span class="line-num">10</span><span class="code-content indent1">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">11</span><span class="code-content indent1 comment"># ขั้นตอนการคืนค่าระบบ (Cleanup)</span></div>
+                                        <div class="code-line"><span class="line-num">12</span><span class="code-content indent1">Logout</span></div>
+                                        <div class="code-line"><span class="line-num">13</span><span class="code-content indent1"><span class="kwd">Close Browser</span></span></div>
+                                    </div>
+
+                                    <div class="code-qa-panel">
+                                        <h3>ข้อบกพร่องร้ายแรงที่สุด (Major Flaw) ของโครงสร้างนี้คืออะไร?</h3>
+                                        <div class="code-options">
+                                            <button class="code-opt-btn" onclick="checkRfAnswer('sr', 'syntax')">A) Syntax Error: คำสั่ง 'Open Browser' ต้องอยู่ในส่วน 'Settings' เท่านั้น</button>
+                                            <button class="code-opt-btn" onclick="checkRfAnswer('sr', 'orphan')">B) Cascading Failure: Browser จะเปิดค้างไว้ หากการ Validation ล้มเหลว</button>
+                                            <button class="code-opt-btn" onclick="checkRfAnswer('sr', 'hardcode')">C) Data Issue: มีการฝังค่า (Hardcode) "iPhone 15" ไว้ใน Code</button>
+                                            <button class="code-opt-btn" onclick="checkRfAnswer('sr', 'variable')">D) Variable Scope: ตัวแปร ${URL} ไม่ได้ถูกประกาศไว้ในไฟล์นี้</button>
+                                        </div>
+                                        <div id="rf-sr-feedback-2026" class="feedback-box hidden"></div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         
                     </div>
@@ -1566,6 +1795,226 @@
                                             <button class="code-opt-btn" onclick="checkCyAnswer('sr', 'alias')">D) ใช้งานได้ปกติ ไม่มีปัญหาอะไร</button>
                                         </div>
                                         <div id="cy-sr-feedback" class="feedback-box hidden"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CYPRESS 2026: JUNIOR LEVEL -->
+                            <div id="cy-junior-view-2026" class="hidden">
+                                <div class="section-title">🌲 Cypress Jr: Selectors & Chaining</div>
+                                <p class="code-instruction">วิเคราะห์การทำงานของคำสั่ง <b>Get</b> และ <b>Contains</b> เมื่อมี Element ที่มี Class ซ้ำกัน</p>
+                                
+                                <div class="coding-container">
+                                    <div class="code-editor">
+                                        <div class="code-line"><span class="line-num">1</span><span class="code-content comment">// HTML Structure:</span></div>
+                                        <div class="code-line"><span class="line-num">2</span><span class="code-content comment">// &lt;button class="btn"&gt;Cancel&lt;/button&gt;</span></div>
+                                        <div class="code-line"><span class="line-num">3</span><span class="code-content comment">// &lt;button class="btn"&gt;Submit&lt;/button&gt;</span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content"><span class="func">it</span>(<span class="str">'Submit Form'</span>, () => {</span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content indent1"><span class="kwd">cy</span>.get(<span class="str">'.btn'</span>)</span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content indent2">.contains(<span class="str">'Submit'</span>)</span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content indent2">.click();</span></div>
+                                        <div class="code-line"><span class="line-num">9</span><span class="code-content">});</span></div>
+                                    </div>
+
+                                    <div class="code-qa-panel">
+                                        <h3>Cypress จะทำงานอย่างไรกับคำสั่งชุดนี้?</h3>
+                                        <div class="code-options">
+                                            <button class="code-opt-btn" onclick="checkCyAnswer('jr', 'error')">A) Error: เพราะ '.btn' คืนค่า Element กลับมาหลายตัว</button>
+                                            <button class="code-opt-btn" onclick="checkCyAnswer('jr', 'cancel')">B) คลิกปุ่ม 'Cancel' (เพราะเป็นปุ่มแรกที่เจอ)</button>
+                                            <button class="code-opt-btn" onclick="checkCyAnswer('jr', 'submit')">C) คลิกปุ่ม 'Submit' ได้อย่างถูกต้อง</button>
+                                            <button class="code-opt-btn" onclick="checkCyAnswer('jr', 'random')">D) คลิกปุ่มไหนก็ได้ ที่โหลดเสร็จก่อน</button>
+                                        </div>
+                                        <div id="cy-jr-feedback-2026" class="feedback-box hidden"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CYPRESS 2026: SENIOR LEVEL -->
+                            <div id="cy-senior-view-2026" class="hidden">
+                                <div class="section-title">🌲 Cypress Sr: Async & Variables (Anti-Pattern)</div>
+                                <p class="code-instruction">วิเคราะห์ <b>"ความเสี่ยง"</b> ของการใช้ตัวแปร <code>let/var</code> ภายนอก Chain ของ Cypress</p>
+                                
+                                <div class="coding-container">
+                                    <div class="code-editor">
+                                        <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">let</span> userData; <span class="comment">// Global Variable</span></span></div>
+                                        <div class="code-line"><span class="line-num">2</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">3</span><span class="code-content"><span class="func">beforeEach</span>(() => {</span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content indent1"><span class="kwd">cy</span>.fixture(<span class="str">'users'</span>).then((data) => {</span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content indent2">userData = data; <span class="comment">// Assign value</span></span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content indent1">});</span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content">});</span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">9</span><span class="code-content"><span class="func">it</span>(<span class="str">'Test Login'</span>, () => {</span></div>
+                                        <div class="code-line"><span class="line-num">10</span><span class="code-content indent1"><span class="comment">// ⚠️ Risk Point</span></span></div>
+                                        <div class="code-line"><span class="line-num">11</span><span class="code-content indent1"><span class="kwd">cy</span>.login(userData.username, userData.password);</span></div>
+                                        <div class="code-line"><span class="line-num">12</span><span class="code-content">});</span></div>
+                                    </div>
+
+                                    <div class="code-qa-panel">
+                                        <h3>ทำไมรูปแบบการเขียนนี้ถึง "ไม่แนะนำ" ให้ใช้ใน Cypress?</h3>
+                                        <div class="code-options">
+                                            <button class="code-opt-btn" onclick="checkCyAnswer('sr', 'scope')">A) ปัญหาสโคป: ตัวแปร 'let' ไม่สามารถเข้าถึงได้ภายใน 'it'</button>
+                                            <button class="code-opt-btn" onclick="checkCyAnswer('sr', 'async')">B) ปัญหา Sync/Async: ตัวแปร 'userData' อาจมีค่าเป็น undefined ตอนที่ Test เริ่มทำงาน</button>
+                                            <button class="code-opt-btn" onclick="checkCyAnswer('sr', 'fixture')">C) Syntax Error: คำสั่ง cy.fixture() ห้ามใช้ใน beforeEach</button>
+                                            <button class="code-opt-btn" onclick="checkCyAnswer('sr', 'alias')">D) ใช้งานได้ปกติ ไม่มีปัญหาอะไร</button>
+                                        </div>
+                                        <div id="cy-sr-feedback-2026" class="feedback-box hidden"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                    </div>
+                    
+                    <div id="sub-topic-3-5" class="sub-topic-content hidden">
+                        
+                        <!-- PLAYWRIGHT SECTION -->
+                        <div id="code-content-playwright" class="code-content-view">
+                            
+                            <!-- PLAYWRIGHT: JUNIOR LEVEL -->
+                            <div id="pw-junior-view" class="hidden">
+                                <div class="section-title">🎭 Playwright Jr: Locators & Auto-Wait</div>
+                                <p class="code-instruction">วิเคราะห์การทำงานของ <b>Locator</b> และ <b>Auto-waiting</b> ใน Playwright</p>
+                                
+                                <div class="coding-container">
+                                    <div class="code-editor">
+                                        <div class="code-line"><span class="line-num">1</span><span class="code-content comment">// HTML Structure:</span></div>
+                                        <div class="code-line"><span class="line-num">2</span><span class="code-content comment">// &lt;div id="loading"&gt;Loading...&lt;/div&gt;</span></div>
+                                        <div class="code-line"><span class="line-num">3</span><span class="code-content comment">// &lt;button id="submit" style="display:none"&gt;Submit&lt;/button&gt;</span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content comment">// (After 2 seconds: loading disappears, button shows)</span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content"><span class="kwd">const</span> { test, expect } = <span class="func">require</span>(<span class="str">'@playwright/test'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content"><span class="func">test</span>(<span class="str">'Submit after loading'</span>, <span class="kwd">async</span> ({ page }) => {</span></div>
+                                        <div class="code-line"><span class="line-num">9</span><span class="code-content indent1"><span class="kwd">await</span> page.goto(<span class="str">'http://example.com'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">10</span><span class="code-content indent1">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">11</span><span class="code-content indent1 comment">// ⚠️ Key Question: Will this work?</span></div>
+                                        <div class="code-line"><span class="line-num">12</span><span class="code-content indent1"><span class="kwd">await</span> page.locator(<span class="str">'#submit'</span>).click();</span></div>
+                                        <div class="code-line"><span class="line-num">13</span><span class="code-content">});</span></div>
+                                    </div>
+
+                                    <div class="code-qa-panel">
+                                        <h3>Playwright จะทำงานอย่างไรกับโค้ดนี้?</h3>
+                                        <div class="code-options">
+                                            <button class="code-opt-btn" onclick="checkPwAnswer('jr', 'error')">A) Error ทันที: เพราะปุ่มยัง display:none</button>
+                                            <button class="code-opt-btn" onclick="checkPwAnswer('jr', 'wait')">B) รอ 2 วินาที แล้วคลิกปุ่มได้สำเร็จ</button>
+                                            <button class="code-opt-btn" onclick="checkPwAnswer('jr', 'timeout')">C) Timeout หลัง 30 วินาที (Default timeout)</button>
+                                            <button class="code-opt-btn" onclick="checkPwAnswer('jr', 'immediate')">D) คลิกทันทีโดยไม่รอ (Force click)</button>
+                                        </div>
+                                        <div id="pw-jr-feedback" class="feedback-box hidden"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PLAYWRIGHT: SENIOR LEVEL -->
+                            <div id="pw-senior-view" class="hidden">
+                                <div class="section-title">🎭 Playwright Sr: Parallel Testing & Context Isolation</div>
+                                <p class="code-instruction">วิเคราะห์ <b>"ความเสี่ยง"</b> ของการใช้ Shared State ใน Parallel Testing</p>
+                                
+                                <div class="coding-container">
+                                    <div class="code-editor">
+                                        <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">const</span> { test, expect } = <span class="func">require</span>(<span class="str">'@playwright/test'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">2</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">3</span><span class="code-content comment">// Global shared variable</span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content"><span class="kwd">let</span> sharedCounter = <span class="num">0</span>;</span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content"><span class="func">test</span>(<span class="str">'Test A: Increment counter'</span>, <span class="kwd">async</span> ({ page }) => {</span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content indent1">sharedCounter++;</span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content indent1"><span class="kwd">await</span> page.goto(<span class="str">`/user/${sharedCounter}`</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">9</span><span class="code-content indent1">expect(sharedCounter).toBe(<span class="num">1</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">10</span><span class="code-content">});</span></div>
+                                        <div class="code-line"><span class="line-num">11</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">12</span><span class="code-content"><span class="func">test</span>(<span class="str">'Test B: Increment counter'</span>, <span class="kwd">async</span> ({ page }) => {</span></div>
+                                        <div class="code-line"><span class="line-num">13</span><span class="code-content indent1">sharedCounter++;</span></div>
+                                        <div class="code-line"><span class="line-num">14</span><span class="code-content indent1"><span class="kwd">await</span> page.goto(<span class="str">`/user/${sharedCounter}`</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">15</span><span class="code-content indent1">expect(sharedCounter).toBe(<span class="num">1</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">16</span><span class="code-content">});</span></div>
+                                    </div>
+
+                                    <div class="code-qa-panel">
+                                        <h3>เมื่อรัน Tests แบบ Parallel (--workers=2) จะเกิดอะไรขึ้น?</h3>
+                                        <div class="code-options">
+                                            <button class="code-opt-btn" onclick="checkPwAnswer('sr', 'pass')">A) ทั้งสอง Test ผ่านเสมอ (เพราะ Context แยกกัน)</button>
+                                            <button class="code-opt-btn" onclick="checkPwAnswer('sr', 'race')">B) Test อาจ Fail เป็นบางครั้ง (Race Condition)</button>
+                                            <button class="code-opt-btn" onclick="checkPwAnswer('sr', 'sequential')">C) Playwright จะรัน Sequential อัตโนมัติ</button>
+                                            <button class="code-opt-btn" onclick="checkPwAnswer('sr', 'error')">D) Error: ห้ามใช้ Global Variable</button>
+                                        </div>
+                                        <div id="pw-sr-feedback" class="feedback-box hidden"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PLAYWRIGHT 2026: JUNIOR LEVEL -->
+                            <div id="pw-junior-view-2026" class="hidden">
+                                <div class="section-title">🎭 Playwright Jr: Locators & Auto-Wait</div>
+                                <p class="code-instruction">วิเคราะห์การทำงานของ <b>Locator</b> และ <b>Auto-waiting</b> ใน Playwright</p>
+                                
+                                <div class="coding-container">
+                                    <div class="code-editor">
+                                        <div class="code-line"><span class="line-num">1</span><span class="code-content comment">// HTML Structure:</span></div>
+                                        <div class="code-line"><span class="line-num">2</span><span class="code-content comment">// &lt;div id="loading"&gt;Loading...&lt;/div&gt;</span></div>
+                                        <div class="code-line"><span class="line-num">3</span><span class="code-content comment">// &lt;button id="submit" style="display:none"&gt;Submit&lt;/button&gt;</span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content comment">// (After 2 seconds: loading disappears, button shows)</span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content"><span class="kwd">const</span> { test, expect } = <span class="func">require</span>(<span class="str">'@playwright/test'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content"><span class="func">test</span>(<span class="str">'Submit after loading'</span>, <span class="kwd">async</span> ({ page }) => {</span></div>
+                                        <div class="code-line"><span class="line-num">9</span><span class="code-content indent1"><span class="kwd">await</span> page.goto(<span class="str">'http://example.com'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">10</span><span class="code-content indent1">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">11</span><span class="code-content indent1 comment">// ⚠️ Key Question: Will this work?</span></div>
+                                        <div class="code-line"><span class="line-num">12</span><span class="code-content indent1"><span class="kwd">await</span> page.locator(<span class="str">'#submit'</span>).click();</span></div>
+                                        <div class="code-line"><span class="line-num">13</span><span class="code-content">});</span></div>
+                                    </div>
+
+                                    <div class="code-qa-panel">
+                                        <h3>Playwright จะทำงานอย่างไรกับโค้ดนี้?</h3>
+                                        <div class="code-options">
+                                            <button class="code-opt-btn" onclick="checkPwAnswer('jr', 'error')">A) Error ทันที: เพราะปุ่มยัง display:none</button>
+                                            <button class="code-opt-btn" onclick="checkPwAnswer('jr', 'wait')">B) รอ 2 วินาที แล้วคลิกปุ่มได้สำเร็จ</button>
+                                            <button class="code-opt-btn" onclick="checkPwAnswer('jr', 'timeout')">C) Timeout หลัง 30 วินาที (Default timeout)</button>
+                                            <button class="code-opt-btn" onclick="checkPwAnswer('jr', 'immediate')">D) คลิกทันทีโดยไม่รอ (Force click)</button>
+                                        </div>
+                                        <div id="pw-jr-feedback-2026" class="feedback-box hidden"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PLAYWRIGHT 2026: SENIOR LEVEL -->
+                            <div id="pw-senior-view-2026" class="hidden">
+                                <div class="section-title">🎭 Playwright Sr: Parallel Testing & Context Isolation</div>
+                                <p class="code-instruction">วิเคราะห์ <b>"ความเสี่ยง"</b> ของการใช้ Shared State ใน Parallel Testing</p>
+                                
+                                <div class="coding-container">
+                                    <div class="code-editor">
+                                        <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">const</span> { test, expect } = <span class="func">require</span>(<span class="str">'@playwright/test'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">2</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">3</span><span class="code-content comment">// Global shared variable</span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content"><span class="kwd">let</span> sharedCounter = <span class="num">0</span>;</span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content"><span class="func">test</span>(<span class="str">'Test A: Increment counter'</span>, <span class="kwd">async</span> ({ page }) => {</span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content indent1">sharedCounter++;</span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content indent1"><span class="kwd">await</span> page.goto(<span class="str">`/user/${sharedCounter}`</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">9</span><span class="code-content indent1">expect(sharedCounter).toBe(<span class="num">1</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">10</span><span class="code-content">});</span></div>
+                                        <div class="code-line"><span class="line-num">11</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">12</span><span class="code-content"><span class="func">test</span>(<span class="str">'Test B: Increment counter'</span>, <span class="kwd">async</span> ({ page }) => {</span></div>
+                                        <div class="code-line"><span class="line-num">13</span><span class="code-content indent1">sharedCounter++;</span></div>
+                                        <div class="code-line"><span class="line-num">14</span><span class="code-content indent1"><span class="kwd">await</span> page.goto(<span class="str">`/user/${sharedCounter}`</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">15</span><span class="code-content indent1">expect(sharedCounter).toBe(<span class="num">1</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">16</span><span class="code-content">});</span></div>
+                                    </div>
+
+                                    <div class="code-qa-panel">
+                                        <h3>เมื่อรัน Tests แบบ Parallel (--workers=2) จะเกิดอะไรขึ้น?</h3>
+                                        <div class="code-options">
+                                            <button class="code-opt-btn" onclick="checkPwAnswer('sr', 'pass')">A) ทั้งสอง Test ผ่านเสมอ (เพราะ Context แยกกัน)</button>
+                                            <button class="code-opt-btn" onclick="checkPwAnswer('sr', 'race')">B) Test อาจ Fail เป็นบางครั้ง (Race Condition)</button>
+                                            <button class="code-opt-btn" onclick="checkPwAnswer('sr', 'sequential')">C) Playwright จะรัน Sequential อัตโนมัติ</button>
+                                            <button class="code-opt-btn" onclick="checkPwAnswer('sr', 'error')">D) Error: ห้ามใช้ Global Variable</button>
+                                        </div>
+                                        <div id="pw-sr-feedback-2026" class="feedback-box hidden"></div>
                                     </div>
                                 </div>
                             </div>
