@@ -389,14 +389,20 @@
     <div id="view-interview" class="section-view">
         
         <div id="interview-year-select" class="level-selector-container">
-            <div class="level-card year-card" data-year="2025" style="background: rgba(102, 126, 234, 0.3);" onclick="selectInterviewYear('2025')">
+            <div class="level-card year-card" data-year="2025" style="background: rgba(46, 204, 113, 0.15);" onclick="selectInterviewYear('2025')">
                 <span class="level-icon">📅</span>
-                <span class="level-title">Interview 2025</span>
+                <div>
+                    <span class="level-title">Interview 2025</span>
+                    <div style="font-size: 0.8rem; color: #666; margin-top: 5px; line-height: 1.3;">แนะนำตัว  5-10 min  |  QA COE 15-25 min<br>QA Lead 15-25 min  |  ผู้สมัครถาม 5 min</div>
+                </div>
             </div>
             
-            <div class="level-card year-card" data-year="2026" style="background: rgba(240, 147, 251, 0.3);" onclick="selectInterviewYear('2026')">
+            <div class="level-card year-card" data-year="2026" style="background: rgba(52, 152, 219, 0.15);" onclick="selectInterviewYear('2026')">
                 <span class="level-icon">🚀</span>
-                <span class="level-title">Interview 2026</span>
+                <div>
+                    <span class="level-title">Interview 2026</span>
+                    <div style="font-size: 0.8rem; color: #666; margin-top: 5px; line-height: 1.3;">แนะนำตัว  5-10 min  |  QA COE 15-25 min<br>QA Lead 15-25 min  |  ผู้สมัครถาม 5 min</div>
+                </div>
             </div>
         </div>
 
@@ -404,13 +410,13 @@
             <div class="level-card junior" onclick="if(selectedYear==='2025') selectInterviewLevel2025('junior'); else selectInterviewLevel2026('junior');">
                 <span class="level-icon">🌱</span>
                 <span class="level-title">Junior Level</span>
-                <span class="level-desc" id="junior-desc">Logic Exam, JSON/SQL Basics, JS/Python/Robot/Cypress Fundamentals</span>
+                <span class="level-desc" id="junior-desc">3-5 นาที Logic Exam<br>5-7 นาที Backend Testing<br>3-5 นาที Automation Testing<br>(2-5 Years Exp.)</span>
             </div>
             
             <div class="level-card senior" onclick="if(selectedYear==='2025') selectInterviewLevel2025('senior'); else selectInterviewLevel2026('senior');">
                 <span class="level-icon">🎯</span>
                 <span class="level-title">Senior Level</span>
-                <span class="level-desc" id="senior-desc">Advanced Logic, Complex Queries, Error Handling & Anti-Patterns</span>
+                <span class="level-desc" id="senior-desc">3-5 นาที Logic Exam<br>5-7 นาที Backend Testing<br>3-5 นาที Automation Testing<br>(5+ Years Exp.)</span>
             </div>
         </div>
 
@@ -1655,36 +1661,38 @@
 
                             <!-- ROBOT 2026: JUNIOR LEVEL -->
                             <div id="rf-junior-view-2026" class="hidden">
-                                <div class="section-title">🤖 Robot Jr: Keyword Arguments & Syntax</div>
-                                <p class="code-instruction">วิเคราะห์การส่งค่าตัวแปร (Variables) และ Default Arguments</p>
+                                <div class="section-title">🤖 Robot Jr: Appium Code Analysis</div>
+                                <p class="code-instruction">อธิบาย Robot Framework + Appium code นี้ และแนะนำสิ่งที่ควรเพิ่มเติม</p>
                                 
                                 <div class="coding-container">
                                     <div class="code-editor">
-                                        <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">*** Variables ***</span></span></div>
-                                        <div class="code-line"><span class="line-num">2</span><span class="code-content">${password} <span class="str">Pass999</span></span></div>
+                                        <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">*** Settings ***</span></span></div>
+                                        <div class="code-line"><span class="line-num">2</span><span class="code-content">Library <span class="str">AppiumLibrary</span></span></div>
                                         <div class="code-line"><span class="line-num">3</span><span class="code-content">&nbsp;</span></div>
-                                        <div class="code-line"><span class="line-num">4</span><span class="code-content"><span class="kwd">*** Test Cases ***</span></span></div>
-                                        <div class="code-line"><span class="line-num">5</span><span class="code-content">Login Scenario</span></div>
-                                        <div class="code-line"><span class="line-num">6</span><span class="code-content indent1">Open Browser With Chrome</span></div>
-                                        <div class="code-line"><span class="line-num">7</span><span class="code-content indent1 comment"># Call Keyword with 1 argument</span></div>
-                                        <div class="code-line"><span class="line-num">8</span><span class="code-content indent1">Login With User <span class="str">"Admin"</span></span></div>
-                                        <div class="code-line"><span class="line-num">9</span><span class="code-content">&nbsp;</span></div>
-                                        <div class="code-line"><span class="line-num">10</span><span class="code-content"><span class="kwd">*** Keywords ***</span></span></div>
-                                        <div class="code-line"><span class="line-num">11</span><span class="code-content">Login With User</span></div>
-                                        <div class="code-line"><span class="line-num">12</span><span class="code-content indent1"><span class="kwd">[Arguments]</span> ${username} ${password}=<span class="str">1234</span></span></div>
-                                        <div class="code-line"><span class="line-num">13</span><span class="code-content indent1">Input Text id:user ${username}</span></div>
-                                        <div class="code-line"><span class="line-num">14</span><span class="code-content indent1">Input Text id:pass ${password}</span></div>
-                                        <div class="code-line"><span class="line-num">15</span><span class="code-content indent1">Click Button id:login</span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content"><span class="kwd">*** Variables ***</span></span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content">${PLATFORM_NAME} <span class="str">Android</span></span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content">${APP_PACKAGE} <span class="str">com.example.app</span></span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content"><span class="kwd">*** Test Cases ***</span></span></div>
+                                        <div class="code-line"><span class="line-num">9</span><span class="code-content">Login Test</span></div>
+                                        <div class="code-line"><span class="line-num">10</span><span class="code-content indent1">Open Application <span class="str">http://localhost:4723/wd/hub</span></span></div>
+                                        <div class="code-line"><span class="line-num">11</span><span class="code-content indent1">... platformName=${PLATFORM_NAME}</span></div>
+                                        <div class="code-line"><span class="line-num">12</span><span class="code-content indent1">... appPackage=${APP_PACKAGE}</span></div>
+                                        <div class="code-line"><span class="line-num">13</span><span class="code-content indent1">Click Element <span class="str">id=username</span></span></div>
+                                        <div class="code-line"><span class="line-num">14</span><span class="code-content indent1">Input Text <span class="str">id=username</span> <span class="str">testuser</span></span></div>
+                                        <div class="code-line"><span class="line-num">15</span><span class="code-content indent1">Input Text <span class="str">id=password</span> <span class="str">testpass</span></span></div>
+                                        <div class="code-line"><span class="line-num">16</span><span class="code-content indent1">Click Element <span class="str">id=loginBtn</span></span></div>
+                                        <div class="code-line"><span class="line-num">17</span><span class="code-content indent1">Close Application</span></div>
                                     </div>
 
                                     <div class="code-qa-panel">
-                                        <h3>รหัสผ่านที่ถูกใช้จะเป็นค่าใด?</h3>
-                                        <div class="code-options">
-                                            <button class="code-opt-btn" onclick="checkRfAnswer('jr', 'error')">A) Error (เกิน Argument)</button>
-                                            <button class="code-opt-btn" onclick="checkRfAnswer('jr', 'default')">B) "1234" (ค่า Default)</button>
-                                            <button class="code-opt-btn" onclick="checkRfAnswer('jr', 'admin')">C) "Admin"</button>
-                                            <button class="code-opt-btn" onclick="checkRfAnswer('jr', 'pass999')">D) "Pass999"</button>
+                                        <h3>📝 Interview Task</h3>
+                                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;">
+                                            <p><strong>1. อธิบาย Code:</strong> บอกว่า code นี้ทำอะไรบ้าง (ทีละบรรทัด)</p>
+                                            <p><strong>2. ชี้จุดที่ขาด:</strong> code นี้ยังขาดอะไรที่สำคัญบ้าง?</p>
+                                            <p><strong>3. แนะนำปรับปรุง:</strong> ควรเพิ่มอะไรเพื่อให้ robust มากขึ้น?</p>
                                         </div>
+                                        <button class="code-opt-btn" onclick="checkRfAnswer('jr', 'explain')">💡 ดูตัวอย่างคำตอบที่ดี</button>
                                         <div id="rf-jr-feedback-2026" class="feedback-box hidden"></div>
                                     </div>
                                 </div>
@@ -1692,34 +1700,43 @@
 
                             <!-- ROBOT 2026: SENIOR LEVEL -->
                             <div id="rf-senior-view-2026" class="hidden">
-                                <div class="section-title">🤖 Robot Sr: Test Lifecycle & Error Handling</div>
-                                <p class="code-instruction">วิเคราะห์โครงสร้าง Test Case นี้: <b>"จะเกิดผลกระทบอย่างไร หากบรรทัดที่ 9 (Validation) เกิด Error ขึ้น?"</b></p>
+                                <div class="section-title">🤖 Robot Sr: Advanced Appium Code Review</div>
+                                <p class="code-instruction">วิเคราะห์ Robot Framework + Appium code ขั้นสูง และแนะนำ best practices</p>
                                 
                                 <div class="coding-container">
                                     <div class="code-editor">
-                                        <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">*** Test Cases ***</span></span></div>
-                                        <div class="code-line"><span class="line-num">2</span><span class="code-content">Purchase Item Flow</span></div>
-                                        <div class="code-line"><span class="line-num">3</span><span class="code-content indent1"><span class="kwd">Open Browser</span> ${URL} chrome</span></div>
-                                        <div class="code-line"><span class="line-num">4</span><span class="code-content indent1">Login ${USER} ${PASS}</span></div>
-                                        <div class="code-line"><span class="line-num">5</span><span class="code-content indent1">Add Item To Cart <span class="str">"iPhone 15"</span></span></div>
-                                        <div class="code-line"><span class="line-num">6</span><span class="code-content indent1">Click Element id:checkout_btn</span></div>
-                                        <div class="code-line"><span class="line-num">7</span><span class="code-content indent1">&nbsp;</span></div>
-                                        <div class="code-line"><span class="line-num">8</span><span class="code-content indent1 comment"># ⚠️ จุดตรวจสอบความถูกต้อง (Validation)</span></div>
-                                        <div class="code-line"><span class="line-num">9</span><span class="code-content indent1"><span class="kwd">Element Should Be Visible</span> id:payment_success</span></div>
-                                        <div class="code-line"><span class="line-num">10</span><span class="code-content indent1">&nbsp;</span></div>
-                                        <div class="code-line"><span class="line-num">11</span><span class="code-content indent1 comment"># ขั้นตอนการคืนค่าระบบ (Cleanup)</span></div>
-                                        <div class="code-line"><span class="line-num">12</span><span class="code-content indent1">Logout</span></div>
-                                        <div class="code-line"><span class="line-num">13</span><span class="code-content indent1"><span class="kwd">Close Browser</span></span></div>
+                                        <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">*** Settings ***</span></span></div>
+                                        <div class="code-line"><span class="line-num">2</span><span class="code-content">Library <span class="str">AppiumLibrary</span></span></div>
+                                        <div class="code-line"><span class="line-num">3</span><span class="code-content">Resource <span class="str">../resources/common.robot</span></span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content"><span class="kwd">*** Variables ***</span></span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content">&{ANDROID_CAPS} platformName=Android deviceName=emulator-5554</span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content">... appPackage=com.example.app appActivity=.MainActivity</span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">9</span><span class="code-content"><span class="kwd">*** Test Cases ***</span></span></div>
+                                        <div class="code-line"><span class="line-num">10</span><span class="code-content">E2E Purchase Flow</span></div>
+                                        <div class="code-line"><span class="line-num">11</span><span class="code-content indent1">[Setup] Launch App With Capabilities</span></div>
+                                        <div class="code-line"><span class="line-num">12</span><span class="code-content indent1">Login With Valid User</span></div>
+                                        <div class="code-line"><span class="line-num">13</span><span class="code-content indent1">Add Product To Cart <span class="str">iPhone 15</span></span></div>
+                                        <div class="code-line"><span class="line-num">14</span><span class="code-content indent1">Proceed To Checkout</span></div>
+                                        <div class="code-line"><span class="line-num">15</span><span class="code-content indent1">Verify Order Success</span></div>
+                                        <div class="code-line"><span class="line-num">16</span><span class="code-content indent1">[Teardown] Close Application</span></div>
+                                        <div class="code-line"><span class="line-num">17</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">18</span><span class="code-content"><span class="kwd">*** Keywords ***</span></span></div>
+                                        <div class="code-line"><span class="line-num">19</span><span class="code-content">Launch App With Capabilities</span></div>
+                                        <div class="code-line"><span class="line-num">20</span><span class="code-content indent1">Open Application <span class="str">http://localhost:4723/wd/hub</span> &{ANDROID_CAPS}</span></div>
+                                        <div class="code-line"><span class="line-num">21</span><span class="code-content indent1">Wait Until Page Contains Element <span class="str">id=splash_logo</span> <span class="str">10s</span></span></div>
                                     </div>
 
                                     <div class="code-qa-panel">
-                                        <h3>ข้อบกพร่องร้ายแรงที่สุด (Major Flaw) ของโครงสร้างนี้คืออะไร?</h3>
-                                        <div class="code-options">
-                                            <button class="code-opt-btn" onclick="checkRfAnswer('sr', 'syntax')">A) Syntax Error: คำสั่ง 'Open Browser' ต้องอยู่ในส่วน 'Settings' เท่านั้น</button>
-                                            <button class="code-opt-btn" onclick="checkRfAnswer('sr', 'orphan')">B) Cascading Failure: Browser จะเปิดค้างไว้ หากการ Validation ล้มเหลว</button>
-                                            <button class="code-opt-btn" onclick="checkRfAnswer('sr', 'hardcode')">C) Data Issue: มีการฝังค่า (Hardcode) "iPhone 15" ไว้ใน Code</button>
-                                            <button class="code-opt-btn" onclick="checkRfAnswer('sr', 'variable')">D) Variable Scope: ตัวแปร ${URL} ไม่ได้ถูกประกาศไว้ในไฟล์นี้</button>
+                                        <h3>📝 Senior Interview Task</h3>
+                                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;">
+                                            <p><strong>1. Code Review:</strong> วิเคราะห์โครงสร้างและ patterns ที่ใช้</p>
+                                            <p><strong>2. Best Practices:</strong> ชี้จุดที่ดีและจุดที่ควรปรับปรุง</p>
+                                            <p><strong>3. Scalability:</strong> แนะนำวิธีทำให้ maintainable สำหรับ team</p>
+                                            <p><strong>4. Error Handling:</strong> เพิ่มการจัดการ edge cases</p>
                                         </div>
+                                        <button class="code-opt-btn" onclick="checkRfAnswer('sr', 'review')">💡 ดูตัวอย่างคำตอบ Senior</button>
                                         <div id="rf-sr-feedback-2026" class="feedback-box hidden"></div>
                                     </div>
                                 </div>
@@ -1801,30 +1818,30 @@
 
                             <!-- CYPRESS 2026: JUNIOR LEVEL -->
                             <div id="cy-junior-view-2026" class="hidden">
-                                <div class="section-title">🌲 Cypress Jr: Selectors & Chaining</div>
-                                <p class="code-instruction">วิเคราะห์การทำงานของคำสั่ง <b>Get</b> และ <b>Contains</b> เมื่อมี Element ที่มี Class ซ้ำกัน</p>
+                                <div class="section-title">🌲 Cypress Jr: E2E Test Code Analysis</div>
+                                <p class="code-instruction">อธิบาย Cypress E2E test code นี้ และแนะนำสิ่งที่ควรเพิ่มเติม</p>
                                 
                                 <div class="coding-container">
                                     <div class="code-editor">
-                                        <div class="code-line"><span class="line-num">1</span><span class="code-content comment">// HTML Structure:</span></div>
-                                        <div class="code-line"><span class="line-num">2</span><span class="code-content comment">// &lt;button class="btn"&gt;Cancel&lt;/button&gt;</span></div>
-                                        <div class="code-line"><span class="line-num">3</span><span class="code-content comment">// &lt;button class="btn"&gt;Submit&lt;/button&gt;</span></div>
-                                        <div class="code-line"><span class="line-num">4</span><span class="code-content">&nbsp;</span></div>
-                                        <div class="code-line"><span class="line-num">5</span><span class="code-content"><span class="func">it</span>(<span class="str">'Submit Form'</span>, () => {</span></div>
-                                        <div class="code-line"><span class="line-num">6</span><span class="code-content indent1"><span class="kwd">cy</span>.get(<span class="str">'.btn'</span>)</span></div>
-                                        <div class="code-line"><span class="line-num">7</span><span class="code-content indent2">.contains(<span class="str">'Submit'</span>)</span></div>
-                                        <div class="code-line"><span class="line-num">8</span><span class="code-content indent2">.click();</span></div>
+                                        <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">describe</span>(<span class="str">'Login Test'</span>, () => {</span></div>
+                                        <div class="code-line"><span class="line-num">2</span><span class="code-content indent1"><span class="kwd">it</span>(<span class="str">'should login successfully'</span>, () => {</span></div>
+                                        <div class="code-line"><span class="line-num">3</span><span class="code-content indent2"><span class="kwd">cy</span>.visit(<span class="str">'https://example.com/login'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content indent2"><span class="kwd">cy</span>.get(<span class="str">'#username'</span>).type(<span class="str">'testuser'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content indent2"><span class="kwd">cy</span>.get(<span class="str">'#password'</span>).type(<span class="str">'testpass'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content indent2"><span class="kwd">cy</span>.get(<span class="str">'button[type="submit"]'</span>).click();</span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content indent2"><span class="kwd">cy</span>.url().should(<span class="str">'include'</span>, <span class="str">'/dashboard'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content indent1">});</span></div>
                                         <div class="code-line"><span class="line-num">9</span><span class="code-content">});</span></div>
                                     </div>
 
                                     <div class="code-qa-panel">
-                                        <h3>Cypress จะทำงานอย่างไรกับคำสั่งชุดนี้?</h3>
-                                        <div class="code-options">
-                                            <button class="code-opt-btn" onclick="checkCyAnswer('jr', 'error')">A) Error: เพราะ '.btn' คืนค่า Element กลับมาหลายตัว</button>
-                                            <button class="code-opt-btn" onclick="checkCyAnswer('jr', 'cancel')">B) คลิกปุ่ม 'Cancel' (เพราะเป็นปุ่มแรกที่เจอ)</button>
-                                            <button class="code-opt-btn" onclick="checkCyAnswer('jr', 'submit')">C) คลิกปุ่ม 'Submit' ได้อย่างถูกต้อง</button>
-                                            <button class="code-opt-btn" onclick="checkCyAnswer('jr', 'random')">D) คลิกปุ่มไหนก็ได้ ที่โหลดเสร็จก่อน</button>
+                                        <h3>📝 Interview Task</h3>
+                                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;">
+                                            <p><strong>1. อธิบาย Code:</strong> บอกว่า code นี้ทำอะไรบ้าง (ทีละบรรทัด)</p>
+                                            <p><strong>2. ชี้จุดที่ขาด:</strong> code นี้ยังขาดอะไรที่สำคัญบ้าง?</p>
+                                            <p><strong>3. แนะนำปรับปรุง:</strong> ควรเพิ่มอะไรเพื่อให้ robust มากขึ้น?</p>
                                         </div>
+                                        <button class="code-opt-btn" onclick="checkCyAnswer('jr', 'explain')">💡 ดูตัวอย่างคำตอบที่ดี</button>
                                         <div id="cy-jr-feedback-2026" class="feedback-box hidden"></div>
                                     </div>
                                 </div>
@@ -1832,33 +1849,39 @@
 
                             <!-- CYPRESS 2026: SENIOR LEVEL -->
                             <div id="cy-senior-view-2026" class="hidden">
-                                <div class="section-title">🌲 Cypress Sr: Async & Variables (Anti-Pattern)</div>
-                                <p class="code-instruction">วิเคราะห์ <b>"ความเสี่ยง"</b> ของการใช้ตัวแปร <code>let/var</code> ภายนอก Chain ของ Cypress</p>
+                                <div class="section-title">🌲 Cypress Sr: Advanced E2E Code Review</div>
+                                <p class="code-instruction">วิเคราะห์ Cypress E2E test code ขั้นสูง และแนะนำ best practices</p>
                                 
                                 <div class="coding-container">
                                     <div class="code-editor">
-                                        <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">let</span> userData; <span class="comment">// Global Variable</span></span></div>
-                                        <div class="code-line"><span class="line-num">2</span><span class="code-content">&nbsp;</span></div>
-                                        <div class="code-line"><span class="line-num">3</span><span class="code-content"><span class="func">beforeEach</span>(() => {</span></div>
-                                        <div class="code-line"><span class="line-num">4</span><span class="code-content indent1"><span class="kwd">cy</span>.fixture(<span class="str">'users'</span>).then((data) => {</span></div>
-                                        <div class="code-line"><span class="line-num">5</span><span class="code-content indent2">userData = data; <span class="comment">// Assign value</span></span></div>
-                                        <div class="code-line"><span class="line-num">6</span><span class="code-content indent1">});</span></div>
-                                        <div class="code-line"><span class="line-num">7</span><span class="code-content">});</span></div>
-                                        <div class="code-line"><span class="line-num">8</span><span class="code-content">&nbsp;</span></div>
-                                        <div class="code-line"><span class="line-num">9</span><span class="code-content"><span class="func">it</span>(<span class="str">'Test Login'</span>, () => {</span></div>
-                                        <div class="code-line"><span class="line-num">10</span><span class="code-content indent1"><span class="comment">// ⚠️ Risk Point</span></span></div>
-                                        <div class="code-line"><span class="line-num">11</span><span class="code-content indent1"><span class="kwd">cy</span>.login(userData.username, userData.password);</span></div>
-                                        <div class="code-line"><span class="line-num">12</span><span class="code-content">});</span></div>
+                                        <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">describe</span>(<span class="str">'E-commerce Checkout Flow'</span>, () => {</span></div>
+                                        <div class="code-line"><span class="line-num">2</span><span class="code-content indent1"><span class="kwd">beforeEach</span>(() => {</span></div>
+                                        <div class="code-line"><span class="line-num">3</span><span class="code-content indent2"><span class="kwd">cy</span>.visit(<span class="str">'/'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content indent2"><span class="kwd">cy</span>.login(<span class="str">'user@test.com'</span>, <span class="str">'password123'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content indent1">});</span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content indent1"><span class="kwd">it</span>(<span class="str">'should complete purchase'</span>, () => {</span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content indent2"><span class="kwd">cy</span>.get(<span class="str">'[data-cy="product-1"]'</span>).click();</span></div>
+                                        <div class="code-line"><span class="line-num">9</span><span class="code-content indent2"><span class="kwd">cy</span>.get(<span class="str">'[data-cy="add-to-cart"]'</span>).click();</span></div>
+                                        <div class="code-line"><span class="line-num">10</span><span class="code-content indent2"><span class="kwd">cy</span>.get(<span class="str">'[data-cy="cart-icon"]'</span>).click();</span></div>
+                                        <div class="code-line"><span class="line-num">11</span><span class="code-content indent2"><span class="kwd">cy</span>.get(<span class="str">'[data-cy="checkout-btn"]'</span>).click();</span></div>
+                                        <div class="code-line"><span class="line-num">12</span><span class="code-content indent2"><span class="kwd">cy</span>.get(<span class="str">'[data-cy="payment-form"]'</span>).should(<span class="str">'be.visible'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">13</span><span class="code-content indent2"><span class="kwd">cy</span>.get(<span class="str">'[data-cy="card-number"]'</span>).type(<span class="str">'4111111111111111'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">14</span><span class="code-content indent2"><span class="kwd">cy</span>.get(<span class="str">'[data-cy="submit-payment"]'</span>).click();</span></div>
+                                        <div class="code-line"><span class="line-num">15</span><span class="code-content indent2"><span class="kwd">cy</span>.contains(<span class="str">'Order Successful'</span>).should(<span class="str">'be.visible'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">16</span><span class="code-content indent1">});</span></div>
+                                        <div class="code-line"><span class="line-num">17</span><span class="code-content">});</span></div>
                                     </div>
 
                                     <div class="code-qa-panel">
-                                        <h3>ทำไมรูปแบบการเขียนนี้ถึง "ไม่แนะนำ" ให้ใช้ใน Cypress?</h3>
-                                        <div class="code-options">
-                                            <button class="code-opt-btn" onclick="checkCyAnswer('sr', 'scope')">A) ปัญหาสโคป: ตัวแปร 'let' ไม่สามารถเข้าถึงได้ภายใน 'it'</button>
-                                            <button class="code-opt-btn" onclick="checkCyAnswer('sr', 'async')">B) ปัญหา Sync/Async: ตัวแปร 'userData' อาจมีค่าเป็น undefined ตอนที่ Test เริ่มทำงาน</button>
-                                            <button class="code-opt-btn" onclick="checkCyAnswer('sr', 'fixture')">C) Syntax Error: คำสั่ง cy.fixture() ห้ามใช้ใน beforeEach</button>
-                                            <button class="code-opt-btn" onclick="checkCyAnswer('sr', 'alias')">D) ใช้งานได้ปกติ ไม่มีปัญหาอะไร</button>
+                                        <h3>📝 Senior Interview Task</h3>
+                                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;">
+                                            <p><strong>1. Code Review:</strong> วิเคราะห์โครงสร้างและ patterns ที่ใช้</p>
+                                            <p><strong>2. Best Practices:</strong> ชี้จุดที่ดีและจุดที่ควรปรับปรุง</p>
+                                            <p><strong>3. Scalability:</strong> แนะนำวิธีทำให้ maintainable สำหรับ team</p>
+                                            <p><strong>4. Error Handling:</strong> เพิ่มการจัดการ edge cases</p>
                                         </div>
+                                        <button class="code-opt-btn" onclick="checkCyAnswer('sr', 'review')">💡 ดูตัวอย่างคำตอบ Senior</button>
                                         <div id="cy-sr-feedback-2026" class="feedback-box hidden"></div>
                                     </div>
                                 </div>
@@ -1948,34 +1971,30 @@
 
                             <!-- PLAYWRIGHT 2026: JUNIOR LEVEL -->
                             <div id="pw-junior-view-2026" class="hidden">
-                                <div class="section-title">🎭 Playwright Jr: Locators & Auto-Wait</div>
-                                <p class="code-instruction">วิเคราะห์การทำงานของ <b>Locator</b> และ <b>Auto-waiting</b> ใน Playwright</p>
+                                <div class="section-title">🎭 Playwright Jr: E2E Test Code Analysis</div>
+                                <p class="code-instruction">อธิบาย Playwright E2E test code นี้ และแนะนำสิ่งที่ควรเพิ่มเติม</p>
                                 
                                 <div class="coding-container">
                                     <div class="code-editor">
-                                        <div class="code-line"><span class="line-num">1</span><span class="code-content comment">// HTML Structure:</span></div>
-                                        <div class="code-line"><span class="line-num">2</span><span class="code-content comment">// &lt;div id="loading"&gt;Loading...&lt;/div&gt;</span></div>
-                                        <div class="code-line"><span class="line-num">3</span><span class="code-content comment">// &lt;button id="submit" style="display:none"&gt;Submit&lt;/button&gt;</span></div>
-                                        <div class="code-line"><span class="line-num">4</span><span class="code-content comment">// (After 2 seconds: loading disappears, button shows)</span></div>
-                                        <div class="code-line"><span class="line-num">5</span><span class="code-content">&nbsp;</span></div>
-                                        <div class="code-line"><span class="line-num">6</span><span class="code-content"><span class="kwd">const</span> { test, expect } = <span class="func">require</span>(<span class="str">'@playwright/test'</span>);</span></div>
-                                        <div class="code-line"><span class="line-num">7</span><span class="code-content">&nbsp;</span></div>
-                                        <div class="code-line"><span class="line-num">8</span><span class="code-content"><span class="func">test</span>(<span class="str">'Submit after loading'</span>, <span class="kwd">async</span> ({ page }) => {</span></div>
-                                        <div class="code-line"><span class="line-num">9</span><span class="code-content indent1"><span class="kwd">await</span> page.goto(<span class="str">'http://example.com'</span>);</span></div>
-                                        <div class="code-line"><span class="line-num">10</span><span class="code-content indent1">&nbsp;</span></div>
-                                        <div class="code-line"><span class="line-num">11</span><span class="code-content indent1 comment">// ⚠️ Key Question: Will this work?</span></div>
-                                        <div class="code-line"><span class="line-num">12</span><span class="code-content indent1"><span class="kwd">await</span> page.locator(<span class="str">'#submit'</span>).click();</span></div>
-                                        <div class="code-line"><span class="line-num">13</span><span class="code-content">});</span></div>
+                                        <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">const</span> { test, expect } = <span class="func">require</span>(<span class="str">'@playwright/test'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">2</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">3</span><span class="code-content"><span class="func">test</span>(<span class="str">'Login Test'</span>, <span class="kwd">async</span> ({ page }) => {</span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content indent1"><span class="kwd">await</span> page.goto(<span class="str">'https://example.com/login'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content indent1"><span class="kwd">await</span> page.fill(<span class="str">'#username'</span>, <span class="str">'testuser'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content indent1"><span class="kwd">await</span> page.fill(<span class="str">'#password'</span>, <span class="str">'testpass'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content indent1"><span class="kwd">await</span> page.click(<span class="str">'button[type="submit"]'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content indent1"><span class="kwd">await</span> expect(page).toHaveURL(<span class="str">/.*dashboard.*/</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">9</span><span class="code-content">});</span></div>
                                     </div>
 
                                     <div class="code-qa-panel">
-                                        <h3>Playwright จะทำงานอย่างไรกับโค้ดนี้?</h3>
-                                        <div class="code-options">
-                                            <button class="code-opt-btn" onclick="checkPwAnswer('jr', 'error')">A) Error ทันที: เพราะปุ่มยัง display:none</button>
-                                            <button class="code-opt-btn" onclick="checkPwAnswer('jr', 'wait')">B) รอ 2 วินาที แล้วคลิกปุ่มได้สำเร็จ</button>
-                                            <button class="code-opt-btn" onclick="checkPwAnswer('jr', 'timeout')">C) Timeout หลัง 30 วินาที (Default timeout)</button>
-                                            <button class="code-opt-btn" onclick="checkPwAnswer('jr', 'immediate')">D) คลิกทันทีโดยไม่รอ (Force click)</button>
+                                        <h3>📝 Interview Task</h3>
+                                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;">
+                                            <p><strong>1. อธิบาย Code:</strong> บอกว่า code นี้ทำอะไรบ้าง (ทีละบรรทัด)</p>
+                                            <p><strong>2. ชี้จุดที่ขาด:</strong> code นี้ยังขาดอะไรที่สำคัญบ้าง?</p>
+                                            <p><strong>3. แนะนำปรับปรุง:</strong> ควรเพิ่มอะไรเพื่อให้ robust มากขึ้น?</p>
                                         </div>
+                                        <button class="code-opt-btn" onclick="checkPwAnswer('jr', 'explain')">💡 ดูตัวอย่างคำตอบที่ดี</button>
                                         <div id="pw-jr-feedback-2026" class="feedback-box hidden"></div>
                                     </div>
                                 </div>
@@ -1983,37 +2002,41 @@
 
                             <!-- PLAYWRIGHT 2026: SENIOR LEVEL -->
                             <div id="pw-senior-view-2026" class="hidden">
-                                <div class="section-title">🎭 Playwright Sr: Parallel Testing & Context Isolation</div>
-                                <p class="code-instruction">วิเคราะห์ <b>"ความเสี่ยง"</b> ของการใช้ Shared State ใน Parallel Testing</p>
+                                <div class="section-title">🎭 Playwright Sr: Advanced E2E Code Review</div>
+                                <p class="code-instruction">วิเคราะห์ Playwright E2E test code ขั้นสูง และแนะนำ best practices</p>
                                 
                                 <div class="coding-container">
                                     <div class="code-editor">
                                         <div class="code-line"><span class="line-num">1</span><span class="code-content"><span class="kwd">const</span> { test, expect } = <span class="func">require</span>(<span class="str">'@playwright/test'</span>);</span></div>
                                         <div class="code-line"><span class="line-num">2</span><span class="code-content">&nbsp;</span></div>
-                                        <div class="code-line"><span class="line-num">3</span><span class="code-content comment">// Global shared variable</span></div>
-                                        <div class="code-line"><span class="line-num">4</span><span class="code-content"><span class="kwd">let</span> sharedCounter = <span class="num">0</span>;</span></div>
-                                        <div class="code-line"><span class="line-num">5</span><span class="code-content">&nbsp;</span></div>
-                                        <div class="code-line"><span class="line-num">6</span><span class="code-content"><span class="func">test</span>(<span class="str">'Test A: Increment counter'</span>, <span class="kwd">async</span> ({ page }) => {</span></div>
-                                        <div class="code-line"><span class="line-num">7</span><span class="code-content indent1">sharedCounter++;</span></div>
-                                        <div class="code-line"><span class="line-num">8</span><span class="code-content indent1"><span class="kwd">await</span> page.goto(<span class="str">`/user/${sharedCounter}`</span>);</span></div>
-                                        <div class="code-line"><span class="line-num">9</span><span class="code-content indent1">expect(sharedCounter).toBe(<span class="num">1</span>);</span></div>
-                                        <div class="code-line"><span class="line-num">10</span><span class="code-content">});</span></div>
-                                        <div class="code-line"><span class="line-num">11</span><span class="code-content">&nbsp;</span></div>
-                                        <div class="code-line"><span class="line-num">12</span><span class="code-content"><span class="func">test</span>(<span class="str">'Test B: Increment counter'</span>, <span class="kwd">async</span> ({ page }) => {</span></div>
-                                        <div class="code-line"><span class="line-num">13</span><span class="code-content indent1">sharedCounter++;</span></div>
-                                        <div class="code-line"><span class="line-num">14</span><span class="code-content indent1"><span class="kwd">await</span> page.goto(<span class="str">`/user/${sharedCounter}`</span>);</span></div>
-                                        <div class="code-line"><span class="line-num">15</span><span class="code-content indent1">expect(sharedCounter).toBe(<span class="num">1</span>);</span></div>
-                                        <div class="code-line"><span class="line-num">16</span><span class="code-content">});</span></div>
+                                        <div class="code-line"><span class="line-num">3</span><span class="code-content"><span class="func">test</span>.describe(<span class="str">'Product Search Flow'</span>, () => {</span></div>
+                                        <div class="code-line"><span class="line-num">4</span><span class="code-content indent1"><span class="func">test</span>.beforeEach(<span class="kwd">async</span> ({ page }) => {</span></div>
+                                        <div class="code-line"><span class="line-num">5</span><span class="code-content indent2"><span class="kwd">await</span> page.goto(<span class="str">'/'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">6</span><span class="code-content indent2"><span class="kwd">await</span> page.fill(<span class="str">'[data-testid="email"]'</span>, <span class="str">'user@test.com'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">7</span><span class="code-content indent2"><span class="kwd">await</span> page.fill(<span class="str">'[data-testid="password"]'</span>, <span class="str">'password123'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">8</span><span class="code-content indent2"><span class="kwd">await</span> page.click(<span class="str">'[data-testid="login-btn"]'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">9</span><span class="code-content indent1">});</span></div>
+                                        <div class="code-line"><span class="line-num">10</span><span class="code-content">&nbsp;</span></div>
+                                        <div class="code-line"><span class="line-num">11</span><span class="code-content indent1"><span class="func">test</span>(<span class="str">'should search and filter products'</span>, <span class="kwd">async</span> ({ page }) => {</span></div>
+                                        <div class="code-line"><span class="line-num">12</span><span class="code-content indent2"><span class="kwd">await</span> page.fill(<span class="str">'[data-testid="search-input"]'</span>, <span class="str">'laptop'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">13</span><span class="code-content indent2"><span class="kwd">await</span> page.click(<span class="str">'[data-testid="search-btn"]'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">14</span><span class="code-content indent2"><span class="kwd">await</span> page.selectOption(<span class="str">'[data-testid="price-filter"]'</span>, <span class="str">'1000-2000'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">15</span><span class="code-content indent2"><span class="kwd">await</span> expect(page.locator(<span class="str">'[data-testid="product-card"]'</span>)).toHaveCount(<span class="num">5</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">16</span><span class="code-content indent2"><span class="kwd">await</span> page.click(<span class="str">'[data-testid="product-card"]:first-child'</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">17</span><span class="code-content indent2"><span class="kwd">await</span> expect(page).toHaveURL(<span class="str">/.*product\/\d+.*/</span>);</span></div>
+                                        <div class="code-line"><span class="line-num">18</span><span class="code-content indent1">});</span></div>
+                                        <div class="code-line"><span class="line-num">19</span><span class="code-content">});</span></div>
                                     </div>
 
                                     <div class="code-qa-panel">
-                                        <h3>เมื่อรัน Tests แบบ Parallel (--workers=2) จะเกิดอะไรขึ้น?</h3>
-                                        <div class="code-options">
-                                            <button class="code-opt-btn" onclick="checkPwAnswer('sr', 'pass')">A) ทั้งสอง Test ผ่านเสมอ (เพราะ Context แยกกัน)</button>
-                                            <button class="code-opt-btn" onclick="checkPwAnswer('sr', 'race')">B) Test อาจ Fail เป็นบางครั้ง (Race Condition)</button>
-                                            <button class="code-opt-btn" onclick="checkPwAnswer('sr', 'sequential')">C) Playwright จะรัน Sequential อัตโนมัติ</button>
-                                            <button class="code-opt-btn" onclick="checkPwAnswer('sr', 'error')">D) Error: ห้ามใช้ Global Variable</button>
+                                        <h3>📝 Senior Interview Task</h3>
+                                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;">
+                                            <p><strong>1. Code Review:</strong> วิเคราะห์โครงสร้างและ patterns ที่ใช้</p>
+                                            <p><strong>2. Best Practices:</strong> ชี้จุดที่ดีและจุดที่ควรปรับปรุง</p>
+                                            <p><strong>3. Scalability:</strong> แนะนำวิธีทำให้ maintainable สำหรับ team</p>
+                                            <p><strong>4. Error Handling:</strong> เพิ่มการจัดการ edge cases</p>
                                         </div>
+                                        <button class="code-opt-btn" onclick="checkPwAnswer('sr', 'review')">💡 ดูตัวอย่างคำตอบ Senior</button>
                                         <div id="pw-sr-feedback-2026" class="feedback-box hidden"></div>
                                     </div>
                                 </div>

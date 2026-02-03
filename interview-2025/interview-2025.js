@@ -441,8 +441,13 @@ function updateRfView2025() {
     // Only handle if year 2025 is selected
     if(typeof selectedYear !== 'undefined' && selectedYear !== '2025') return;
     
+    // Hide all RF views first
     document.getElementById('rf-junior-view').classList.add('hidden');
     document.getElementById('rf-senior-view').classList.add('hidden');
+    const rf2026Jr = document.getElementById('rf-junior-view-2026');
+    const rf2026Sr = document.getElementById('rf-senior-view-2026');
+    if(rf2026Jr) rf2026Jr.classList.add('hidden');
+    if(rf2026Sr) rf2026Sr.classList.add('hidden');
     
     if(currentLevel2025 === 'junior') {
         document.getElementById('rf-junior-view').classList.remove('hidden');
@@ -452,6 +457,9 @@ function updateRfView2025() {
 }
 
 function checkRfAnswer(level, answer) {
+    // Only handle 2025 logic if year is 2025
+    if(typeof selectedYear !== 'undefined' && selectedYear !== '2025') return;
+    
     const isJunior = level === 'jr';
     const feedbackId = isJunior ? 'rf-jr-feedback' : 'rf-sr-feedback';
     const feedbackEl = document.getElementById(feedbackId);
@@ -527,8 +535,13 @@ function updateCyView2025() {
     // Only handle if year 2025 is selected
     if(typeof selectedYear !== 'undefined' && selectedYear !== '2025') return;
     
+    // Hide all CY views first
     document.getElementById('cy-junior-view').classList.add('hidden');
     document.getElementById('cy-senior-view').classList.add('hidden');
+    const cy2026Jr = document.getElementById('cy-junior-view-2026');
+    const cy2026Sr = document.getElementById('cy-senior-view-2026');
+    if(cy2026Jr) cy2026Jr.classList.add('hidden');
+    if(cy2026Sr) cy2026Sr.classList.add('hidden');
     
     if(currentLevel2025 === 'junior') {
         document.getElementById('cy-junior-view').classList.remove('hidden');
@@ -538,6 +551,9 @@ function updateCyView2025() {
 }
 
 function checkCyAnswer(level, answer) {
+    // Only handle 2025 logic if year is 2025
+    if(typeof selectedYear !== 'undefined' && selectedYear !== '2025') return;
+    
     const isJunior = level === 'jr';
     const feedbackId = isJunior ? 'cy-jr-feedback' : 'cy-sr-feedback';
     const feedbackEl = document.getElementById(feedbackId);

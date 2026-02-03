@@ -42,11 +42,11 @@ function updateLevelDescriptions2026() {
     const seniorDesc = document.getElementById('senior-desc');
     
     if (juniorDesc) {
-        juniorDesc.textContent = '3 Real-World Scenarios: Delivery Fee, Login Lockout, Leave Request (2-5 Years Exp.)';
+        juniorDesc.innerHTML = '3-5 นาที Logic Exam<br>5-7 นาที Backend Testing<br>3-5 นาที Automation Testing<br>(2-5 Years Exp.)';
     }
     
     if (seniorDesc) {
-        seniorDesc.textContent = '3 Complex Scenarios: Parking System, Discount Logic, ATM Limits (5+ Years Exp.)';
+        seniorDesc.innerHTML = '3-5 นาที Logic Exam<br>5-7 นาที Backend Testing<br>3-5 นาที Automation Testing<br>(5+ Years Exp.)';
     }
 }
 
@@ -565,29 +565,79 @@ function checkRfAnswer(level, answer) {
     let isCorrect = false;
     let msg = "";
 
-    if(isJunior) {
-        // Answer: B (Default value "1234" is used)
-        if(answer === 'default') {
-            isCorrect = true;
-            msg = "✅ ถูกต้อง! ('1234')<br><small>เมื่อเรียกใช้ Keyword โดย <b>ไม่ส่ง Argument ตัวที่ 2</b> (password) ระบบจะใช้ค่า Default ที่กำหนดไว้ใน [Arguments] คือ '1234' <br>หมายเหตุ: ตัวแปร ${password} ที่ประกาศไว้ไม่ได้ถูกส่งเข้าไปใน Keyword เพราะไม่ได้ระบุในการเรียกใช้</small>";
-        } else if (answer === 'pass999') {
-            msg = "❌ ผิด<br><small>ตัวแปร ${password} ถูกประกาศไว้ในส่วน Variables แต่ <b>ไม่ได้ถูกส่งเข้าไป</b>ในการเรียกใช้ Keyword (Line 8 ส่งแค่ 'Admin' เท่านั้น)</small>";
-        } else if (answer === 'admin') {
-            msg = "❌ ผิด<br><small>'Admin' คือ Argument ตัวที่ 1 (username) ไม่ใช่ password ลองสังเกตลำดับการส่ง Argument อีกครั้ง</small>";
+    // Handle 2026 Robot Appium questions
+    if (selectedYear === '2026') {
+        if (isJunior) {
+            if (answer === 'explain') {
+                isCorrect = true;
+                msg = "✅ คำตอบที่คาดหวัง (Junior Level):<br><br>" +
+                      "<strong>1. อธิบาย Code:</strong><br>" +
+                      "• เปิด Android app ผ่าน Appium server (localhost:4723)<br>" +
+                      "• กรอก username และ password<br>" +
+                      "• คลิกปุ่ม login<br>" +
+                      "• ปิด application<br><br>" +
+                      "<strong>2. จุดที่ขาด:</strong><br>" +
+                      "• ไม่มี Wait/Timeout สำหรับ element loading<br>" +
+                      "• ไม่มี Assertion ตรวจสอบ login สำเร็จ<br>" +
+                      "• ไม่มี Error handling<br>" +
+                      "• Hardcode ค่า username/password<br><br>" +
+                      "<strong>3. ควรเพิ่ม:</strong><br>" +
+                      "• Wait Until Element Is Visible<br>" +
+                      "• Element Should Contain Text (success message)<br>" +
+                      "• Variables สำหรับ test data<br>" +
+                      "• [Teardown] เพื่อ cleanup";
+            }
         } else {
-            msg = "❌ ผิด<br><small>ลองนับจำนวน Argument ที่ส่งเข้าไป: มีแค่ 1 Argument คือ 'Admin' (username) เท่านั้น</small>";
+            if (answer === 'review') {
+                isCorrect = true;
+                msg = "✅ คำตอบที่คาดหวัง (Senior Level):<br><br>" +
+                      "<strong>1. Code Review:</strong><br>" +
+                      "• ใช้ Page Object Model pattern ดี (Keywords แยกออกมา)<br>" +
+                      "• มี Resource file import<br>" +
+                      "• ใช้ Dictionary capabilities (&{ANDROID_CAPS})<br>" +
+                      "• มี Setup/Teardown structure<br><br>" +
+                      "<strong>2. จุดที่ควรปรับปรุง:</strong><br>" +
+                      "• ควรมี timeout configuration<br>" +
+                      "• ควรมี retry mechanism<br>" +
+                      "• ควรแยก test data ออกจาก code<br>" +
+                      "• ควรมี screenshot on failure<br><br>" +
+                      "<strong>3. Best Practices ที่ควรเพิ่ม:</strong><br>" +
+                      "• Dynamic locators (xpath with variables)<br>" +
+                      "• Cross-platform capabilities<br>" +
+                      "• Parallel execution support<br>" +
+                      "• Reporting และ logging<br><br>" +
+                      "<strong>4. Error Handling:</strong><br>" +
+                      "• Try-Catch blocks ใน Keywords<br>" +
+                      "• Graceful degradation<br>" +
+                      "• Recovery scenarios";
+            }
         }
     } else {
-        // Answer: B (Cascading Failure - orphan browser)
-        if(answer === 'orphan') {
-            isCorrect = true;
-            msg = "✅ ถูกต้อง! (เสี่ยงต่อระบบรวน)<br><small><b>คำอธิบาย:</b> หากบรรทัดที่ 9 พัง Test Case จะหยุดทำงานทันที ทำให้คำสั่ง <code>Close Browser</code> ด้านล่างไม่ถูกเรียกใช้งาน ผลคือ Browser จะเปิดค้างไว้ (Zombie Browser) กิน Ram และทำให้ Test Case ข้อถัดไปพังตามไปด้วย (Cascading Failure) <br><b>วิธีแก้:</b> ต้องย้าย <code>Close Browser</code> ไปใส่ในส่วน <code>[Teardown]</code> เพื่อการันตีว่ามันจะถูกรันเสมอ</small>";
-        } else if (answer === 'syntax') {
-            msg = "❌ ผิด <br><small>คำสั่ง <code>Open Browser</code> สามารถใช้ที่ไหนก็ได้ (Test Case หรือ Keyword) ไม่จำเป็นต้องอยู่ใน Settings เสมอไป</small>";
-        } else if (answer === 'hardcode') {
-            msg = "⚠️ เป็นคำตอบที่ 'ถูกแต่ไม่ใช่ประเด็นหลัก'<br><small>การ Hardcode เป็นสิ่งไม่ดีก็จริง แต่มันไม่ทำให้ระบบ Test พังพินาศ (System Instability) เหมือนการไม่คืนค่า Environment ในข้อ B</small>";
+        // Original 2025 logic
+        if(isJunior) {
+            // Answer: B (Default value "1234" is used)
+            if(answer === 'default') {
+                isCorrect = true;
+                msg = "✅ ถูกต้อง! ('1234')<br><small>เมื่อเรียกใช้ Keyword โดย <b>ไม่ส่ง Argument ตัวที่ 2</b> (password) ระบบจะใช้ค่า Default ที่กำหนดไว้ใน [Arguments] คือ '1234' <br>หมายเหตุ: ตัวแปร ${password} ที่ประกาศไว้ไม่ได้ถูกส่งเข้าไปใน Keyword เพราะไม่ได้ระบุในการเรียกใช้</small>";
+            } else if (answer === 'pass999') {
+                msg = "❌ ผิด<br><small>ตัวแปร ${password} ถูกประกาศไว้ในส่วน Variables แต่ <b>ไม่ได้ถูกส่งเข้าไป</b>ในการเรียกใช้ Keyword (Line 8 ส่งแค่ 'Admin' เท่านั้น)</small>";
+            } else if (answer === 'admin') {
+                msg = "❌ ผิด<br><small>'Admin' คือ Argument ตัวที่ 1 (username) ไม่ใช่ password ลองสังเกตลำดับการส่ง Argument อีกครั้ง</small>";
+            } else {
+                msg = "❌ ผิด<br><small>ลองนับจำนวน Argument ที่ส่งเข้าไป: มีแค่ 1 Argument คือ 'Admin' (username) เท่านั้น</small>";
+            }
         } else {
-            msg = "❌ ผิด <br><small>ตัวแปรอาจจะถูก Import มาจาก Resource File อื่นก็ได้ ปัญหาหลักข้อนี้อยู่ที่การจัดการ Error Handling</small>";
+            // Answer: B (Cascading Failure - orphan browser)
+            if(answer === 'orphan') {
+                isCorrect = true;
+                msg = "✅ ถูกต้อง! (เสี่ยงต่อระบบรวน)<br><small><b>คำอธิบาย:</b> หากบรรทัดที่ 9 พัง Test Case จะหยุดทำงานทันที ทำให้คำสั่ง <code>Close Browser</code> ด้านล่างไม่ถูกเรียกใช้งาน ผลคือ Browser จะเปิดค้างไว้ (Zombie Browser) กิน Ram และทำให้ Test Case ข้อถัดไปพังตามไปด้วย (Cascading Failure) <br><b>วิธีแก้:</b> ต้องย้าย <code>Close Browser</code> ไปใส่ในส่วน <code>[Teardown]</code> เพื่อการันตีว่ามันจะถูกรันเสมอ</small>";
+            } else if (answer === 'syntax') {
+                msg = "❌ ผิด <br><small>คำสั่ง <code>Open Browser</code> สามารถใช้ที่ไหนก็ได้ (Test Case หรือ Keyword) ไม่จำเป็นต้องอยู่ใน Settings เสมอไป</small>";
+            } else if (answer === 'hardcode') {
+                msg = "⚠️ เป็นคำตอบที่ 'ถูกแต่ไม่ใช่ประเด็นหลัก'<br><small>การ Hardcode เป็นสิ่งไม่ดีก็จริง แต่มันไม่ทำให้ระบบ Test พังพินาศ (System Instability) เหมือนการไม่คืนค่า Environment ในข้อ B</small>";
+            } else {
+                msg = "❌ ผิด <br><small>ตัวแปรอาจจะถูก Import มาจาก Resource File อื่นก็ได้ ปัญหาหลักข้อนี้อยู่ที่การจัดการ Error Handling</small>";
+            }
         }
     }
 
@@ -649,25 +699,78 @@ function checkCyAnswer(level, answer) {
     let isCorrect = false;
     let msg = "";
 
-    if(isJunior) {
-        // Answer: C (Correctly clicks Submit)
-        if(answer === 'submit') {
-            isCorrect = true;
-            msg = "✅ ถูกต้อง! (คลิกปุ่ม Submit)<br><small><b>คำอธิบาย:</b> `cy.get('.btn')` จะดึงปุ่มทั้งหมดมาเป็น List แต่เมื่อเราต่อท้าย (Chain) ด้วย `.contains('Submit')` Cypress จะฉลาดพอที่จะ **กรอง (Filter)** เอาเฉพาะปุ่มที่มีข้อความตรงกัน แล้วค่อยสั่ง Click ครับ</small>";
-        } else if (answer === 'error') {
-            msg = "❌ ผิด <br><small>Cypress ยอมให้ `cy.get` คืนค่าหลาย Element ได้ครับ แต่ถ้าสั่ง `.click()` ทันทีโดยไม่กรองก่อน ถึงจะ Error (แต่นี่เรากรองด้วย contains แล้ว)</small>";
+    // Handle 2026 Cypress code explanation questions
+    if (selectedYear === '2026') {
+        if (isJunior) {
+            if (answer === 'explain') {
+                isCorrect = true;
+                msg = "✅ คำตอบที่คาดหวัง (Junior Level):<br><br>" +
+                      "<strong>1. อธิบาย Code:</strong><br>" +
+                      "• เปิดหน้า login page<br>" +
+                      "• กรอก username และ password<br>" +
+                      "• คลิกปุ่ม submit<br>" +
+                      "• ตรวจสอบว่า URL เปลี่ยนไป /dashboard<br><br>" +
+                      "<strong>2. จุดที่ขาด:</strong><br>" +
+                      "• ไม่มี data-cy attributes สำหรับ selectors<br>" +
+                      "• ไม่มี wait/timeout สำหรับ loading<br>" +
+                      "• ไม่มี assertion ตรวจสอบ success message<br>" +
+                      "• Hardcode credentials ใน code<br>" +
+                      "• ไม่มี error handling<br><br>" +
+                      "<strong>3. ควรเพิ่ม:</strong><br>" +
+                      "• cy.intercept() สำหรับ API mocking<br>" +
+                      "• cy.fixture() สำหรับ test data<br>" +
+                      "• Custom commands (cy.login)<br>" +
+                      "• Better assertions (contains success text)<br>" +
+                      "• Environment variables สำหรับ base URL";
+            }
         } else {
-            msg = "❌ ผิด <br><small>`.contains()` เป็นคำสั่ง Filter ที่ทรงพลังครับ มันจะไม่คลิกตัวแรก (Cancel) แบบสุ่มสี่สุ่มห้า แต่จะหาตัวที่มีข้อความตรงกันเท่านั้น</small>";
+            if (answer === 'review') {
+                isCorrect = true;
+                msg = "✅ คำตอบที่คาดหวัง (Senior Level):<br><br>" +
+                      "<strong>1. Code Review:</strong><br>" +
+                      "• ใช้ data-cy attributes ดี (Best Practice)<br>" +
+                      "• มี beforeEach สำหรับ setup<br>" +
+                      "• มี custom command (cy.login)<br>" +
+                      "• E2E flow ครอบคลุม user journey<br><br>" +
+                      "<strong>2. จุดที่ควรปรับปรุง:</strong><br>" +
+                      "• ควรมี cy.intercept() สำหรับ API calls<br>" +
+                      "• ควรมี timeout configuration<br>" +
+                      "• ควรแยก test data ออกจาก code<br>" +
+                      "• ควรมี screenshot on failure<br><br>" +
+                      "<strong>3. Best Practices ที่ควรเพิ่ม:</strong><br>" +
+                      "• Page Object Model pattern<br>" +
+                      "• Environment-specific configurations<br>" +
+                      "• Parallel execution support<br>" +
+                      "• Custom assertions<br><br>" +
+                      "<strong>4. Error Handling:</strong><br>" +
+                      "• Retry mechanisms<br>" +
+                      "• Graceful failure handling<br>" +
+                      "• Better error messages<br>" +
+                      "• Network failure scenarios";
+            }
         }
     } else {
-        // Answer: B (Sync/Async Mix)
-        if(answer === 'async') {
-            isCorrect = true;
-            msg = "✅ ถูกต้อง! (Sync/Async ไม่สัมพันธ์กัน)<br><small><b>คำอธิบาย:</b> คำสั่ง Cypress เป็น Asynchronous (ทำทีหลัง) แต่ตัวแปร `let/var` เป็น Synchronous (ทำเลย) ในบางจังหวะ Test Case อาจจะเริ่มรัน **ก่อน** ที่ `fixture` จะโหลดข้อมูลเสร็จ ทำให้ `userData` ไม่มีค่า <br><b>วิธีแก้:</b> ควรใช้ Cypress Alias: `cy.fixture('users').as('userData')` แทนการใช้ตัวแปร JS ปกติครับ</small>";
-        } else if (answer === 'scope') {
-            msg = "❌ ผิด <br><small>ตัวแปร Global สามารถเข้าถึงได้ตามปกติครับ (Scope ถูกต้อง) แต่ปัญหาอยู่ที่ 'Timing' (เวลาในการโหลดข้อมูลที่ไม่พร้อมกัน)</small>";
+        // Original 2025 logic
+        if(isJunior) {
+            // Answer: C (Correctly clicks Submit)
+            if(answer === 'submit') {
+                isCorrect = true;
+                msg = "✅ ถูกต้อง! (คลิกปุ่ม Submit)<br><small><b>คำอธิบาย:</b> `cy.get('.btn')` จะดึงปุ่มทั้งหมดมาเป็น List แต่เมื่อเราต่อท้าย (Chain) ด้วย `.contains('Submit')` Cypress จะฉลาดพอที่จะ **กรอง (Filter)** เอาเฉพาะปุ่มที่มีข้อความตรงกัน แล้วค่อยสั่ง Click ครับ</small>";
+            } else if (answer === 'error') {
+                msg = "❌ ผิด <br><small>Cypress ยอมให้ `cy.get` คืนค่าหลาย Element ได้ครับ แต่ถ้าสั่ง `.click()` ทันทีโดยไม่กรองก่อน ถึงจะ Error (แต่นี่เรากรองด้วย contains แล้ว)</small>";
+            } else {
+                msg = "❌ ผิด <br><small>`.contains()` เป็นคำสั่ง Filter ที่ทรงพลังครับ มันจะไม่คลิกตัวแรก (Cancel) แบบสุ่มสี่สุ่มห้า แต่จะหาตัวที่มีข้อความตรงกันเท่านั้น</small>";
+            }
         } else {
-            msg = "❌ ผิด <br><small>นี่คือ Anti-Pattern (ข้อห้าม) ที่พบบ่อยที่สุดที่ทำให้ Test เดี๋ยวผ่านเดี๋ยวพัง (Flaky) ใน Cypress ครับ</small>";
+            // Answer: B (Sync/Async Mix)
+            if(answer === 'async') {
+                isCorrect = true;
+                msg = "✅ ถูกต้อง! (Sync/Async ไม่สัมพันธ์กัน)<br><small><b>คำอธิบาย:</b> คำสั่ง Cypress เป็น Asynchronous (ทำทีหลัง) แต่ตัวแปร `let/var` เป็น Synchronous (ทำเลย) ในบางจังหวะ Test Case อาจจะเริ่มรัน **ก่อน** ที่ `fixture` จะโหลดข้อมูลเสร็จ ทำให้ `userData` ไม่มีค่า <br><b>วิธีแก้:</b> ควรใช้ Cypress Alias: `cy.fixture('users').as('userData')` แทนการใช้ตัวแปร JS ปกติครับ</small>";
+            } else if (answer === 'scope') {
+                msg = "❌ ผิด <br><small>ตัวแปร Global สามารถเข้าถึงได้ตามปกติครับ (Scope ถูกต้อง) แต่ปัญหาอยู่ที่ 'Timing' (เวลาในการโหลดข้อมูลที่ไม่พร้อมกัน)</small>";
+            } else {
+                msg = "❌ ผิด <br><small>นี่คือ Anti-Pattern (ข้อห้าม) ที่พบบ่อยที่สุดที่ทำให้ Test เดี๋ยวผ่านเดี๋ยวพัง (Flaky) ใน Cypress ครับ</small>";
+            }
         }
     }
 
@@ -769,29 +872,83 @@ function checkPwAnswer(level, answer) {
     let isCorrect = false;
     let msg = "";
 
-    if(isJunior) {
-        // Answer: B (Wait 2 seconds then click successfully)
-        if(answer === 'wait') {
-            isCorrect = true;
-            msg = "✅ ถูกต้อง! (รอ 2 วินาที แล้วคลิกได้)<br><small><b>คำอธิบาย:</b> Playwright มี <b>Auto-waiting</b> ในตัว จะรอจนกว่า Element จะ <b>Visible</b> และ <b>Enabled</b> ก่อนที่จะคลิก แม้ว่าปุ่มจะเป็น display:none ในตอนแรก แต่หลัง 2 วินาที มันจะแสดงและคลิกได้ตามปกติ</small>";
-        } else if (answer === 'error') {
-            msg = "❌ ผิด <br><small>Playwright ไม่เกิด Error ทันที เพราะมันมี Auto-waiting จะรอจนกว่า Element จะพร้อมใช้งาน</small>";
-        } else if (answer === 'timeout') {
-            msg = "❌ ผิด <br><small>ถ้า Element ไม่แสดงภายใน 30 วินาที ถึงจะ Timeout แต่ในกรณีนี้ Element จะแสดงภายใน 2 วินาที</small>";
+    // Handle 2026 Playwright code explanation questions
+    if (selectedYear === '2026') {
+        if (isJunior) {
+            if (answer === 'explain') {
+                isCorrect = true;
+                msg = "✅ คำตอบที่คาดหวัง (Junior Level):<br><br>" +
+                      "<strong>1. อธิบาย Code:</strong><br>" +
+                      "• Import Playwright test และ expect<br>" +
+                      "• เปิดหน้า login page<br>" +
+                      "• กรอก username และ password ด้วย fill()<br>" +
+                      "• คลิกปุ่ม submit<br>" +
+                      "• ตรวจสอบ URL ด้วย toHaveURL() และ regex<br><br>" +
+                      "<strong>2. จุดที่ขาด:</strong><br>" +
+                      "• ไม่มี beforeEach สำหรับ setup<br>" +
+                      "• ไม่มี wait สำหรับ loading states<br>" +
+                      "• ไม่มี assertion ตรวจสอบ success message<br>" +
+                      "• Hardcode credentials และ URL<br>" +
+                      "• ไม่มี error handling<br><br>" +
+                      "<strong>3. ควรเพิ่ม:</strong><br>" +
+                      "• page.waitForLoadState() หลัง navigation<br>" +
+                      "• expect(page.locator()).toContainText() สำหรับ success message<br>" +
+                      "• Environment variables สำหรับ test data<br>" +
+                      "• Page Object Model pattern<br>" +
+                      "• Screenshot on failure";
+            }
         } else {
-            msg = "❌ ผิด <br><small>Playwright ไม่มี Force click จะรอจนกว่า Element จะพร้อมใช้งานก่อน</small>";
+            if (answer === 'review') {
+                isCorrect = true;
+                msg = "✅ คำตอบที่คาดหวัง (Senior Level):<br><br>" +
+                      "<strong>1. Code Review:</strong><br>" +
+                      "• ใช้ test.describe() สำหรับ grouping<br>" +
+                      "• มี beforeEach สำหรับ setup<br>" +
+                      "• ใช้ data-testid attributes (Best Practice)<br>" +
+                      "• มี comprehensive test flow<br><br>" +
+                      "<strong>2. จุดที่ควรปรับปรุง:</strong><br>" +
+                      "• ควรมี page.waitForLoadState() หลัง navigation<br>" +
+                      "• ควรมี timeout configuration<br>" +
+                      "• ควรแยก test data ออกจาก code<br>" +
+                      "• ควรมี screenshot on failure<br><br>" +
+                      "<strong>3. Best Practices ที่ควรเพิ่ม:</strong><br>" +
+                      "• Page Object Model pattern<br>" +
+                      "• Fixtures สำหรับ authentication<br>" +
+                      "• Parallel execution configuration<br>" +
+                      "• Custom matchers<br><br>" +
+                      "<strong>4. Error Handling:</strong><br>" +
+                      "• Retry mechanisms<br>" +
+                      "• Network failure scenarios<br>" +
+                      "• Graceful degradation<br>" +
+                      "• Better error reporting";
+            }
         }
     } else {
-        // Answer: B (Race Condition)
-        if(answer === 'race') {
-            isCorrect = true;
-            msg = "✅ ถูกต้อง! (Race Condition)<br><small><b>คำอธิบาย:</b> เมื่อรัน Parallel ตัวแปร <code>sharedCounter</code> จะถูกแชร์ระหว่าง 2 Workers ทำให้ Test A อาจได้ counter=2 และ Test B ได้ counter=1 หรือกลับกัน ทำให้ Assertion ผิดพลาด<br><b>Senior Tip:</b> ใช้ <code>test.describe.serial()</code> หรือ Fixtures แทน</small>";
-        } else if (answer === 'pass') {
-            msg = "❌ ผิด <br><small>Playwright ไม่ได้แยก Context อัตโนมัติ Global Variable ยังคงถูกแชร์ระหว่าง Workers</small>";
-        } else if (answer === 'sequential') {
-            msg = "❌ ผิด <br><small>Playwright จะรัน Parallel ตามการตั้งค่า --workers=2 ไม่ได้เปลี่ยนเป็น Sequential อัตโนมัติ</small>";
+        // Original 2025 logic
+        if(isJunior) {
+            // Answer: B (Wait 2 seconds then click successfully)
+            if(answer === 'wait') {
+                isCorrect = true;
+                msg = "✅ ถูกต้อง! (รอ 2 วินาที แล้วคลิกได้)<br><small><b>คำอธิบาย:</b> Playwright มี <b>Auto-waiting</b> ในตัว จะรอจนกว่า Element จะ <b>Visible</b> และ <b>Enabled</b> ก่อนที่จะคลิก แม้ว่าปุ่มจะเป็น display:none ในตอนแรก แต่หลัง 2 วินาที มันจะแสดงและคลิกได้ตามปกติ</small>";
+            } else if (answer === 'error') {
+                msg = "❌ ผิด <br><small>Playwright ไม่เกิด Error ทันที เพราะมันมี Auto-waiting จะรอจนกว่า Element จะพร้อมใช้งาน</small>";
+            } else if (answer === 'timeout') {
+                msg = "❌ ผิด <br><small>ถ้า Element ไม่แสดงภายใน 30 วินาที ถึงจะ Timeout แต่ในกรณีนี้ Element จะแสดงภายใน 2 วินาที</small>";
+            } else {
+                msg = "❌ ผิด <br><small>Playwright ไม่มี Force click จะรอจนกว่า Element จะพร้อมใช้งานก่อน</small>";
+            }
         } else {
-            msg = "❌ ผิด <br><small>Playwright อนุญาตให้ใช้ Global Variable ได้ แต่ไม่แนะนำใน Parallel Testing</small>";
+            // Answer: B (Race Condition)
+            if(answer === 'race') {
+                isCorrect = true;
+                msg = "✅ ถูกต้อง! (Race Condition)<br><small><b>คำอธิบาย:</b> เมื่อรัน Parallel ตัวแปร <code>sharedCounter</code> จะถูกแชร์ระหว่าง 2 Workers ทำให้ Test A อาจได้ counter=2 และ Test B ได้ counter=1 หรือกลับกัน ทำให้ Assertion ผิดพลาด<br><b>Senior Tip:</b> ใช้ <code>test.describe.serial()</code> หรือ Fixtures แทน</small>";
+            } else if (answer === 'pass') {
+                msg = "❌ ผิด <br><small>Playwright ไม่ได้แยก Context อัตโนมัติ Global Variable ยังคงถูกแชร์ระหว่าง Workers</small>";
+            } else if (answer === 'sequential') {
+                msg = "❌ ผิด <br><small>Playwright จะรัน Parallel ตามการตั้งค่า --workers=2 ไม่ได้เปลี่ยนเป็น Sequential อัตโนมัติ</small>";
+            } else {
+                msg = "❌ ผิด <br><small>Playwright อนุญาตให้ใช้ Global Variable ได้ แต่ไม่แนะนำใน Parallel Testing</small>";
+            }
         }
     }
 
